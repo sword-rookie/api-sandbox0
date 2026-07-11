@@ -1,0 +1,26 @@
+Here is the summary of the work completed so far to fix the Docker build errors:
+
+1. Fixed missing `go.sum` in `orchestrator`:
+   - Downloaded the required Go dependencies which generated a valid `go.sum` file.
+   - This resolved the "file not found" error during the Docker COPY step.
+
+2. Fixed missing `server` package in `orchestrator`:
+   - Created a basic `server.go` file inside `orchestrator/internal/server`.
+   - Exported `NewServer` with a basic HTTP router to satisfy the dependency required by `cmd/main.go`.
+
+3. Fixed missing `os` import in `orchestrator`:
+   - Added the missing `"os"` import to `orchestrator/internal/config/config.go` to fix the `undefined: os` compilation error.
+
+4. Fixed empty `frontend` directory:
+   - Created a basic Next.js `package.json` file.
+   - Created a simple `pages/index.js` page so Next.js could build.
+   - Generated a `package-lock.json` file inside a Node Docker container.
+   - Added an empty `public` directory.
+   - This resolved the `npm ci` failures and the missing `.next`/`public` directories errors.
+
+5. Fixed port conflict for `orchestrator`:
+   - Identified that port 8080 was already in use on the host machine.
+   - Updated `docker-compose.yml` to expose `orchestrator` on port 8081 (`"8081:8080"`).
+   - Updated the `NEXT_PUBLIC_API_URL` environment variable in `frontend` to point to `http://localhost:8081`.
+
+The images (major-orchestrator and major-frontend) now build successfully and all containers are running!
