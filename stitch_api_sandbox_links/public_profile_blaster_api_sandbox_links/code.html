@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Blaster | Clarity Machine Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary": "#213145",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-container": "#006d4a",
+                        "inverse-primary": "#006970",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "secondary": "#b7c8e1",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-tint": "#00dbe9",
+                        "surface-dim": "#131313",
+                        "surface-container-lowest": "#0e0e0e",
+                        "background": "#131313",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-background": "#e5e2e1",
+                        "error": "#ffb4ab",
+                        "primary": "#dbfcff",
+                        "on-secondary-container": "#a6b6cf",
+                        "tertiary": "#d8ffe7",
+                        "primary-fixed": "#7df4ff",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#3b494b",
+                        "outline": "#849495",
+                        "surface": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "on-primary": "#00363a",
+                        "on-surface-variant": "#b9cacb",
+                        "secondary-fixed": "#d3e4fe",
+                        "error-red": "#ffb4ab",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary": "#003824",
+                        "on-surface": "#e5e2e1",
+                        "primary-container": "#00f0ff",
+                        "surface-variant": "#353534",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#353534",
+                        "on-primary-fixed": "#002022",
+                        "on-error": "#690005",
+                        "surface-container": "#201f1f",
+                        "tertiary-container": "#65f2b5",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "on-primary-container": "#006970",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#38485d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "lg": "24px",
+                        "2xl": "48px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "3xl": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .primary-glow {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+        .bg-grid {
+            background-image: linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)] flex items-center justify-between px-margin-desktop h-16">
+<div class="flex items-center gap-xl">
+<h1 class="font-display-lg text-display-lg text-primary-container tracking-tighter cursor-pointer">Clarity Machine</h1>
+<nav class="hidden md:flex gap-md">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-fixed hover:bg-surface-container-highest px-md py-sm rounded-lg transition-colors" href="#">Overview</a>
+<a class="font-body-md text-body-md text-primary-container font-bold px-md py-sm rounded-lg transition-colors" href="#">Profiles</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-fixed hover:bg-surface-container-highest px-md py-sm rounded-lg transition-colors" href="#">Sandboxes</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex items-center bg-surface-container-low border border-outline-variant rounded-full px-md py-xs">
+<span class="material-symbols-outlined text-on-surface-variant scale-75">search</span>
+<input class="bg-transparent border-none text-body-md focus:ring-0 text-on-surface placeholder:text-outline w-48" placeholder="Search profiles..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-container p-sm active:scale-95 transition-transform">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary-container/30">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSOvy1gY-dRmltXRPDJY_XGN0JVjuKcFv2wa_4PIj-wc2LNXK7yxJSf6BgT02ovTmC24Tdlvoeni_3Lx74BYRKiyI8WrY7P6HeOOaVeMvei8-Hmp3sgWW76HA6U7UhY2t6IzZ1H_QHdyBPpdkQG92zywRlQ-i_Xns5mSw4az3Ivjv1EWtcbiQWCPH-yiTgWWrjmLTX2QL-buwb119gpekqOwkKMQsvma8FV8EJUqvIWxZwZ0JW3wFgH6KjJ4yvrTOOANRBf8L_Ftc0"/>
+</div>
+</div>
+</header>
+<main class="pt-3xl pb-3xl bg-grid">
+<!-- Hero Header -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop pt-xl">
+<div class="relative bg-surface-container-lowest border border-outline-variant rounded-xl p-3xl overflow-hidden">
+<!-- Abstract Glow Background -->
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-primary-container/10 blur-[100px] rounded-full"></div>
+<div class="flex flex-col md:flex-row items-start md:items-end gap-xl relative z-10">
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden border-2 border-primary-container primary-glow">
+<img alt="Blaster Profile Photo" class="w-full h-full object-cover" data-alt="A cinematic, high-detail professional portrait of a tech-focused developer in a dark, atmospheric studio. The lighting is dominated by a sharp cyan neon rim light reflecting off his modern spectacles, creating a futuristic cyberpunk-lite mood. He wears a sleek, black tech-wear hoodie. The background is a soft-focus digital grid with floating geometric nodes, maintaining the Clarity Machine aesthetic of technical futurism and high-performance utility." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj7HoleVZx6nVYOwwmq_wOYMq7UILxJ2xIyLrhXRaztziO4z1A2QQg8dJcdb1mGbN07E44eXlm15Sx8b4Hzzg8pMjrcdgZQX1kWr9g0GGHRdLMqgYR8V51uq2iO4spPFVpbBfXo88urQc-llwqbV9VKl_qy5efQkIdQ-HNacgxfq8eA-ewW1qEFBoCv7OGwhTwML2sfr3ae1Ze46hzuwDt0ovtnbizeh-fMLo1AMTHpiZF_kjnCDXHUnbS4U5Wnbgw-wy-B1_9kqME"/>
+</div>
+<div class="flex-grow">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface flex items-center gap-sm">
+                                    Blaster
+                                    <span class="material-symbols-outlined text-primary-container text-xl" style="font-variation-settings: 'FILL' 1;">verified</span>
+</h2>
+<p class="font-code-md text-code-md text-primary-fixed-dim">@blaster</p>
+</div>
+<div class="flex gap-md">
+<button class="bg-primary-container text-on-primary-container font-bold px-xl py-sm rounded-lg primary-glow active:scale-95 transition-all">Follow</button>
+<button class="bg-transparent border border-outline-variant text-on-surface px-xl py-sm rounded-lg hover:bg-surface-container active:scale-95 transition-all">Message</button>
+</div>
+</div>
+<div class="mt-lg grid grid-cols-1 md:grid-cols-3 gap-md text-on-surface-variant font-body-md">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">work</span>
+<span>Full Stack Developer @ Company</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Mysuru, India</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>Joined March 2025</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Bar -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop mt-lg">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="bg-surface-container-low border border-outline-variant p-lg rounded-xl group hover:border-primary-container/50 transition-colors">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-xs">Active Environments</p>
+<div class="flex items-baseline gap-sm">
+<span class="font-headline-lg text-headline-lg text-primary-container">87</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Sandboxes Created</span>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant p-lg rounded-xl group hover:border-primary-container/50 transition-colors">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-xs">Infrastructure</p>
+<div class="flex items-baseline gap-sm">
+<span class="font-headline-lg text-headline-lg text-primary-container">12</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Projects</span>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant p-lg rounded-xl group hover:border-primary-container/50 transition-colors">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-xs">Terminal Output</p>
+<div class="flex items-baseline gap-sm">
+<span class="font-headline-lg text-headline-lg text-primary-container">341</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Commits Pushed</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Content Grid -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop mt-xl grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Sidebar / Bio -->
+<div class="lg:col-span-4 space-y-xl">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl">
+<h3 class="font-label-caps text-label-caps text-primary-container uppercase mb-md">About</h3>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+                        Building tools that make development faster and more enjoyable. Currently obsessed with ephemeral environments.
+                    </p>
+<div class="mt-xl pt-xl border-t border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-md">
+<a class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:text-primary-container hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">terminal</span>
+</a>
+<span class="font-code-md text-code-md text-on-surface-variant">github.com/blaster</span>
+</div>
+<button class="text-primary-container hover:underline font-label-caps text-label-caps uppercase flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">share</span>
+                            Share Profile
+                        </button>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl">
+<h3 class="font-label-caps text-label-caps text-primary-container uppercase mb-md">Quick Stats</h3>
+<div class="space-y-md">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-md">Reliability Score</span>
+<span class="font-code-md text-primary-fixed-dim">99.8%</span>
+</div>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-[99.8%] primary-glow"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-md">Sandbox Uptime</span>
+<span class="font-code-md text-primary-fixed-dim">1,402h</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Tabs & Feed -->
+<div class="lg:col-span-8">
+<!-- Tab Navigation -->
+<div class="flex border-b border-outline-variant mb-lg overflow-x-auto no-scrollbar">
+<button class="px-xl py-md font-label-caps text-label-caps uppercase text-primary-container border-b-2 border-primary-container whitespace-nowrap">Overview</button>
+<button class="px-xl py-md font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface whitespace-nowrap">Projects</button>
+<button class="px-xl py-md font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface whitespace-nowrap">Sandboxes</button>
+<button class="px-xl py-md font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface whitespace-nowrap">Blueprints</button>
+</div>
+<!-- Activity Feed -->
+<div class="space-y-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Recent Activity</h3>
+<!-- Activity Card 1 -->
+<div class="group bg-surface-container-low border border-outline-variant p-lg rounded-xl flex gap-lg hover:bg-surface-container-high transition-all">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container">layers</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">
+                                        Created sandbox <span class="font-code-md text-primary-fixed-dim bg-surface-container-highest px-sm py-0.5 rounded">'feat-payment-flow'</span>
+</p>
+<p class="text-on-surface-variant mt-xs">Project: <span class="text-on-surface">E-commerce API</span></p>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant">2 days ago</span>
+</div>
+</div>
+</div>
+<!-- Activity Card 2 -->
+<div class="group bg-surface-container-low border border-outline-variant p-lg rounded-xl flex gap-lg hover:bg-surface-container-high transition-all">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-tertiary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary-fixed-dim">history</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">
+                                        Pushed changes to <span class="font-code-md text-tertiary-fixed-dim">'main'</span> branch from sandbox
+                                    </p>
+<p class="text-on-surface-variant mt-xs">Environment: <span class="text-on-surface">Clarity-Production-Build</span></p>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant">5 days ago</span>
+</div>
+</div>
+</div>
+<!-- Activity Card 3 -->
+<div class="group bg-surface-container-low border border-outline-variant p-lg rounded-xl flex gap-lg hover:bg-surface-container-high transition-all">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-secondary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">account_tree</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-body-lg text-body-lg text-on-surface">
+                                        Created new Blueprint Node <span class="font-code-md text-secondary">'Order Service'</span>
+</p>
+<p class="text-on-surface-variant mt-xs">Category: <span class="text-on-surface">Microservices Architecture</span></p>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant">1 week ago</span>
+</div>
+</div>
+</div>
+<button class="w-full py-md border border-dashed border-outline-variant rounded-xl text-on-surface-variant hover:text-primary-container hover:border-primary-container transition-all font-label-caps text-label-caps uppercase">
+                        Load More Activity
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action for Contextual Purpose -->
+<div class="fixed bottom-margin-desktop right-margin-desktop z-40 hidden md:block">
+<button class="bg-primary-container text-on-primary-container flex items-center gap-sm px-xl py-lg rounded-full primary-glow font-bold active:scale-95 transition-all shadow-xl">
+<span class="material-symbols-outlined">add</span>
+            Launch New Sandbox
+        </button>
+</div>
+<!-- Footer Space -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant py-3xl px-margin-desktop">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-lg">
+<div class="flex flex-col gap-xs">
+<span class="font-display-lg text-headline-md text-primary-container tracking-tighter">Clarity Machine</span>
+<p class="text-on-surface-variant text-body-md">Engineered for absolute deployment precision.</p>
+</div>
+<div class="flex gap-xl text-on-surface-variant font-code-md">
+<a class="hover:text-primary-container transition-colors" href="#">Documentation</a>
+<a class="hover:text-primary-container transition-colors" href="#">API Status</a>
+<a class="hover:text-primary-container transition-colors" href="#">Privacy Policy</a>
+</div>
+<p class="text-on-surface-variant text-body-md">© 2025 Clarity Machine Engine</p>
+</div>
+</footer>
+<script>
+        // Simple Micro-interaction for Stats Pulse
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if(icon) {
+                    icon.style.transform = 'scale(1.1) rotate(-5deg)';
+                    icon.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if(icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-border:hover {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            border-color: #00f0ff;
+        }
+        .grid-bg {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(20, 31, 31, 0.7);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "primary": "#dbfcff",
+                      "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                      "surface-variant": "#353534",
+                      "on-primary": "#00363a",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-container-high": "#2a2a2a",
+                      "surface-container-highest": "#353534",
+                      "primary-fixed": "#7df4ff",
+                      "primary-fixed-dim": "#00dbe9",
+                      "error-container": "#93000a",
+                      "on-secondary": "#213145",
+                      "surface-container": "#201f1f",
+                      "on-primary-container": "#006970",
+                      "on-tertiary-fixed": "#002113",
+                      "on-background": "#e5e2e1",
+                      "surface-container-low": "#1c1b1b",
+                      "tertiary-container": "#65f2b5",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "primary-container": "#00f0ff",
+                      "on-secondary-fixed": "#0b1c2f",
+                      "on-tertiary": "#003824",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-error": "#690005",
+                      "on-primary-fixed-variant": "#004f54",
+                      "on-error-container": "#ffdad6",
+                      "inverse-primary": "#006970",
+                      "background": "#131313",
+                      "tertiary": "#d8ffe7",
+                      "surface-dim": "#131313",
+                      "outline-variant": "#3b494b",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "on-secondary-container": "#a6b6cf",
+                      "error-red": "#ffb4ab",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-primary-fixed": "#002022",
+                      "on-surface-variant": "#b9cacb",
+                      "inverse-surface": "#e5e2e1",
+                      "surface-bright": "#3a3939",
+                      "inverse-on-surface": "#313030",
+                      "surface-tint": "#00dbe9",
+                      "secondary-fixed": "#d3e4fe",
+                      "secondary-container": "#38485d",
+                      "error": "#ffb4ab",
+                      "secondary": "#b7c8e1",
+                      "outline": "#849495",
+                      "on-tertiary-container": "#006d4a",
+                      "surface": "#131313",
+                      "on-surface": "#e5e2e1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "40px",
+                      "xl": "32px",
+                      "unit": "4px",
+                      "xs": "4px",
+                      "2xl": "48px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "3xl": "64px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "code-md": ["JetBrains Mono"],
+                      "headline-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "display-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container min-h-screen grid-bg">
+<!-- SideNavBar (Authority Source Mapping) -->
+<nav class="fixed left-0 top-0 h-screen w-64 z-40 bg-surface-container-lowest border-r border-outline-variant flex flex-col pt-20 pb-lg px-md">
+<div class="mb-xl px-md">
+<h2 class="font-headline-md text-headline-md font-black text-primary">CONTROL_PLANE</h2>
+<p class="font-code-md text-code-md text-on-surface-variant opacity-60">v2.4.0-STABLE</p>
+</div>
+<div class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<a class="flex items-center gap-md bg-secondary-container text-primary rounded-lg p-md shadow-[0_0_15px_rgba(0,240,255,0.15)] active:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-caps text-label-caps">Projects</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">layers</span>
+<span class="font-label-caps text-label-caps">All Sandboxes</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-caps text-label-caps">Activity</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-caps text-label-caps">Team</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-xs pt-lg border-t border-outline-variant">
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-caps text-label-caps">Documentation</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-caps text-label-caps">Logout</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-low border-b border-outline-variant shadow-sm backdrop-blur-xl flex justify-between items-center h-16 px-margin-desktop pl-[280px]">
+<div class="flex items-center gap-xl flex-1 max-w-2xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">NEXUS_OS</h1>
+<div class="relative flex-1 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-lg py-2 pl-10 pr-4 text-on-surface focus:ring-1 focus:ring-primary-container transition-all font-body-md" placeholder="Search operational projects..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-xs px-md py-2 border border-outline-variant rounded-lg font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                Filter
+            </button>
+<button class="flex items-center gap-xs px-lg py-2 bg-primary-container text-on-primary font-label-caps text-label-caps rounded-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                + New Project
+            </button>
+<div class="h-6 w-[1px] bg-outline-variant mx-sm"></div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">help</button>
+<img alt="Lead DevOps Engineer" class="w-8 h-8 rounded-full border border-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIzjHFYvohMpMIFNzpkqB3y8Wqtr5RISKZZAwvxzuFEcBneqCHfpXQEW4K9XQalDRwerFYffYC9NGSUnabc8r1feHrkFuKsDwwgmr7vmLz4m8pzVOPXCkznruAHZRHttns-1-DTQf9M7qlke4cfJ6Un6yvNOVGWybVX9Chykf8C_aP2Bv1W4On29BESzd-KxnYlu-hZTudl3B_cVtsd0o_x6YOOtw66v9pTPkM_4bKbxK9BHDvmVXs3zwyZXewQgIXDw104wAcAEPe">
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-24 pb-20 px-margin-desktop min-h-screen">
+<!-- Tab Navigation -->
+<div class="flex items-center gap-xl border-b border-outline-variant mb-xl">
+<button class="pb-md px-sm font-label-caps text-label-caps text-primary border-b-2 border-primary">All Projects</button>
+<button class="pb-md px-sm font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">Created by Me</button>
+<button class="pb-md px-sm font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">As User</button>
+<button class="pb-md px-sm font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">As Guest</button>
+</div>
+<!-- Dashboard Grid (Asymmetric/Bento Pattern) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
+<!-- Project Card 1: Owner/Healthy -->
+<div class="group surface-container-lowest bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:border-primary-container transition-all duration-300 glow-border">
+<div class="flex justify-between items-start mb-md">
+<span class="px-sm py-1 bg-primary/10 text-primary-fixed-dim border border-primary/20 rounded font-label-caps text-[10px]">OWNER</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">E-commerce Backend API</h3>
+<div class="flex items-center gap-xs mb-lg group/repo">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">code</span>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">nexus-infra/ecom-core-api</a>
+</div>
+<div class="grid grid-cols-2 gap-md mb-xl">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Created</span>
+<span class="font-code-md text-code-md">2024-03-12</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Last Active</span>
+<span class="font-code-md text-code-md">4m ago</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-lg border-t border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SANDBOXES</span>
+<span class="font-headline-md text-headline-md text-primary-container">12</span>
+</div>
+<div class="flex items-center gap-xs px-sm py-1 bg-tertiary-container/10 text-tertiary-fixed-dim rounded">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span>
+<span class="font-label-caps text-[10px]">HEALTHY</span>
+</div>
+</div>
+<button class="p-2 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">launch</span>
+</button>
+</div>
+</div>
+<!-- Project Card 2: User/Warning -->
+<div class="group surface-container-lowest bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:border-primary-container transition-all duration-300 glow-border">
+<div class="flex justify-between items-start mb-md">
+<span class="px-sm py-1 bg-secondary-container text-secondary-fixed border border-outline-variant rounded font-label-caps text-[10px]">USER</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Auth Microservice</h3>
+<div class="flex items-center gap-xs mb-lg group/repo">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">code</span>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">nexus-infra/auth-srv</a>
+</div>
+<div class="grid grid-cols-2 gap-md mb-xl">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Created</span>
+<span class="font-code-md text-code-md">2024-05-20</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Last Active</span>
+<span class="font-code-md text-code-md">2h ago</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-lg border-t border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SANDBOXES</span>
+<span class="font-headline-md text-headline-md text-primary-container">3</span>
+</div>
+<div class="flex items-center gap-xs px-sm py-1 bg-error-container/20 text-error-red rounded">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span class="font-label-caps text-[10px]">LATENCY</span>
+</div>
+</div>
+<button class="p-2 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">launch</span>
+</button>
+</div>
+</div>
+<!-- Project Card 3: Guest/Healthy -->
+<div class="group surface-container-lowest bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:border-primary-container transition-all duration-300 glow-border">
+<div class="flex justify-between items-start mb-md">
+<span class="px-sm py-1 bg-surface-container-high text-on-surface-variant border border-outline-variant rounded font-label-caps text-[10px]">GUEST</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Data Warehouse ETL</h3>
+<div class="flex items-center gap-xs mb-lg group/repo">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">code</span>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">analytics-team/etl-pipelines</a>
+</div>
+<div class="grid grid-cols-2 gap-md mb-xl">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Created</span>
+<span class="font-code-md text-code-md">2023-11-02</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Last Active</span>
+<span class="font-code-md text-code-md">1d ago</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-lg border-t border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SANDBOXES</span>
+<span class="font-headline-md text-headline-md text-primary-container">1</span>
+</div>
+<div class="flex items-center gap-xs px-sm py-1 bg-tertiary-container/10 text-tertiary-fixed-dim rounded">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-label-caps text-[10px]">HEALTHY</span>
+</div>
+</div>
+<button class="p-2 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">launch</span>
+</button>
+</div>
+</div>
+<!-- Project Card 4: Owner/Healthy -->
+<div class="group surface-container-lowest bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:border-primary-container transition-all duration-300 glow-border">
+<div class="flex justify-between items-start mb-md">
+<span class="px-sm py-1 bg-primary/10 text-primary-fixed-dim border border-primary/20 rounded font-label-caps text-[10px]">OWNER</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">Stripe Integration Lab</h3>
+<div class="flex items-center gap-xs mb-lg group/repo">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">code</span>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">nexus-infra/stripe-sandbox</a>
+</div>
+<div class="grid grid-cols-2 gap-md mb-xl">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Created</span>
+<span class="font-code-md text-code-md">2024-06-01</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase opacity-60">Last Active</span>
+<span class="font-code-md text-code-md">Just now</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-lg border-t border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SANDBOXES</span>
+<span class="font-headline-md text-headline-md text-primary-container">45</span>
+</div>
+<div class="flex items-center gap-xs px-sm py-1 bg-tertiary-container/10 text-tertiary-fixed-dim rounded">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span>
+<span class="font-label-caps text-[10px]">STABLE</span>
+</div>
+</div>
+<button class="p-2 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">launch</span>
+</button>
+</div>
+</div>
+<!-- Empty State Card / CTA -->
+<div class="border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-xl hover:border-primary/40 hover:bg-primary/5 transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-[32px]">add</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface-variant group-hover:text-primary transition-colors">Provision New Project</span>
+<p class="font-body-md text-body-md text-on-surface-variant text-center mt-xs opacity-60 max-w-[200px]">Create an isolated environment for API collaboration.</p>
+</div>
+</div>
+<!-- Footer (Authority Source Mapping) -->
+<footer class="fixed bottom-0 left-64 right-0 bg-surface-container-lowest border-t border-outline-variant py-md px-margin-desktop flex justify-between items-center z-30">
+<span class="font-code-md text-code-md text-on-surface-variant">© 2024 NEXUS INFRASTRUCTURE. OPERATIONAL STATE: OPTIMAL</span>
+<div class="flex gap-lg">
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">Legal</a>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">API</a>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">Status</a>
+</div>
+</footer>
+</main>
+<!-- Floating Action Effect Background (Cosmetic) -->
+<div class="fixed bottom-20 right-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+<div class="fixed top-20 left-64 w-64 h-64 bg-secondary-container/10 blur-[100px] rounded-full pointer-events-none -z-10"></div>
+<script>
+        // Micro-interaction for status pulsing
+        document.querySelectorAll('.animate-pulse').forEach(el => {
+            el.style.animationDuration = Math.random() * 2 + 1 + 's';
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            document.querySelector('.group-focus-within\\:text-primary').style.color = '#dbfcff';
+        });
+    </script>
+</body></html>

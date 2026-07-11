@@ -1,0 +1,479 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>nexus-core-api | Sandbox Links</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#201f1f",
+                        "inverse-surface": "#e5e2e1",
+                        "outline-variant": "#3b494b",
+                        "outline": "#849495",
+                        "primary": "#dbfcff",
+                        "surface-dim": "#131313",
+                        "surface-tint": "#00dbe9",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-container": "#65f2b5",
+                        "on-primary-fixed-variant": "#004f54",
+                        "primary-fixed-dim": "#00dbe9",
+                        "primary-container": "#00f0ff",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "secondary": "#b7c8e1",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed": "#002022",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary-container": "#a6b6cf",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-highest": "#353534",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-fixed": "#7df4ff",
+                        "surface-container-low": "#1c1b1b",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "tertiary-fixed": "#6ffbbe",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-primary": "#006970",
+                        "on-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "secondary-container": "#38485d",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-tertiary": "#003824",
+                        "on-primary": "#00363a",
+                        "background": "#131313",
+                        "surface": "#131313",
+                        "on-secondary": "#213145",
+                        "on-tertiary-container": "#006d4a",
+                        "error-red": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary": "#d8ffe7",
+                        "on-surface-variant": "#b9cacb",
+                        "on-primary-container": "#006970",
+                        "on-tertiary-fixed-variant": "#005236"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "sm": "8px",
+                        "2xl": "48px",
+                        "lg": "24px",
+                        "3xl": "64px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "code-md": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .node-glow-gold {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+        }
+        .node-glow-primary {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(59, 73, 75, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 73, 75, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .bezier-curve {
+            position: absolute;
+            pointer-events: none;
+            stroke: #3b494b;
+            fill: none;
+            stroke-width: 2;
+        }
+        .active-log-line {
+            border-left: 2px solid #00f0ff;
+            padding-left: 12px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex justify-between items-center px-margin-desktop py-md max-w-[1440px] mx-auto h-16">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">API Sandbox Links</span>
+<nav class="hidden md:flex gap-lg">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Features</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">How it Works</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="px-md py-sm font-body-md text-on-surface-variant hover:text-primary transition-all duration-200">Login</button>
+<button class="px-lg py-sm bg-primary-container text-on-primary font-bold rounded-lg active:scale-95 transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)]">Try Demo</button>
+</div>
+</div>
+</header>
+<main class="pt-16 h-screen flex flex-col">
+<!-- Project Header -->
+<section class="px-margin-desktop py-lg bg-surface-container-lowest border-b border-outline-variant flex flex-wrap justify-between items-center gap-md shrink-0">
+<div class="space-y-xs">
+<div class="flex items-center gap-sm">
+<input class="bg-transparent border-none focus:ring-0 font-headline-lg text-headline-lg text-primary p-0 w-auto min-w-[200px]" spellcheck="false" type="text" value="nexus-core-api">
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary">edit</span>
+</div>
+<div class="flex items-center gap-md">
+<a class="flex items-center gap-xs font-code-md text-code-md text-outline hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">link</span>
+                        github.com/nexus-infra/core-api
+                    </a>
+<div class="flex items-center gap-xs px-sm py-xs bg-tertiary-container/10 border border-tertiary-container/30 rounded-full">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-tertiary-container">Running (main branch)</span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap gap-sm">
+<button class="px-md py-sm bg-primary-container/10 border border-primary-container/30 text-primary-container font-label-caps text-label-caps rounded-lg hover:bg-primary-container/20 transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">fork_right</span>
+                    + FORK SANDBOX
+                </button>
+<button class="px-md py-sm bg-surface-container-high border border-outline-variant text-on-surface-variant font-label-caps text-label-caps rounded-lg hover:text-on-surface transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">group_add</span>
+                    INVITE
+                </button>
+<button class="px-md py-sm bg-surface-container-high border border-outline-variant text-on-surface-variant font-label-caps text-label-caps rounded-lg hover:text-on-surface transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+                    SETTINGS
+                </button>
+<div class="h-8 w-[1px] bg-outline-variant mx-xs"></div>
+<button class="px-md py-sm bg-surface-container-high border border-outline-variant text-on-surface-variant font-label-caps text-label-caps rounded-lg hover:text-on-surface transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">code</span>
+                    CODE
+                </button>
+<button class="px-md py-sm bg-surface-container-high border border-outline-variant text-on-surface-variant font-label-caps text-label-caps rounded-lg hover:text-on-surface transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+                    DEPLOYED
+                </button>
+</div>
+</section>
+<!-- Main Workspace Area -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Blueprint Graph Canvas -->
+<div class="flex-1 relative bg-surface-dim cyber-grid overflow-auto cursor-grab active:cursor-grabbing" id="graph-canvas">
+<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_50%_50%,_#00f0ff_0%,_transparent_50%)]"></div>
+<!-- Graph Content Container -->
+<div class="min-w-[1200px] min-h-[800px] relative p-3xl flex flex-col items-center">
+<!-- Root Node -->
+<div class="z-10 mb-3xl">
+<div class="w-64 bg-surface-container-highest border-2 border-[#FFD700] rounded-xl p-md node-glow-gold relative">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-caps text-label-caps text-[#FFD700] flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">account_tree</span>
+                                    ROOT
+                                </span>
+<span class="px-sm py-[2px] bg-tertiary-container/20 text-tertiary-container text-[10px] font-bold rounded">ACTIVE</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-white mb-xs">main</h3>
+<p class="font-code-md text-code-md text-outline">v2.4.12-stable</p>
+<div class="mt-md pt-sm border-t border-outline-variant flex justify-between">
+<span class="material-symbols-outlined text-outline text-[18px] hover:text-primary transition-colors cursor-pointer">visibility</span>
+<span class="material-symbols-outlined text-outline text-[18px] hover:text-primary transition-colors cursor-pointer">refresh</span>
+</div>
+</div>
+</div>
+<!-- SVG Connections -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" id="svg-connections">
+<!-- Connections will be drawn here by JS or static paths -->
+<path d="M 600 180 C 600 280, 200 280, 200 380" fill="none" opacity="0.6" stroke="url(#gradient-primary)" stroke-width="2"></path>
+<path d="M 600 180 C 600 280, 600 280, 600 380" fill="none" opacity="0.6" stroke="url(#gradient-primary)" stroke-width="2"></path>
+<path d="M 600 180 C 600 280, 1000 280, 1000 380" fill="none" opacity="0.6" stroke="url(#gradient-primary)" stroke-width="2"></path>
+<defs>
+<linearGradient id="gradient-primary" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#FFD700"></stop>
+<stop offset="100%" stop-color="#00f0ff"></stop>
+</linearGradient>
+</defs>
+</svg>
+<!-- Child Nodes Container -->
+<div class="grid grid-cols-3 gap-3xl w-full z-10">
+<!-- Node 1: feat-auth-v2 -->
+<div class="flex flex-col items-center">
+<div class="w-64 bg-surface-container-high border border-primary-container rounded-xl p-md node-glow-primary group cursor-pointer hover:-translate-y-1 transition-transform">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-caps text-label-caps text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">account_tree</span>
+                                        feat-auth-v2
+                                    </span>
+<span class="px-sm py-[2px] bg-tertiary-container/10 border border-tertiary-container/30 text-tertiary-container text-[10px] font-bold rounded">IN_SYNC</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-white mb-xs truncate">auth-refactor</h3>
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-code-md text-code-md text-outline">Running</span>
+</div>
+</div>
+</div>
+<!-- Node 2: bugfix-stripe-latency -->
+<div class="flex flex-col items-center">
+<div class="w-64 bg-surface-container-high border border-outline-variant rounded-xl p-md hover:border-error transition-colors cursor-pointer group hover:-translate-y-1">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-caps text-label-caps text-outline group-hover:text-error flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">bug_report</span>
+                                        bugfix-stripe
+                                    </span>
+<span class="px-sm py-[2px] bg-error/10 border border-error/30 text-error text-[10px] font-bold rounded">MISMATCH</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-white mb-xs truncate">fix-stripe</h3>
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-spin border-t-transparent border-2"></span>
+<span class="font-code-md text-code-md text-outline">Building...</span>
+</div>
+</div><div class="absolute z-50 mt-2 w-56 bg-surface-container-highest border border-outline-variant shadow-2xl rounded-lg overflow-hidden py-1">
+<button class="w-full text-left px-md py-sm flex items-center gap-sm hover:bg-primary-container/20 text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">fork_right</span>
+<span class="font-label-caps">Fork from this Sandbox</span>
+</button>
+<div class="h-[1px] bg-outline-variant my-1 mx-md"></div>
+<button class="w-full text-left px-md py-sm flex items-center gap-sm hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span class="font-label-caps">View Live</span>
+</button>
+<button class="w-full text-left px-md py-sm flex items-center gap-sm hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">code</span>
+<span class="font-label-caps">View Code</span>
+</button>
+<button class="w-full text-left px-md py-sm flex items-center gap-sm hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+<span class="font-label-caps">Isolate</span>
+</button>
+<div class="h-[1px] bg-outline-variant my-1 mx-md"></div>
+<button class="w-full text-left px-md py-sm flex items-center gap-sm hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">link_off</span>
+<span class="font-label-caps">Break Connection</span>
+</button>
+<button class="w-full text-left px-md py-sm flex items-center gap-sm hover:bg-error-container/20 text-error hover:text-error/80">
+<span class="material-symbols-outlined text-[18px]">delete_forever</span>
+<span class="font-label-caps">Terminate</span>
+</button>
+</div>
+</div>
+<!-- Node 3: dev-test-env -->
+<div class="flex flex-col items-center">
+<div class="w-64 bg-surface-container-high border border-outline-variant rounded-xl p-md opacity-60 hover:opacity-100 transition-opacity cursor-pointer group hover:-translate-y-1">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-caps text-label-caps text-outline flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">science</span>
+                                        dev-test-env
+                                    </span>
+<span class="px-sm py-[2px] bg-outline-variant/30 text-outline text-[10px] font-bold rounded">IN_SYNC</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-white mb-xs truncate">develop</h3>
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span class="font-code-md text-code-md text-outline">Sleeping</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Details Panel -->
+<aside class="w-96 bg-surface-container-low border-l border-outline-variant flex flex-col h-full">
+<div class="p-lg border-b border-outline-variant">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-headline-md text-headline-md text-white">Sandbox Details</h2>
+<button class="material-symbols-outlined text-outline hover:text-primary">close</button>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between">
+<span class="text-outline text-label-caps">NAME</span>
+<span class="text-primary font-code-md">feat-auth-v2</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline text-label-caps">BRANCH</span>
+<span class="text-white font-code-md">auth-refactor</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline text-label-caps">ID</span>
+<span class="text-white font-code-md">sbx_99a82b1</span>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col min-h-0">
+<div class="px-lg py-sm bg-surface-container-high border-b border-outline-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">terminal</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">INSTANCE LOGS</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-md font-code-md text-code-md overflow-y-auto space-y-sm">
+<div class="text-outline/50">[14:22:01] System checking node status...</div>
+<div class="text-tertiary-container">&gt; Auth service initialized</div>
+<div class="text-on-surface">&gt; Pulling latest changes from origin...</div>
+<div class="text-tertiary-container">&gt; Database connected (CoW)</div>
+<div class="active-log-line text-primary">
+                            &gt; Ready on auth-v2.clarity.dev
+                        </div>
+<div class="text-on-surface">&gt; Waiting for connections...</div>
+<div class="flex gap-xs items-center">
+<span class="animate-pulse w-2 h-4 bg-primary-container"></span>
+<span class="text-outline">_</span>
+</div>
+</div>
+</div>
+<div class="p-lg bg-surface-container border-t border-outline-variant grid grid-cols-2 gap-md">
+<button class="py-sm bg-secondary-container text-secondary font-label-caps text-label-caps rounded hover:bg-secondary-container/80 transition-all">RESTART</button>
+<button class="py-sm bg-error-container/20 text-error border border-error-container/30 font-label-caps text-label-caps rounded hover:bg-error-container/30 transition-all">TERMINATE</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter px-margin-desktop max-w-[1440px] mx-auto">
+<div class="space-y-md">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">API Sandbox Links</span>
+<p class="text-on-surface-variant font-body-sm text-body-sm max-w-[200px]">
+                    Empowering developers with instantaneous, visual sandbox environments.
+                </p>
+</div>
+<div class="space-y-md">
+<h4 class="font-label-caps text-label-caps text-on-surface">RESOURCES</h4>
+<ul class="space-y-sm">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Documentation</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">API Reference</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Status</a></li>
+</ul>
+</div>
+<div class="space-y-md">
+<h4 class="font-label-caps text-label-caps text-on-surface">LEGAL</h4>
+<ul class="space-y-sm">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div class="flex flex-col justify-between">
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-outline hover:text-primary cursor-pointer">rss_feed</span>
+<span class="material-symbols-outlined text-outline hover:text-primary cursor-pointer">alternate_email</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-md">© 2024 API Sandbox Links. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for the canvas
+        const canvas = document.getElementById('graph-canvas');
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            canvas.classList.add('cursor-grabbing');
+            startX = e.pageX - canvas.offsetLeft;
+            startY = e.pageY - canvas.offsetTop;
+            scrollLeft = canvas.scrollLeft;
+            scrollTop = canvas.scrollTop;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+            canvas.classList.remove('cursor-grabbing');
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - canvas.offsetLeft;
+            const y = e.pageY - canvas.offsetTop;
+            const walkX = (x - startX);
+            const walkY = (y - startY);
+            canvas.scrollLeft = scrollLeft - walkX;
+            canvas.scrollTop = scrollTop - walkY;
+        });
+
+        // Initialize scroll to center
+        window.addEventListener('load', () => {
+            const centerX = (canvas.scrollWidth - canvas.clientWidth) / 2;
+            canvas.scrollLeft = centerX;
+        });
+    </script>
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-background/60 backdrop-blur-sm">
+<div class="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant bg-surface-container-high flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">Fork Sandbox</h2>
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">close</button>
+</div>
+<div class="p-lg space-y-lg">
+<div class="space-y-xs">
+<label class="text-outline text-label-caps">New Sandbox Name</label>
+<input class="w-full bg-surface-container-high border-outline-variant rounded-lg text-white font-code-md focus:border-primary-container focus:ring-1 focus:ring-primary-container" type="text" value="bugfix-stripe-v2">
+</div>
+<div class="space-y-xs">
+<label class="text-outline text-label-caps">Git Branch</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high border-outline-variant rounded-lg text-white font-code-md appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container px-md py-sm">
+<option selected="">bugfix-stripe</option>
+<option>main</option>
+<option>develop</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md p-md bg-surface-container-high rounded-lg">
+<div class="space-y-1">
+<span class="text-outline text-label-caps block">Inherits From</span>
+<span class="text-primary font-code-md">fix-stripe</span>
+</div>
+<div class="space-y-1">
+<span class="text-outline text-label-caps block">DB Strategy</span>
+<span class="text-tertiary-container font-code-md">CoW Copy</span>
+</div>
+</div>
+<div class="flex gap-md pt-md">
+<button class="flex-1 py-md bg-primary-container text-on-primary font-bold rounded-lg hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all">Create Fork</button>
+<button class="flex-1 py-md bg-surface-container-high text-on-surface-variant font-bold rounded-lg border border-outline-variant hover:text-on-surface transition-all">Cancel</button>
+</div>
+</div>
+</div>
+</div></body></html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Database Configuration - API Sandbox Links</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#2a2a2a",
+                        "secondary": "#b7c8e1",
+                        "surface-dim": "#131313",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-highest": "#353534",
+                        "surface": "#131313",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#65f2b5",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary": "#213145",
+                        "background": "#131313",
+                        "outline-variant": "#3b494b",
+                        "inverse-primary": "#006970",
+                        "on-primary-fixed-variant": "#004f54",
+                        "surface-tint": "#00dbe9",
+                        "on-tertiary": "#003824",
+                        "secondary-container": "#38485d",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#a6b6cf",
+                        "on-tertiary-fixed": "#002113",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary": "#d8ffe7",
+                        "surface-bright": "#3a3939",
+                        "primary": "#dbfcff",
+                        "outline": "#849495",
+                        "primary-container": "#00f0ff",
+                        "surface-container": "#201f1f",
+                        "surface-variant": "#353534",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "error-red": "#ffb4ab",
+                        "primary-fixed": "#7df4ff",
+                        "on-surface-variant": "#b9cacb",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#006970",
+                        "on-primary-fixed": "#002022",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "on-tertiary-container": "#006d4a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary": "#00363a",
+                        "on-surface": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "2xl": "48px",
+                        "unit": "4px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "margin-desktop": "40px",
+                        "3xl": "64px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "code-md": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen font-body-md text-body-md flex">
+<!-- SideNavBar (Database Active) -->
+<nav class="hidden md:flex flex-col py-md gap-xs bg-surface-container-lowest text-primary-fixed fixed left-0 top-16 h-[calc(100vh-64px)] w-64 border-r border-outline-variant z-40">
+<div class="px-md pb-md border-b border-outline-variant mb-sm">
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-primary text-[32px]">dataset</span>
+<h2 class="font-headline-md text-headline-md text-primary">Environment Control</h2>
+</div>
+<p class="font-code-md text-code-md text-on-surface-variant">Production Cluster v2.4</p>
+</div>
+<div class="flex flex-col gap-xs flex-1 overflow-y-auto">
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-code-md text-code-md">General</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-code-md text-code-md">GitHub</span>
+</a>
+<a class="flex items-center gap-md bg-secondary-container text-on-secondary-container border-l-4 border-primary-container px-md py-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">database</span>
+<span class="font-code-md text-code-md font-bold">Database</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-code-md text-code-md">Members</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="font-code-md text-code-md">Security</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">layers</span>
+<span class="font-code-md text-code-md">Resources</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-code-md text-code-md">Sandbox</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-code-md text-code-md">AI</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-code-md text-code-md">Billing</span>
+</a>
+</div>
+<div class="px-md pt-md border-t border-outline-variant mt-sm">
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-code-md text-code-md">Documentation</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-low hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-code-md text-code-md">Support</span>
+</a>
+<button class="mt-md w-full bg-primary-container text-on-primary-container font-code-md text-code-md font-bold py-sm px-md rounded-DEFAULT shadow-glow-rgba hover:bg-primary transition-colors active:scale-95 duration-200">
+                Deploy New Sandbox
+            </button>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant shadow-glow-rgba flex justify-between items-center px-lg h-16">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-container text-[28px]">token</span>
+<span class="font-headline-md text-headline-md font-bold text-primary-container">Clarity Machine</span>
+</div>
+<div class="flex items-center gap-lg">
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARloLaMmG6vrOayFp8HvId3R_0hX3XNlhnYxWF92_K7_yIIG51VMQfEqTVT6avqASaQqC9Mfu8EW3Zr1xfef3ApFY9eqqpOSPkCZl_38M8OVm_y5cx9iUvAo6ra7aPD8vsqN7_MAnqzYiFmFikbp7nlHmmLNbWMQqONmxI9jdZIGkMWfa-8zLwVVybusbeculZjhFv2VbGgpCz0BIrnzVcMm29uAOZZIe27JT5bqfQAFKnT560hBAhbjvVbwIQnS69bOzPRDv2s584"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 pt-16 mt-3xl px-margin-mobile md:px-margin-desktop pb-3xl max-w-[1440px] mx-auto w-full">
+<div class="mb-xl">
+<h1 class="font-display-lg text-display-lg text-primary md:font-display-lg font-headline-lg-mobile text-headline-lg-mobile mb-sm">Database Configuration</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Configure the data layer for your sandbox environment. Choose between isolated ephemeral databases for rapid testing or connect directly to external providers.</p>
+</div>
+<div class="grid grid-cols-1 gap-xl">
+<!-- Ephemeral Database Section -->
+<section class="bg-surface-container-lowest border border-primary-container/50 rounded-xl p-lg md:p-xl relative overflow-hidden group shadow-[0_0_15px_rgba(0,240,255,0.05)]">
+<div class="absolute top-0 right-0 p-md opacity-20 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+<span class="material-symbols-outlined text-[120px] text-primary-container blur-sm" style="font-variation-settings: 'FILL' 1;">speed</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-start justify-between mb-md">
+<div>
+<div class="flex items-center gap-sm mb-xs">
+<h2 class="font-headline-md text-headline-md text-on-background">Ephemeral Database</h2>
+<span class="bg-primary-container/10 text-primary-container border border-primary-container/30 px-sm py-xs rounded-full font-label-caps text-label-caps">Recommended Default</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">An isolated, fast-startup environment optimized for development and destructive testing.</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary-container/10 flex items-center justify-center border border-primary-container/30">
+<span class="material-symbols-outlined text-primary-container">memory</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mb-lg">
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-xs uppercase tracking-wider">Type</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">dataset</span>
+<span class="font-code-md text-code-md text-on-background">PostgreSQL 16</span>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-xs uppercase tracking-wider">Snapshot</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">history</span>
+<span class="font-code-md text-code-md text-on-background">main-blueprint-v2</span>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-xs uppercase tracking-wider">Size Limit</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">hard_drive</span>
+<span class="font-code-md text-code-md text-on-background">2 GB (Copy-on-Write)</span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap gap-md">
+<button class="bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-background font-body-md text-body-md font-semibold py-sm px-lg rounded-DEFAULT transition-colors active:scale-95 duration-200 flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+                            Change Snapshot
+                        </button>
+<button class="bg-primary-container text-on-primary-container font-body-md text-body-md font-bold py-sm px-lg rounded-DEFAULT shadow-glow-rgba hover:bg-primary transition-colors active:scale-95 duration-200 flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+                            Seed with AI
+                        </button>
+</div>
+</div>
+</section>
+<!-- External Database Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg md:p-xl relative overflow-hidden group hover:border-outline transition-colors">
+<div class="absolute top-0 right-0 p-md opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+<span class="material-symbols-outlined text-[120px] text-on-surface blur-[2px]" style="font-variation-settings: 'FILL' 1;">cloud_queue</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-sm mb-xs">
+<h2 class="font-headline-md text-headline-md text-on-background">External Database Connections</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Connect to a managed database provider for stateful testing across deployments.</p>
+<div class="mb-lg">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-sm uppercase tracking-wider">Select Provider</span>
+<div class="flex flex-wrap gap-md">
+<!-- Placeholder for Provider Logos - Using stylized text blocks -->
+<button class="bg-surface-container-low border border-outline-variant hover:border-secondary hover:bg-surface-container text-on-background font-body-md text-body-md py-sm px-md rounded-lg transition-all flex items-center gap-sm">
+<span class="material-symbols-outlined text-[#3ECF8E]">database</span> Supabase
+                            </button>
+<button class="bg-surface-container-low border border-outline-variant hover:border-secondary hover:bg-surface-container text-on-background font-body-md text-body-md py-sm px-md rounded-lg transition-all flex items-center gap-sm">
+<span class="material-symbols-outlined text-[#FFCA28]">local_fire_department</span> Firebase
+                            </button>
+<button class="bg-surface-container-low border border-outline-variant hover:border-secondary hover:bg-surface-container text-on-background font-body-md text-body-md py-sm px-md rounded-lg transition-all flex items-center gap-sm">
+<span class="material-symbols-outlined text-[#47A248]">eco</span> MongoDB Atlas
+                            </button>
+<button class="bg-surface-container-low border border-outline-variant hover:border-secondary hover:bg-surface-container text-on-background font-body-md text-body-md py-sm px-md rounded-lg transition-all flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container">lightbulb</span> Neon
+                            </button>
+</div>
+</div>
+<div class="mb-lg">
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-sm uppercase tracking-wider" for="connection-string">Connection String / API Key</label>
+<div class="flex gap-sm">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
+<input class="w-full bg-surface-container border border-outline-variant text-font-code-md text-code-md text-on-background rounded-DEFAULT pl-10 pr-md py-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all placeholder:text-on-surface-variant/50" id="connection-string" placeholder="postgresql://user:password@host:port/dbname" type="password"/>
+</div>
+<button class="bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-background font-body-md text-body-md font-semibold py-sm px-md rounded-DEFAULT transition-colors active:scale-95 duration-200 whitespace-nowrap">
+                                Test Connection
+                            </button>
+</div>
+</div>
+<div class="bg-error-container/10 border border-error-container/30 rounded-lg p-md flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<div class="flex items-center gap-xs text-error-red mb-xs">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Caution</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">This sandbox can modify your real data depending on the connection mode.</p>
+</div>
+<div class="flex bg-surface-container-low p-xs rounded-DEFAULT border border-outline-variant">
+<label class="cursor-pointer relative">
+<input checked="" class="peer sr-only" name="db_mode" type="radio"/>
+<span class="block px-sm py-xs rounded text-sm font-medium peer-checked:bg-surface-container-high peer-checked:text-on-background text-on-surface-variant transition-colors">Read Only</span>
+</label>
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="db_mode" type="radio"/>
+<span class="block px-sm py-xs rounded text-sm font-medium peer-checked:bg-error-container/30 peer-checked:text-error-red text-on-surface-variant transition-colors">Read + Write</span>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Advanced Settings Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg md:p-xl relative group hover:border-outline transition-colors">
+<div class="flex items-center gap-sm mb-md">
+<h2 class="font-headline-md text-headline-md text-on-background">Advanced Configuration</h2>
+<span class="material-symbols-outlined text-on-surface-variant">tune</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl mb-xl">
+<div class="space-y-md">
+<label class="flex items-center justify-between cursor-pointer group">
+<div>
+<span class="block font-body-md text-body-md text-on-background font-semibold">Migration Run on Start</span>
+<span class="block font-code-md text-code-md text-on-surface-variant">Automatically execute pending schema migrations when the sandbox boots.</span>
+</div>
+<div class="relative inline-block w-12 h-6 ml-4">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant rounded-full peer peer-focus:ring-2 peer-focus:ring-primary-container/50 peer-checked:bg-primary-container transition-colors duration-300"></div>
+<div class="absolute top-[2px] left-[2px] bg-white w-5 h-5 rounded-full border border-gray-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-5 peer-checked:border-white"></div>
+</div>
+</label>
+<div class="h-[1px] w-full bg-outline-variant/50"></div>
+<label class="flex items-center justify-between cursor-pointer group">
+<div>
+<span class="block font-body-md text-body-md text-on-background font-semibold">Reset Database on Restart</span>
+<span class="block font-code-md text-code-md text-on-surface-variant">Drop all tables and re-seed data every time the sandbox environment restarts.</span>
+</div>
+<div class="relative inline-block w-12 h-6 ml-4">
+<input class="peer sr-only" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant rounded-full peer peer-focus:ring-2 peer-focus:ring-primary-container/50 peer-checked:bg-primary-container transition-colors duration-300"></div>
+<div class="absolute top-[2px] left-[2px] bg-on-background w-5 h-5 rounded-full shadow-sm transition-transform duration-300 peer-checked:translate-x-5 peer-checked:bg-surface-dim"></div>
+</div>
+</label>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md font-code-md text-code-md">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-sm uppercase tracking-wider">Injected Environment Variables</span>
+<div class="space-y-xs text-on-surface-variant">
+<div class="flex">
+<span class="w-24 text-secondary">DB_HOST</span>
+<span class="text-on-background truncate">db.sandbox.internal</span>
+</div>
+<div class="flex">
+<span class="w-24 text-secondary">DB_PORT</span>
+<span class="text-on-background">5432</span>
+</div>
+<div class="flex">
+<span class="w-24 text-secondary">DB_USER</span>
+<span class="text-on-background">sandbox_admin</span>
+</div>
+<div class="flex">
+<span class="w-24 text-secondary">DB_URL</span>
+<span class="text-on-surface-variant/50 italic">Generated at runtime</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

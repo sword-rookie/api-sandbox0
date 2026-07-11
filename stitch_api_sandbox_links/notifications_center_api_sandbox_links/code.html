@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications | Clarity Machine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-accent {
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b494b;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00dbe9;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#006970",
+                        "outline-variant": "#3b494b",
+                        "surface-container-highest": "#353534",
+                        "surface-bright": "#3a3939",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#00363a",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-dim": "#131313",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-primary-fixed": "#002022",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-container": "#006d4a",
+                        "on-surface": "#e5e2e1",
+                        "on-surface-variant": "#b9cacb",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary": "#003824",
+                        "primary-fixed": "#7df4ff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-variant": "#353534",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#2a2a2a",
+                        "error-red": "#ffb4ab",
+                        "surface-container": "#201f1f",
+                        "error-container": "#93000a",
+                        "outline": "#849495",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-secondary-container": "#a6b6cf",
+                        "tertiary-container": "#65f2b5",
+                        "inverse-primary": "#006970",
+                        "surface": "#131313",
+                        "surface-tint": "#00dbe9",
+                        "surface-container-low": "#1c1b1b",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "secondary": "#b7c8e1",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002113",
+                        "on-background": "#e5e2e1",
+                        "on-error": "#690005",
+                        "tertiary": "#d8ffe7",
+                        "primary-container": "#00f0ff",
+                        "background": "#131313",
+                        "primary": "#dbfcff",
+                        "secondary-container": "#38485d",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary": "#213145"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "3xl": "64px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "md": "16px",
+                        "2xl": "48px",
+                        "gutter": "24px",
+                        "xl": "32px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl dark:bg-surface/80 border-b border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)] flex items-center justify-between px-margin-desktop h-16">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg text-primary-container tracking-tighter">Clarity Machine</span>
+<div class="hidden md:flex items-center gap-md">
+<nav class="flex gap-lg">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-fixed hover:bg-surface-container-highest transition-colors px-xs py-xs" href="#">Overview</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-fixed hover:bg-surface-container-highest transition-colors px-xs py-xs" href="#">Sandboxes</a>
+<a class="font-body-md text-body-md text-primary-container font-bold px-xs py-xs" href="#">Activity</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed transition-colors">search</button>
+<button class="material-symbols-outlined text-primary-container font-bold relative">
+                notifications
+                <span class="absolute top-0 right-0 w-2 h-2 bg-primary-fixed-dim rounded-full"></span>
+</button>
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkjD-bQWf71nQF7RCaIhyQljgtWZQUBf6XMpwtBkc5ndDMR9_CNfNWQ2d7PztlmnTb3ewf82iQevVf2byyXvWNlGPxehZlyb4UKwfbqHeD-lAw9pzx5s1BBLANam7fF_cP95c-l81LeHgdlBfemxMC7qzGMmIyqYklJ7Av0oWveTYQ0Vdq61cZ4x53eBtGNQJ7g7CzGLpfV2a5RGOnCmobXlDDNyPVc_Y128TiBHnUx5_gI2QXTtwAVWKsUadDk4jZbH-hDajEBYQe"/>
+</div>
+</header>
+<div class="flex pt-16">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant hidden md:flex flex-col py-lg px-md space-y-sm">
+<div class="mb-lg px-xs">
+<h2 class="font-headline-md text-headline-md text-primary-container">Clarity Machine</h2>
+<p class="font-code-md text-code-md text-on-surface-variant">API Sandbox Engine</p>
+</div>
+<nav class="flex-1 space-y-xs overflow-y-auto">
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Overview
+                </a>
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+                    Account
+                </a>
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">security</span>
+                    Security
+                </a>
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                    GitHub
+                </a>
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+                    Activity
+                </a>
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">layers</span>
+                    Sandboxes
+                </a>
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+                    Billing
+                </a>
+<a class="flex items-center gap-md px-md py-sm font-code-md text-code-md bg-secondary-container/30 text-primary-fixed-dim border-r-2 border-primary-fixed-dim active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">notifications</span>
+                    Notifications
+                </a>
+</nav>
+<button class="mt-auto w-full py-md px-lg bg-primary-container text-on-primary font-bold rounded-lg shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:opacity-90 active:scale-95 transition-all">
+                Launch New Sandbox
+            </button>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 min-h-screen px-margin-mobile md:px-3xl py-xl">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-2xl gap-lg">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary-container mb-xs">Notifications</h1>
+<p class="text-on-surface-variant font-body-md">Stay updated on your sandbox environments and builds.</p>
+</div>
+<button class="flex items-center gap-sm text-primary-fixed-dim font-bold hover:bg-surface-container-high px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined">done_all</span>
+                    Mark all as read
+                </button>
+</div>
+<!-- Filter Tabs -->
+<div class="flex overflow-x-auto gap-sm border-b border-outline-variant mb-xl pb-xs scrollbar-hide">
+<button class="px-lg py-md border-b-2 border-primary-container text-primary-container font-bold whitespace-nowrap">All</button>
+<button class="px-lg py-md text-on-surface-variant hover:text-on-surface whitespace-nowrap">Unread</button>
+<button class="px-lg py-md text-on-surface-variant hover:text-on-surface whitespace-nowrap">Mentions</button>
+<button class="px-lg py-md text-on-surface-variant hover:text-on-surface whitespace-nowrap">Builds</button>
+<button class="px-lg py-md text-on-surface-variant hover:text-on-surface whitespace-nowrap">System</button>
+</div>
+<!-- Notification Feed -->
+<div class="space-y-xl max-w-5xl">
+<!-- Group: Today -->
+<section>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-lg">Today</h3>
+<div class="space-y-md">
+<!-- Ready Notification -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-lg bg-surface-container-lowest border border-outline-variant rounded-xl hover:border-tertiary-container transition-all">
+<div class="flex gap-lg items-start">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/10 flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined">celebration</span>
+</div>
+<div>
+<p class="text-on-surface font-body-md">
+                                        Sandbox <code class="font-code-md text-tertiary-container bg-tertiary-container/5 px-sm py-0.5 rounded">feat-payment-flow</code> is ready
+                                    </p>
+<a class="font-code-md text-primary-fixed-dim hover:underline text-sm block mt-xs" href="https://feat-payment-flow.yourdomain.com">https://feat-payment-flow.yourdomain.com</a>
+<span class="text-on-surface-variant text-xs mt-sm block">3 mins ago</span>
+</div>
+</div>
+<div class="mt-md md:mt-0 flex gap-md">
+<button class="px-md py-sm bg-tertiary-container text-on-tertiary font-bold rounded-lg hover:opacity-90 transition-all active:scale-95">Open</button>
+</div>
+</div>
+<!-- Build Success -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-lg bg-surface-container-lowest border border-outline-variant rounded-xl hover:border-secondary transition-all">
+<div class="flex gap-lg items-start">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<div>
+<p class="text-on-surface font-body-md">Build for branch <code class="font-code-md text-secondary bg-secondary/10 px-sm py-0.5 rounded">login-fix</code> completed successfully</p>
+<span class="text-on-surface-variant text-xs mt-sm block">12 mins ago</span>
+</div>
+</div>
+<div class="mt-md md:mt-0 flex gap-md">
+<button class="px-md py-sm border border-outline-variant text-on-surface hover:bg-surface-container-high rounded-lg transition-all active:scale-95">View Logs</button>
+</div>
+</div>
+<!-- Hibernated -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-lg bg-surface-container-lowest border border-outline-variant rounded-xl hover:border-tertiary transition-all">
+<div class="flex gap-lg items-start">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">bedtime</span>
+</div>
+<div>
+<p class="text-on-surface font-body-md">Your sandbox <code class="font-code-md text-tertiary bg-tertiary/5 px-sm py-0.5 rounded">experiment-dark-mode</code> hibernated</p>
+<span class="text-on-surface-variant text-xs mt-sm block">47 mins ago</span>
+</div>
+</div>
+<div class="mt-md md:mt-0 flex gap-md">
+<button class="px-md py-sm bg-surface-container-high text-on-surface font-bold rounded-lg border border-outline-variant hover:bg-surface-bright transition-all active:scale-95">Wake Up</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Group: Yesterday -->
+<section>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-lg">Yesterday</h3>
+<div class="space-y-md">
+<!-- GitHub Push -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-lg bg-surface-container-lowest border border-outline-variant rounded-xl hover:border-primary-container transition-all">
+<div class="flex gap-lg items-start">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined">arrow_upward</span>
+</div>
+<div>
+<p class="text-on-surface font-body-md">Changes pushed to GitHub from sandbox <code class="font-code-md text-primary-container bg-primary-container/5 px-sm py-0.5 rounded">pr-245</code></p>
+<span class="text-on-surface-variant text-xs mt-sm block">1:23 PM</span>
+</div>
+</div>
+<div class="mt-md md:mt-0 flex gap-md">
+<button class="px-md py-sm border border-outline-variant text-on-surface hover:bg-surface-container-high rounded-lg transition-all active:scale-95 flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">terminal</span>
+                                    View on GitHub
+                                </button>
+</div>
+</div>
+<!-- Error Alert -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-lg bg-surface-container-lowest border border-error-red/20 rounded-xl hover:border-error-red transition-all relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-1 bg-error-red"></div>
+<div class="flex gap-lg items-start">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-error-red">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div>
+<p class="text-on-surface font-body-md">Database connection to <span class="font-bold text-error-red">Supabase</span> failed</p>
+<span class="text-on-surface-variant text-xs mt-sm block">4:15 PM</span>
+</div>
+</div>
+<div class="mt-md md:mt-0 flex gap-md">
+<button class="px-md py-sm bg-error-container text-on-error-container font-bold rounded-lg hover:opacity-90 transition-all active:scale-95">Fix Connection</button>
+</div>
+</div>
+<!-- System Warning -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-lg bg-surface-container-lowest border border-outline-variant rounded-xl hover:border-primary-fixed-dim transition-all">
+<div class="flex gap-lg items-start">
+<div class="w-10 h-10 rounded-full bg-primary-fixed-dim/10 flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined">info</span>
+</div>
+<div>
+<p class="text-on-surface font-body-md">Sandbox limit almost reached <span class="text-primary-fixed-dim font-bold">(9/10 on Free plan)</span></p>
+<span class="text-on-surface-variant text-xs mt-sm block">Yesterday</span>
+</div>
+</div>
+<div class="mt-md md:mt-0 flex gap-md">
+<button class="px-md py-sm bg-primary-container text-on-primary font-bold rounded-lg shadow-[0_0_10px_rgba(0,240,255,0.2)] hover:opacity-90 transition-all active:scale-95">Upgrade Plan</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Actions -->
+<div class="mt-2xl flex flex-col items-center gap-lg py-xl border-t border-outline-variant">
+<button class="text-on-surface-variant hover:text-primary-fixed-dim font-bold flex items-center gap-sm transition-colors group">
+                    Load more notifications
+                    <span class="material-symbols-outlined group-hover:translate-y-1 transition-transform">keyboard_arrow_down</span>
+</button>
+<a class="font-code-md text-code-md text-primary-container hover:underline flex items-center gap-xs" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+                    Manage Notification Settings
+                </a>
+</div>
+</main>
+</div>
+<!-- Decorative Grid Overlay -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[-1]" style="background-image: radial-gradient(#00f0ff 1px, transparent 1px); background-size: 32px 32px;"></div>
+<script>
+        // Micro-interaction for notification items
+        document.querySelectorAll('.group').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateY(-2px)';
+                item.style.boxShadow = '0 10px 20px -10px rgba(0, 240, 255, 0.1)';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateY(0)';
+                item.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body></html>

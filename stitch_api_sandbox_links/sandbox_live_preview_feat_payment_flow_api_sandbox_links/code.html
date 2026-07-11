@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sandbox Preview | feat-payment-flow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1b",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#a6b6cf",
+                        "on-secondary": "#213145",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "error-container": "#93000a",
+                        "background": "#131313",
+                        "on-background": "#e5e2e1",
+                        "error-red": "#ffb4ab",
+                        "outline": "#849495",
+                        "on-surface": "#e5e2e1",
+                        "tertiary-container": "#65f2b5",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed": "#d3e4fe",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "inverse-primary": "#006970",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary-container": "#006d4a",
+                        "on-primary": "#00363a",
+                        "secondary-container": "#38485d",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "surface-tint": "#00dbe9",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-fixed": "#002113",
+                        "inverse-surface": "#e5e2e1",
+                        "on-primary-fixed": "#002022",
+                        "on-tertiary": "#003824",
+                        "inverse-on-surface": "#313030",
+                        "outline-variant": "#3b494b",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary": "#dbfcff",
+                        "surface-variant": "#353534",
+                        "secondary": "#b7c8e1",
+                        "on-surface-variant": "#b9cacb",
+                        "tertiary": "#d8ffe7",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-container": "#006970",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-primary-fixed-variant": "#004f54",
+                        "surface-bright": "#3a3939",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#131313",
+                        "primary-container": "#00f0ff",
+                        "primary-fixed": "#7df4ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "3xl": "64px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "margin-desktop": "40px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-caps": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .primary-glow {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        .grid-bg {
+            background-image: linear-gradient(to right, #1c1b1b 1px, transparent 1px),
+                              linear-gradient(to bottom, #1c1b1b 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3b494b;
+            border-radius: 2px;
+        }
+        .iframe-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container h-screen flex flex-col overflow-hidden grid-bg">
+<!-- TopNavBar Strategy Implementation -->
+<header class="flex justify-between items-center w-full px-lg h-16 sticky top-0 z-50 bg-surface-container-low/80 backdrop-blur-xl border-b border-outline-variant shadow-[0_0_15px_rgba(0,240,255,0.1)]">
+<div class="flex items-center gap-xl">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-primary-container tracking-tight">feat-payment-flow</span>
+<div class="flex items-center gap-sm text-on-surface-variant font-code-md text-[12px]">
+<span class="material-symbols-outlined text-[14px]">account_tree</span>
+<span>main</span>
+<span class="text-tertiary-container flex items-center gap-xs ml-2">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+                        Running
+                    </span>
+<span class="text-outline ml-2 px-2 border border-outline-variant rounded">Expires in 3h 41m</span>
+</div>
+</div>
+<nav class="hidden md:flex gap-lg items-center h-full">
+<a class="text-primary-container border-b-2 border-primary-container pb-1 h-full flex items-center font-code-md" href="#">Environments</a>
+<a class="text-on-surface-variant font-code-md hover:text-primary transition-colors" href="#">Logs</a>
+<a class="text-on-surface-variant font-code-md hover:text-primary transition-colors" href="#">Metrics</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex gap-xs mr-md border-r border-outline-variant pr-md">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest/50 rounded transition-all active:scale-95" title="Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest/50 rounded transition-all active:scale-95" title="Notifications">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-highest/50 rounded transition-all active:scale-95" title="Tree View">
+<span class="material-symbols-outlined">account_tree</span>
+</button>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-sm px-4 py-2 border border-outline-variant text-on-surface font-code-md hover:bg-surface-container transition-all active:scale-95 rounded">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                    Logs
+                </button>
+<button class="flex items-center gap-sm px-4 py-2 bg-primary-container text-on-primary-container font-headline-md font-bold primary-glow transition-all active:scale-95 rounded">
+                    Deploy
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col relative overflow-hidden">
+<!-- Live Preview Area Toolbar -->
+<div class="bg-surface-container-lowest/50 border-b border-outline-variant px-lg py-2 flex items-center justify-between z-10 backdrop-blur-sm">
+<div class="flex items-center gap-md">
+<div class="flex bg-surface-container-low rounded p-0.5 border border-outline-variant">
+<button class="px-3 py-1.5 rounded text-on-surface-variant hover:text-primary transition-all flex items-center" id="device-mobile" onclick="resizeIframe('mobile')">
+<span class="material-symbols-outlined text-[20px]">smartphone</span>
+</button>
+<button class="px-3 py-1.5 rounded text-on-surface-variant hover:text-primary transition-all flex items-center" id="device-tablet" onclick="resizeIframe('tablet')">
+<span class="material-symbols-outlined text-[20px]">tablet</span>
+</button>
+<button class="px-3 py-1.5 rounded bg-surface-container-highest text-primary-container transition-all flex items-center" id="device-desktop" onclick="resizeIframe('desktop')">
+<span class="material-symbols-outlined text-[20px]">desktop_windows</span>
+</button>
+<button class="px-3 py-1.5 rounded text-on-surface-variant hover:text-primary transition-all flex items-center" id="device-full" onclick="resizeIframe('full')">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-sm bg-surface-container-low border border-outline-variant px-3 py-1.5 rounded text-on-surface-variant font-code-md text-[13px]">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">lock</span>
+                    feat-payment.yourdomain.com
+                </div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+<button class="flex items-center gap-sm px-3 py-1.5 border border-outline-variant text-on-surface-variant font-code-md hover:bg-surface-container transition-all rounded">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+                    Open in New Tab
+                </button>
+</div>
+</div>
+<!-- Centered Iframe Container -->
+<div class="flex-1 flex items-center justify-center p-xl overflow-hidden bg-surface-dim">
+<div class="iframe-container w-full h-full bg-white rounded-lg shadow-2xl overflow-hidden relative border border-outline-variant" id="iframe-shell">
+<!-- Mock Application Rendering -->
+<div class="absolute inset-0 flex flex-col">
+<div class="h-12 bg-slate-100 border-b flex items-center px-4 justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-red-400"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+<div class="w-3 h-3 rounded-full bg-green-400"></div>
+</div>
+<div class="text-[12px] font-medium text-slate-500">Checkout Payment v1.2</div>
+<div class="w-10"></div>
+</div>
+<div class="flex-1 bg-white flex flex-col items-center justify-center text-slate-800 p-8">
+<div class="max-w-md w-full space-y-6">
+<h1 class="text-3xl font-bold text-slate-900">Secure Checkout</h1>
+<div class="aspect-video bg-slate-50 rounded-xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-3">
+<span class="material-symbols-outlined text-slate-300 text-[64px]">payments</span>
+<p class="text-slate-400 font-medium">Payment Provider Preview</p>
+</div>
+<div class="space-y-4">
+<div class="h-10 bg-slate-100 rounded"></div>
+<div class="grid grid-cols-2 gap-4">
+<div class="h-10 bg-slate-100 rounded"></div>
+<div class="h-10 bg-slate-100 rounded"></div>
+</div>
+<button class="w-full h-12 bg-blue-600 rounded-lg text-white font-bold">Complete Payment</button>
+</div>
+</div>
+</div>
+</div>
+<img class="hidden" data-alt="A high-fidelity software development dashboard showing live preview of a financial application with modern interface elements. The overall aesthetic is dark and cybernetic, featuring deep charcoal backgrounds and neon cyan accents. Lighting is dramatic with soft glows emanating from UI components, suggesting a high-performance mission control environment. The style is technical futurism with sharp lines and glassmorphic layers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2iEylQvn37iiUjRUcL7UGlG3PzCOTBHFWUBM2TD6KjdlMApY1kAKfe1th0kVWPWQ9FvPedyJ3l9steApd_sg5kRL5_Xszx0-sUbX0R6syH53QHmz1x0UqHJTjfZXhUnNL_uHfFTt4vkRrGRC_Yb_r1uyU5kwwLew06N-XpSzmLMVXGwQvD7xnI8Fc4gpdCpMCklD_hwak0jJKO2I2hXwvFkxj0R-NjGvePL9uEnP3fo8iwePeYshwpvQv5x8J3KET2zCpyZ-7oxKe"/>
+</div>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-margin-desktop right-margin-desktop z-[60] flex items-center gap-sm px-6 py-4 bg-tertiary-container text-on-tertiary-container font-headline-md font-bold rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all primary-glow group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform" style="font-variation-settings: 'FILL' 1;">commit</span>
+            Commit Changes
+        </button>
+</main>
+<!-- Resizable Bottom Panel (Console/Terminal) -->
+<div class="h-64 bg-surface-container-lowest border-t border-outline-variant flex flex-col z-40" id="bottom-panel">
+<!-- Panel Tabs -->
+<div class="flex items-center px-lg h-10 border-b border-outline-variant shrink-0 bg-surface-container/30">
+<div class="flex gap-lg h-full">
+<button class="h-full px-2 flex items-center gap-sm text-on-surface-variant font-code-md text-[13px] hover:text-on-surface border-b-2 border-transparent">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+                    Console Logs
+                </button>
+<button class="h-full px-2 flex items-center gap-sm text-on-surface-variant font-code-md text-[13px] hover:text-on-surface border-b-2 border-transparent">
+<span class="material-symbols-outlined text-[18px]">webhook</span>
+                    Network
+                </button>
+<button class="h-full px-2 flex items-center gap-sm text-primary-container font-code-md text-[13px] border-b-2 border-primary-container">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                    Terminal
+                </button>
+<button class="h-full px-2 flex items-center gap-sm text-on-surface-variant font-code-md text-[13px] hover:text-on-surface border-b-2 border-transparent">
+<span class="material-symbols-outlined text-[18px]">smart_toy</span>
+                    AI Assistant
+                    <span class="bg-primary-container/20 text-primary-container text-[10px] px-1 rounded border border-primary-container/30 uppercase font-bold">Beta</span>
+</button>
+</div>
+<div class="ml-auto flex items-center gap-md">
+<span class="text-on-surface-variant font-code-md text-[11px] opacity-60">⌘ + ` to toggle</span>
+<button class="p-1 hover:bg-surface-container-highest/50 rounded transition-colors" onclick="togglePanel()">
+<span class="material-symbols-outlined text-[20px]" id="panel-toggle-icon">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+<!-- Tab Content: Mock Terminal -->
+<div class="flex-1 overflow-auto custom-scrollbar p-md bg-[#000000] font-code-md text-[13px] selection:bg-primary-container/30">
+<div class="flex flex-col gap-1">
+<div class="flex gap-md">
+<span class="text-on-surface-variant opacity-40 shrink-0">14:02:11</span>
+<span class="text-tertiary-container">[INFO]</span>
+<span class="text-on-surface">Sandbox provisioned successfully on node cluster-ap-3</span>
+</div>
+<div class="flex gap-md">
+<span class="text-on-surface-variant opacity-40 shrink-0">14:02:12</span>
+<span class="text-tertiary-container">[INFO]</span>
+<span class="text-on-surface">Starting payment-service:main...</span>
+</div>
+<div class="flex gap-md">
+<span class="text-on-surface-variant opacity-40 shrink-0">14:02:15</span>
+<span class="text-primary-fixed-dim">[READY]</span>
+<span class="text-on-surface">Listening at http://localhost:3000</span>
+</div>
+<div class="flex gap-md">
+<span class="text-on-surface-variant opacity-40 shrink-0">14:02:18</span>
+<span class="text-on-surface-variant opacity-60">[LOG]</span>
+<span class="text-on-surface">GET /api/v1/health 200 OK</span>
+</div>
+<div class="flex gap-md">
+<span class="text-on-surface-variant opacity-40 shrink-0">14:03:45</span>
+<span class="text-error-red">[WARN]</span>
+<span class="text-error-red">DeprecationWarning: Stripe secret keys should be stored in .env.local</span>
+</div>
+<div class="flex gap-md mt-2">
+<span class="text-primary-container">➜</span>
+<span class="text-secondary">feat-payment-flow</span>
+<span class="animate-pulse w-2 h-5 bg-primary-container ml-1"></span>
+</div>
+</div>
+</div>
+<!-- Small Footer Footer Hints -->
+<footer class="h-6 px-lg flex items-center justify-between border-t border-outline-variant bg-surface-container-low/50 text-[10px] font-code-md text-on-surface-variant opacity-50">
+<div class="flex gap-md">
+<span>REGION: us-east-1</span>
+<span>POD: sandbox-7v92</span>
+</div>
+<div class="flex gap-md items-center">
+<span>F1: Help</span>
+<span>F12: DevTools</span>
+<span class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[12px]">keyboard</span>
+                    Shortcuts
+                </span>
+</div>
+</footer>
+</div>
+<!-- BottomNavBar Replacement (Responsive Navigation Anchor) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-center gap-xl items-center h-14 bg-surface-container/95 backdrop-blur-md border-t border-outline-variant shadow-[0_-4px_20px_rgba(0,0,0,0.4)]">
+<button class="flex flex-col items-center justify-center bg-primary-container/10 text-primary-container rounded-lg px-6 py-1 ring-1 ring-primary-container/30 active:scale-98 duration-100">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call_to_action</span>
+<span class="font-code-md text-code-md">Console</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface px-6 py-1 hover:bg-surface-container-highest transition-colors active:scale-98 duration-100">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-code-md text-code-md">Terminal</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface px-6 py-1 hover:bg-surface-container-highest transition-colors active:scale-98 duration-100">
+<span class="material-symbols-outlined">webhook</span>
+<span class="font-code-md text-code-md">Network</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface px-6 py-1 hover:bg-surface-container-highest transition-colors active:scale-98 duration-100">
+<span class="material-symbols-outlined">error</span>
+<span class="font-code-md text-code-md">Issues</span>
+</button>
+</nav>
+<script>
+        function resizeIframe(device) {
+            const shell = document.getElementById('iframe-shell');
+            const buttons = ['mobile', 'tablet', 'desktop', 'full'];
+            
+            // Remove active styles from all buttons
+            buttons.forEach(btn => {
+                const b = document.getElementById(`device-${btn}`);
+                b.classList.remove('bg-surface-container-highest', 'text-primary-container');
+                b.classList.add('text-on-surface-variant');
+            });
+
+            // Add active style
+            document.getElementById(`device-${device}`).classList.add('bg-surface-container-highest', 'text-primary-container');
+            document.getElementById(`device-${device}`).classList.remove('text-on-surface-variant');
+
+            // Apply size
+            switch(device) {
+                case 'mobile':
+                    shell.style.width = '375px';
+                    shell.style.height = '667px';
+                    break;
+                case 'tablet':
+                    shell.style.width = '768px';
+                    shell.style.height = '1024px';
+                    break;
+                case 'desktop':
+                    shell.style.width = '100%';
+                    shell.style.height = '100%';
+                    break;
+                case 'full':
+                    shell.style.width = '100%';
+                    shell.style.height = '100%';
+                    shell.classList.remove('rounded-lg', 'border');
+                    return;
+            }
+            shell.classList.add('rounded-lg', 'border');
+        }
+
+        let panelExpanded = true;
+        function togglePanel() {
+            const panel = document.getElementById('bottom-panel');
+            const icon = document.getElementById('panel-toggle-icon');
+            if(panelExpanded) {
+                panel.style.height = '40px';
+                icon.innerText = 'keyboard_arrow_up';
+            } else {
+                panel.style.height = '256px';
+                icon.innerText = 'keyboard_arrow_down';
+            }
+            panelExpanded = !panelExpanded;
+        }
+
+        // Pulse the "Running" dot
+        setInterval(() => {
+            const dot = document.querySelector('.animate-pulse');
+            if (dot) {
+                dot.style.opacity = dot.style.opacity === '0.4' ? '1' : '0.4';
+            }
+        }, 1000);
+    </script>
+</body></html>

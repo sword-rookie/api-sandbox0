@@ -1,0 +1,407 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>DevSandbox - feat-payment-flow • main</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .code-glow {
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3b494b;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+        .editor-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.02) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "outline-variant": "#3b494b",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-surface-variant": "#b9cacb",
+                        "on-secondary-container": "#a6b6cf",
+                        "surface": "#131313",
+                        "background": "#131313",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary": "#003824",
+                        "on-error": "#690005",
+                        "on-primary-fixed-variant": "#004f54",
+                        "outline": "#849495",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "tertiary-container": "#65f2b5",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-fixed": "#002022",
+                        "primary-container": "#00f0ff",
+                        "surface-dim": "#131313",
+                        "on-tertiary-container": "#006d4a",
+                        "surface-container-high": "#2a2a2a",
+                        "primary": "#dbfcff",
+                        "tertiary": "#d8ffe7",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-container-highest": "#353534",
+                        "secondary-container": "#38485d",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#353534",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary": "#b7c8e1",
+                        "error-red": "#ffb4ab",
+                        "primary-fixed": "#7df4ff",
+                        "on-secondary": "#213145",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-primary-container": "#006970",
+                        "on-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-fixed": "#002113",
+                        "on-primary": "#00363a",
+                        "inverse-primary": "#006970",
+                        "surface-tint": "#00dbe9",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-container": "#201f1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "2xl": "48px",
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "gutter": "24px",
+                        "3xl": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md overflow-hidden h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-opacity-80 bg-surface dark:bg-surface border-b border-outline-variant flex justify-between items-center px-md h-16 w-full transition-all">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary-container">DevSandbox</span>
+<div class="h-6 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-sm">
+<span class="font-body-md text-on-surface font-semibold">feat-payment-flow • main</span>
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tertiary-container/10 text-tertiary-fixed-dim text-[11px] font-bold border border-tertiary-fixed-dim/20">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim animate-pulse" style="opacity: 0;"></span>
+                    Running
+                </span>
+<span class="text-on-surface-variant text-xs ml-2">12 mins ago</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-sm">
+<button class="px-md py-sm rounded border border-outline-variant font-label-caps text-label-caps text-on-surface hover:bg-surface-container-high transition-colors active:scale-95 duration-200 flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+                Open in GitHub
+            </button>
+<button class="px-md py-sm rounded bg-primary-container text-on-primary-container font-label-caps text-label-caps font-bold shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:opacity-90 transition-all active:scale-95 duration-200 flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">publish</span>
+                Commit &amp; Push
+            </button>
+<div class="h-8 w-px bg-outline-variant mx-sm"></div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-container cursor-pointer transition-colors">account_tree</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-container cursor-pointer transition-colors">play_arrow</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-container cursor-pointer transition-colors">cloud_upload</span>
+</div>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant ml-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD20mlrAIHzKVPDTr6hvokJZhCHeXJSknLYqbgfnvLTcv5GF2ZJBXkyscUT5kjG69ynSx9lIRMQzfCEdaky2uzL8dcvC3kWGI1OsNNS6qo-l75BIW5Qh-TLcODTYqU-k2yU2YWn9TJjAyu_iTzYYuU7wC4JnegalmjAs2Iz71KQOpk7VOkpWnFv9MavSn97UJSAgcN7nocLpuo3qPSmYKwGd7SnpGpkFl1-K51YKaJvqxDENu1Ry7E-8B0qnCVq8QOtlMfhh4kt6-GD">
+</div>
+</header>
+<div class="flex-1 flex pt-16 overflow-hidden">
+<!-- Left SideNavBar (File Explorer) -->
+<aside class="w-64 bg-surface-container-lowest flex flex-col h-full border-r border-outline-variant">
+<div class="p-md flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant tracking-widest">EXPLORER</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface transition-colors text-sm">refresh</button>
+</div>
+<div class="px-md pb-sm">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-sm text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-8 py-1.5 text-xs text-on-surface focus:outline-none focus:border-primary-container transition-all" placeholder="Search files..." type="text">
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar font-body-md text-sm text-on-surface-variant">
+<!-- Folder Tree -->
+<div class="space-y-0.5">
+<div class="flex items-center gap-2 px-md py-1.5 hover:bg-surface-container-high cursor-pointer transition-all">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+<span class="material-symbols-outlined text-sm text-primary-container">folder_open</span>
+<span>src</span>
+</div>
+<div class="pl-8 space-y-0.5">
+<div class="flex items-center gap-2 px-md py-1.5 hover:bg-surface-container-high cursor-pointer transition-all">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="material-symbols-outlined text-sm">folder</span>
+<span>app</span>
+</div>
+<div class="flex items-center gap-2 px-md py-1.5 hover:bg-surface-container-high cursor-pointer transition-all">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+<span class="material-symbols-outlined text-sm">folder_open</span>
+<span>api</span>
+</div>
+<div class="pl-6 space-y-0.5 border-l border-outline-variant/30 ml-2">
+<div class="flex items-center gap-2 px-md py-1.5 bg-surface-container-high text-primary font-medium border-l-2 border-primary-container">
+<span class="material-symbols-outlined text-sm text-[#3178C6]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span>route.ts</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container ml-auto shadow-[0_0_5px_rgba(0,240,255,1)]"></span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-md py-1.5 hover:bg-surface-container-high cursor-pointer transition-all">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="material-symbols-outlined text-sm">folder</span>
+<span>components</span>
+</div>
+<div class="flex items-center gap-2 px-md py-1.5 hover:bg-surface-container-high cursor-pointer transition-all">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="material-symbols-outlined text-sm">folder</span>
+<span>lib</span>
+</div>
+<div class="flex items-center gap-2 px-md py-1.5 hover:bg-surface-container-high cursor-pointer transition-all">
+<span class="material-symbols-outlined text-sm text-[#3178C6]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span>layout.tsx</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-md border-t border-outline-variant space-y-2">
+<button class="w-full flex items-center justify-center gap-2 py-2 bg-surface-container-low border border-outline-variant rounded hover:bg-surface-container-high transition-colors font-label-caps text-label-caps text-on-surface">
+<span class="material-symbols-outlined text-sm">add</span>
+                    New File
+                </button>
+<div class="flex items-center justify-between text-on-surface-variant px-1">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary-container">history</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary-container">extension</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary-container">settings</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary-container">help</span>
+</div>
+</div>
+</aside>
+<!-- Main Editor Area -->
+<main class="flex-1 flex flex-col bg-surface overflow-hidden editor-bg">
+<!-- Tabs Bar -->
+<div class="flex bg-surface-container-lowest h-10 border-b border-outline-variant">
+<div class="flex items-center px-4 bg-surface border-r border-outline-variant border-t-2 border-t-primary-container gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-sm text-[#3178C6]">terminal</span>
+<span class="text-xs text-primary font-medium">route.ts</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container ml-2 animate-pulse shadow-[0_0_8px_rgba(0,240,255,0.6)]"></span>
+<span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">close</span>
+</div>
+<div class="flex items-center px-4 hover:bg-surface-container-low border-r border-outline-variant gap-2 group cursor-pointer text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span class="text-xs">layout.tsx</span>
+<span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-2">close</span>
+</div>
+<div class="flex-1"></div>
+</div>
+<!-- Editor Content -->
+<div class="flex-1 flex relative font-code-md text-code-md overflow-hidden">
+<!-- Line Numbers -->
+<div class="w-12 bg-surface-container-lowest/50 text-outline text-right pr-3 pt-4 select-none">
+                    1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25
+                </div>
+<!-- Syntax Highlighted Code -->
+<div class="flex-1 p-4 overflow-y-auto custom-scrollbar whitespace-pre leading-6 selection:bg-primary-container/20">
+<span class="text-tertiary">import</span> { NextRequest, NextResponse } <span class="text-tertiary">from</span> <span class="text-tertiary-fixed-dim">'next/server'</span>;
+<span class="text-tertiary">import</span> Stripe <span class="text-tertiary">from</span> <span class="text-tertiary-fixed-dim">'stripe'</span>;
+
+<span class="text-on-surface-variant">// Initialize Stripe client</span>
+<span class="text-tertiary">const</span> stripe = <span class="text-tertiary">new</span> <span class="text-primary-container">Stripe</span>(process.env.<span class="text-secondary-fixed-dim">STRIPE_SECRET_KEY</span>!, {
+  apiVersion: <span class="text-tertiary-fixed-dim">'2023-10-16'</span>,
+});
+
+<span class="text-tertiary">export async function</span> <span class="text-primary-container">POST</span>(req: <span class="text-secondary-fixed-dim">NextRequest</span>) {
+  <span class="text-tertiary">const</span> body = <span class="text-tertiary">await</span> req.<span class="text-primary-container">json</span>();
+  
+  <span class="text-tertiary">try</span> {
+    <span class="text-on-surface-variant">// Create Checkout Sessions from body params.</span>
+<span class="text-tertiary">const</span> session = <span class="text-tertiary">await</span> stripe.checkout.sessions.<span class="text-primary-container">create</span>({
+      line_items: [
+        {
+          price: body.<span class="text-secondary-fixed-dim">priceId</span>,
+          quantity: <span class="text-secondary-fixed-dim">1</span>,
+        },
+      ],
+      mode: <span class="text-tertiary-fixed-dim">'subscription'</span>,
+      success_url: <span class="text-tertiary-fixed-dim">`</span><span class="text-primary-container">${req.nextUrl.origin}</span><span class="text-tertiary-fixed-dim">/success?session_id={CHECKOUT_SESSION_ID}`</span>,
+      cancel_url: <span class="text-tertiary-fixed-dim">`</span><span class="text-primary-container">${req.nextUrl.origin}</span><span class="text-tertiary-fixed-dim">/?canceled=true`</span>,
+    });
+
+    <span class="text-tertiary">return</span> NextResponse.<span class="text-primary-container">redirect</span>(session.url!, <span class="text-secondary-fixed-dim">303</span>);
+  } <span class="text-tertiary">catch</span> (err: <span class="text-secondary-fixed-dim">any</span>) {
+    <span class="text-tertiary">return</span> NextResponse.<span class="text-primary-container">json</span>(err.message, { status: <span class="text-secondary-fixed-dim">500</span> });
+  }
+}
+                </div>
+<!-- Minimap -->
+<div class="w-16 bg-surface-container-lowest/30 border-l border-outline-variant select-none opacity-40 hover:opacity-100 transition-opacity py-4">
+<div class="w-full h-1 bg-primary-container/40 mb-1 rounded-sm"></div>
+<div class="w-3/4 h-1 bg-outline-variant mb-1 rounded-sm"></div>
+<div class="w-1/2 h-1 bg-tertiary-container/30 mb-2 rounded-sm"></div>
+<div class="w-full h-1 bg-outline-variant mb-1 rounded-sm"></div>
+<div class="w-full h-1 bg-primary-container/20 mb-1 rounded-sm"></div>
+<div class="w-2/3 h-1 bg-outline-variant mb-4 rounded-sm"></div>
+<div class="w-full h-1 bg-outline-variant mb-1 rounded-sm"></div>
+<div class="w-full h-1 bg-primary-container/30 mb-1 rounded-sm"></div>
+</div>
+</div>
+</main>
+<!-- Right Sidebar (Preview & Context) -->
+<aside class="w-[320px] bg-surface-container-lowest border-l border-outline-variant flex flex-col">
+<!-- Live Preview -->
+<div class="flex-1 flex flex-col border-b border-outline-variant min-h-0">
+<div class="p-sm flex items-center justify-between bg-surface-container-low border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">visibility</span>
+                        LIVE PREVIEW
+                    </span>
+<span class="text-[10px] text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">localhost:3000</span>
+</div>
+<div class="flex-1 bg-white overflow-hidden m-2 rounded-lg shadow-inner flex flex-col items-center justify-center p-md relative">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] bg-[size:10px_10px]"></div>
+<img alt="Preview Interface" class="w-full h-32 object-cover rounded shadow-md mb-md" data-alt="A clean and professional web interface for a SaaS payment processing page, featuring high-contrast blue and white themes, sleek card components for different pricing tiers, and a prominent 'Subscribe' button. The lighting is bright and modern, creating a trustworthy and efficient user experience within a digital environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK7Ffxvcq6XM1VT1k88DTyHuQ8k3oMx2ItnI0wzEZmuKMLa5GCBWPTJQpZZBqDRh7Q3ln5iWLDdPGxWDawMCDYnYrbBnGgOYJfk1sDbqpKbqlK-J-kf721MYw83q7Zul0uuHgxV9VxNf13hbowzVGVAANYdb_tOG4-KbSw3_5CX25l76mO16CgxkGSJkDX_k5WZSAajqtk5Q-SGC0WIz9GqkuciAf5yrLCOuZ6JQ9695V3LYsj6S5sF-xptD_exHs7gCqd0Rp8aLfx">
+<div class="text-center">
+<h4 class="text-black font-bold text-sm">Starter Plan</h4>
+<p class="text-slate-500 text-xs">$19/mo</p>
+<button class="mt-2 px-4 py-1.5 bg-indigo-600 text-white text-xs rounded-full font-bold">Subscribe</button>
+</div>
+</div>
+</div>
+<!-- Terminal -->
+<div class="h-1/3 bg-[#0a0a0a] border-b border-outline-variant flex flex-col">
+<div class="p-sm flex items-center bg-surface-container-low border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TERMINAL / LIVE LOGS</span>
+</div>
+<div class="flex-1 p-2 font-code-md text-[11px] leading-relaxed custom-scrollbar overflow-y-auto">
+<div class="text-tertiary-fixed-dim">✓ Compiled successfully in 1.2s</div>
+<div class="text-on-surface-variant">[14:22:11] POST /api/checkout 200 - OK</div>
+<div class="text-on-surface-variant">[14:22:12] Stripe webhook received: checkout.session.completed</div>
+<div class="text-primary-container animate-pulse">_</div>
+</div>
+</div>
+<!-- Context Panel -->
+<div class="p-md space-y-md">
+<div class="space-y-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant block">CONTEXT PANEL</span>
+<div class="bg-surface-container-low border border-outline-variant rounded p-sm space-y-2">
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface-variant">Blueprint Node:</span>
+<span class="text-primary-container font-code-md">sbx_99a82b1</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface-variant">Status:</span>
+<span class="text-tertiary-fixed-dim font-bold">In-Sync</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-1.5 py-2 bg-surface-container-high border border-outline-variant rounded hover:text-primary-container transition-all active:scale-95 text-xs font-bold">
+<span class="material-symbols-outlined text-sm">restart_alt</span>
+                        Restart
+                    </button>
+<button class="flex items-center justify-center gap-1.5 py-2 bg-surface-container-high border border-outline-variant rounded hover:text-error-red transition-all active:scale-95 text-xs font-bold">
+<span class="material-symbols-outlined text-sm">bedtime</span>
+                        Hibernate
+                    </button>
+</div>
+</div>
+</aside>
+</div>
+<!-- Bottom Status Bar -->
+<footer class="h-6 bg-surface-container-low border-t border-outline-variant flex items-center justify-between px-md text-[10px] text-on-surface-variant font-label-caps">
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-1 hover:text-on-surface cursor-pointer">
+<span class="material-symbols-outlined text-[12px]">account_tree</span>
+<span>main</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">sync</span>
+<span>Last commit: feat: add stripe webhooks</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span>Ln 42, Col 12</span>
+<span>UTF-8</span>
+<div class="flex items-center gap-1 hover:text-primary-container cursor-pointer">
+<span class="material-symbols-outlined text-[12px]">code</span>
+<span>TypeScript</span>
+</div>
+<span class="material-symbols-outlined text-[12px] hover:text-on-surface cursor-pointer">notifications</span>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Mimic line selection
+        document.querySelectorAll('.flex-1.p-4.overflow-y-auto div').forEach(line => {
+            line.addEventListener('click', function() {
+                document.querySelectorAll('.flex-1.p-4.overflow-y-auto div').forEach(l => l.classList.remove('bg-primary-container/5'));
+                this.classList.add('bg-primary-container/5');
+            });
+        });
+
+        // Micro-interaction: Blink cursor
+        setInterval(() => {
+            const cursor = document.querySelector('.animate-pulse');
+            if (cursor) {
+                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+            }
+        }, 600);
+    </script>
+</body></html>

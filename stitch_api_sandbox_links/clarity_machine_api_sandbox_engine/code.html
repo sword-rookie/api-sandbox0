@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Clarity Machine | API Sandbox Engine</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#201f1f",
+                        "inverse-surface": "#e5e2e1",
+                        "outline-variant": "#3b494b",
+                        "outline": "#849495",
+                        "primary": "#dbfcff",
+                        "surface-dim": "#131313",
+                        "surface-tint": "#00dbe9",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-container": "#65f2b5",
+                        "on-primary-fixed-variant": "#004f54",
+                        "primary-fixed-dim": "#00dbe9",
+                        "primary-container": "#00f0ff",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "secondary": "#b7c8e1",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed": "#002022",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary-container": "#a6b6cf",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-highest": "#353534",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-fixed": "#7df4ff",
+                        "surface-container-low": "#1c1b1b",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "tertiary-fixed": "#6ffbbe",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-primary": "#006970",
+                        "on-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "secondary-container": "#38485d",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-tertiary": "#003824",
+                        "on-primary": "#00363a",
+                        "background": "#131313",
+                        "surface": "#131313",
+                        "on-secondary": "#213145",
+                        "on-tertiary-container": "#006d4a",
+                        "error-red": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary": "#d8ffe7",
+                        "on-surface-variant": "#b9cacb",
+                        "on-primary-container": "#006970",
+                        "on-tertiary-fixed-variant": "#005236"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "sm": "8px",
+                        "2xl": "48px",
+                        "lg": "24px",
+                        "3xl": "64px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "code-md": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .node-glow-gold { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
+        .node-glow-primary { box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); }
+        .cyber-grid {
+            background-image: linear-gradient(to right, rgba(59, 73, 75, 0.1) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(59, 73, 75, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .active-log-line { border-left: 2px solid #00f0ff; padding-left: 12px; }
+        .glass-panel { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3b494b; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+        .editor-bg { background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.02) 1px, transparent 0); background-size: 24px 24px; }
+        @keyframes success-pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-success { animation: success-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .scanline {
+            width: 100%; height: 2px;
+            background: linear-gradient(to right, transparent, #00f0ff, transparent);
+            position: absolute; opacity: 0.3; animation: scan 3s linear infinite;
+        }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+    <div id="root"></div>
+
+    <!-- Core Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Mock Data & Constants ---
+        const USER_AVATAR = "https://lh3.googleusercontent.com/aida-public/AB6AXuAgmYnu_TGPBJuJXBN29oK7ov80atTk_ZFEF3lsKsu11ICTB_HAtIkvywnb612lKrAwfEqvT7M7z21oE04V0eWyy9tkrLypLyPauMm9-_s-8iEbiGIOFreOeVPiYtnhbZe4pXc7E3NJrz7rCH2Bsw1DSaes4czke3HeFOFAIZg0-SuEnGBHGv7fvBey_uXqUxok3pCe8wP88GVjAZwn-bidqyw1J1aeBCB11F69-nbjaU3_VmakZaDYUiQsSFeqsuFuHatyuXl8SNXB";
+
+        // --- Components ---
+
+        const Navbar = ({ variant = 'default' }) => {
+            const navigate = useNavigate();
+            return (
+                <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant h-16 flex items-center px-margin-desktop">
+                    <div className="flex justify-between items-center w-full max-w-[1440px] mx-auto">
+                        <div className="flex items-center gap-xl">
+                            <span onClick={() => navigate('/')} className="font-headline-md text-headline-md font-bold text-primary tracking-tighter cursor-pointer">
+                                ClarityEngine
+                            </span>
+                            <nav className="hidden md:flex gap-lg">
+                                <Link to="/" className="text-on-surface-variant hover:text-primary transition-colors">Features</Link>
+                                <Link to="/pricing" className="text-on-surface-variant hover:text-primary transition-colors">Pricing</Link>
+                                <Link to="/dashboard" className="text-on-surface-variant hover:text-primary transition-colors">Dashboard</Link>
+                            </nav>
+                        </div>
+                        <div className="flex items-center gap-md">
+                            <Link to="/login" className="px-md py-sm text-on-surface-variant hover:text-primary transition-all">Login</Link>
+                            <Link to="/signup" className="px-lg py-sm bg-primary-container text-on-primary font-bold rounded-lg active:scale-95 transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)]">Get Started</Link>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const Sidebar = () => {
+            const location = useLocation();
+            const items = [
+                { path: '/dashboard', icon: 'dashboard', label: 'Overview' },
+                { path: '/projects', icon: 'account_tree', label: 'Projects' },
+                { path: '/sandboxes', icon: 'layers', label: 'All Sandboxes' },
+                { path: '/activity', icon: 'history', label: 'Activity' },
+                { path: '/settings', icon: 'settings', label: 'Settings' }
+            ];
+
+            return (
+                <aside className="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-lg px-md gap-sm hidden lg:flex">
+                    <div className="space-y-xs flex-grow">
+                        {items.map(item => (
+                            <Link key={item.path} to={item.path} className={`flex items-center gap-md px-md py-sm rounded-lg transition-all ${location.pathname === item.path ? 'text-primary font-bold bg-surface-container-high shadow-[0_0_15px_rgba(0,240,255,0.1)]' : 'text-on-surface-variant hover:bg-surface-container-high hover:text-primary'}`}>
+                                <span className="material-symbols-outlined">{item.icon}</span>
+                                <span className="font-label-caps text-label-caps">{item.label}</span>
+                            </Link>
+                        ))}
+                    </div>
+                    <div className="mt-auto pt-md border-t border-outline-variant flex flex-col gap-xs">
+                        <a className="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary" href="#"><span className="material-symbols-outlined">description</span><span className="font-label-caps">Docs</span></a>
+                        <Link to="/login" className="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary" href="#"><span className="material-symbols-outlined">logout</span><span className="font-label-caps">Logout</span></Link>
+                    </div>
+                </aside>
+            );
+        };
+
+        const Layout = ({ children, hideSidebar = false }) => (
+            <div className="min-h-screen">
+                <Navbar />
+                <div className="flex">
+                    {!hideSidebar && <Sidebar />}
+                    <main className={`${!hideSidebar ? 'lg:ml-64' : ''} pt-16 w-full min-h-screen overflow-auto`}>
+                        {children}
+                    </main>
+                </div>
+            </div>
+        );
+
+        // --- Pages ---
+
+        const LandingPage = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="bg-background">
+                    <section className="relative px-margin-desktop py-3xl max-w-[1440px] mx-auto flex flex-col items-center text-center">
+                        <div className="absolute inset-0 pointer-events-none opacity-20 cyber-grid"></div>
+                        <span className="font-label-caps text-label-caps text-primary bg-primary-container/10 px-md py-xs rounded-full border border-primary/20 mb-lg z-10">REVOLUTIONIZING BACKEND TESTING</span>
+                        <h1 className="font-display-lg text-display-lg text-primary mb-md leading-none z-10">Staging is Dead.<br />Meet Smart Sandboxes.</h1>
+                        <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-xl z-10">Give your team a live, secure, shareable backend environment in seconds — complete with isolated database and realistic data.</p>
+                        <div className="flex flex-col sm:flex-row gap-md z-10">
+                            <button onClick={() => navigate('/dashboard')} className="bg-primary-container text-on-primary px-xl py-md rounded-xl font-bold text-body-lg shadow-[0_0_15px_rgba(0,240,255,0.3)] active:scale-95 transition-all">Launch Console</button>
+                            <button onClick={() => navigate('/pricing')} className="bg-transparent border border-outline-variant text-white px-xl py-md rounded-xl font-bold text-body-lg hover:bg-surface-container transition-all">View Pricing</button>
+                        </div>
+                        <div className="mt-3xl w-full opacity-40 grayscale flex justify-center gap-xl items-center z-10">
+                            <span className="font-bold text-headline-md tracking-tighter">NODE_MODS</span>
+                            <span className="font-bold text-headline-md tracking-tighter">DOCKERLY</span>
+                            <span className="font-bold text-headline-md tracking-tighter">VIRT_CORE</span>
+                        </div>
+                    </section>
+                </div>
+            );
+        };
+
+        const Dashboard = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="p-margin-desktop space-y-3xl">
+                    <div className="flex justify-between items-end">
+                        <div>
+                            <h1 className="font-display-lg text-display-lg">Welcome back, Alex</h1>
+                            <p className="font-body-lg text-on-surface-variant">Your clusters are healthy and 5 sandboxes are active.</p>
+                        </div>
+                        <div className="flex gap-md">
+                            <button onClick={() => navigate('/projects/new')} className="bg-surface-container-high border border-outline-variant px-md py-sm rounded-lg font-label-caps text-label-caps">New Project</button>
+                            <button onClick={() => navigate('/graph')} className="bg-primary-container text-on-primary px-md py-sm rounded-lg font-label-caps text-label-caps shadow-[0_0_10px_rgba(0,240,255,0.3)]">New Sandbox</button>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+                        {[
+                            { title: 'Project Alpha', status: 'HEALTHY', active: 12, color: 'text-primary' },
+                            { title: 'Beta Service', status: 'ISSUES', active: 5, color: 'text-error' },
+                            { title: 'Auth Core', status: 'STABLE', active: 8, color: 'text-primary' },
+                            { title: 'Stripe Integration', status: 'HEALTHY', active: 45, color: 'text-primary' }
+                        ].map((proj, i) => (
+                            <div key={i} onClick={() => navigate('/graph')} className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all cursor-pointer group">
+                                <div className={`h-2 bg-primary/20 ${proj.status === 'ISSUES' ? 'bg-error/20' : ''}`}></div>
+                                <div className="p-md space-y-md">
+                                    <h4 className="font-headline-md text-lg">{proj.title}</h4>
+                                    <div className="flex justify-between border-t border-outline-variant pt-md">
+                                        <div><p className="text-[10px] text-outline">SANDBOXES</p><p className="font-bold">{proj.active}</p></div>
+                                        <div><p className="text-[10px] text-outline">STATUS</p><p className={`font-bold ${proj.color}`}>{proj.status}</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+                        <table className="w-full text-left">
+                            <thead className="bg-surface-container-low border-b border-outline-variant">
+                                <tr>
+                                    <th className="p-md font-label-caps text-outline">SANDBOX</th>
+                                    <th className="p-md font-label-caps text-outline">PROJECT</th>
+                                    <th className="p-md font-label-caps text-outline">STATUS</th>
+                                    <th className="p-md font-label-caps text-outline">LIVE URL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr onClick={() => navigate('/editor')} className="hover:bg-surface-container-low cursor-pointer border-b border-outline-variant/30">
+                                    <td className="p-md font-bold">auth-v2-dev</td>
+                                    <td className="p-md">Project Alpha</td>
+                                    <td className="p-md"><span className="px-2 py-1 bg-tertiary-container/10 text-tertiary-container text-[10px] rounded font-bold">RUNNING</span></td>
+                                    <td className="p-md text-primary-container font-code-md">auth-v2.clarity.dev</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+        };
+
+        const Pricing = () => {
+            const [isYearly, setIsYearly] = useState(false);
+            return (
+                <div className="pt-xl pb-3xl circuit-bg min-h-screen bg-surface-dim">
+                    <div className="text-center max-w-4xl mx-auto px-margin-desktop mb-2xl">
+                        <h1 className="font-display-lg text-[56px] leading-tight mb-md">Simple, <span className="text-primary-container">Transparent</span> Pricing</h1>
+                        <div className="flex items-center justify-center gap-md mt-md">
+                            <span className={`font-label-caps ${!isYearly ? 'text-primary' : 'text-outline'}`}>Monthly</span>
+                            <button onClick={() => setIsYearly(!isYearly)} className="w-12 h-6 bg-surface-container-high rounded-full relative p-1">
+                                <div className={`w-4 h-4 bg-primary-container rounded-full transition-transform ${isYearly ? 'translate-x-6' : ''}`}></div>
+                            </button>
+                            <span className={`font-label-caps ${isYearly ? 'text-primary' : 'text-outline'}`}>Yearly <span className="text-tertiary-container">(-20%)</span></span>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter max-w-[1200px] mx-auto px-margin-desktop">
+                        {['Starter', 'Pro', 'Enterprise'].map((tier, i) => (
+                            <div key={i} className={`bg-surface-container-lowest border rounded-xl p-xl flex flex-col ${i === 1 ? 'border-primary border-2 scale-105 shadow-[0_0_20px_rgba(0,240,255,0.15)]' : 'border-outline-variant'}`}>
+                                <p className="font-label-caps text-outline mb-md">{tier.toUpperCase()}</p>
+                                <h3 className="text-4xl font-bold mb-md">${tier === 'Starter' ? '0' : tier === 'Pro' ? (isYearly ? '24' : '29') : 'Custom'}</h3>
+                                <ul className="space-y-md flex-grow mb-xl">
+                                    <li className="flex items-center gap-sm"><span className="material-symbols-outlined text-primary">check_circle</span> 10 Sandboxes</li>
+                                    <li className="flex items-center gap-sm"><span className="material-symbols-outlined text-primary">check_circle</span> Isolated DB</li>
+                                    <li className="flex items-center gap-sm"><span className="material-symbols-outlined text-primary">check_circle</span> Private URLs</li>
+                                </ul>
+                                <button className={`w-full py-md rounded-lg font-bold transition-all ${i === 1 ? 'bg-primary text-on-primary' : 'bg-surface-container-high text-on-surface hover:bg-surface-bright'}`}>Get Started</button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const GraphView = () => {
+            const navigate = useNavigate();
+            const [showForkModal, setShowForkModal] = useState(false);
+            return (
+                <div className="flex flex-col h-screen overflow-hidden">
+                    <section className="px-margin-desktop py-lg bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center shrink-0">
+                        <div className="flex items-center gap-md">
+                            <h2 className="font-headline-lg text-primary">nexus-core-api</h2>
+                            <div className="px-sm py-xs bg-tertiary-container/10 border border-tertiary-container/30 rounded-full flex items-center gap-xs">
+                                <span className="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+                                <span className="text-[10px] text-tertiary-container">RUNNING</span>
+                            </div>
+                        </div>
+                        <div className="flex gap-sm">
+                            <button onClick={() => setShowForkModal(true)} className="px-md py-sm bg-primary-container/10 border border-primary/30 text-primary-container rounded-lg hover:bg-primary-container/20 transition-all font-label-caps text-[10px]">+ FORK SANDBOX</button>
+                            <button onClick={() => navigate('/settings')} className="px-md py-sm bg-surface-container-high border border-outline-variant text-on-surface-variant rounded-lg font-label-caps text-[10px]">SETTINGS</button>
+                        </div>
+                    </section>
+                    <div className="flex-1 flex overflow-hidden">
+                        <div className="flex-1 relative bg-surface-dim cyber-grid overflow-auto p-20">
+                            <div className="min-w-[1000px] flex flex-col items-center gap-32">
+                                <div className="w-64 bg-surface-container-highest border-2 border-[#FFD700] rounded-xl p-md node-glow-gold">
+                                    <div className="flex justify-between items-start mb-sm">
+                                        <span className="font-label-caps text-[10px] text-[#FFD700]">ROOT</span>
+                                        <span className="px-2 py-0.5 bg-tertiary/10 text-tertiary text-[8px] rounded font-bold">ACTIVE</span>
+                                    </div>
+                                    <h3 className="text-white font-bold">main</h3>
+                                    <p className="text-xs text-outline font-code-md">v2.4.12-stable</p>
+                                </div>
+                                <div className="grid grid-cols-3 gap-32">
+                                    {['feat-auth-v2', 'bugfix-stripe', 'dev-test-env'].map((name, i) => (
+                                        <div key={i} onClick={() => navigate('/editor')} className="w-64 bg-surface-container-high border border-primary/30 rounded-xl p-md hover:border-primary transition-all cursor-pointer group">
+                                            <div className="flex justify-between items-start mb-sm">
+                                                <span className="font-label-caps text-[10px] text-primary">{name}</span>
+                                                <span className="px-2 py-0.5 bg-primary/10 text-primary text-[8px] rounded font-bold">IN_SYNC</span>
+                                            </div>
+                                            <h3 className="text-white font-bold">refactor-{i+1}</h3>
+                                            <p className="text-xs text-outline">Branch: dev</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                        <aside className="w-96 bg-surface-container-low border-l border-outline-variant flex flex-col shadow-xl">
+                            <div className="p-lg border-b border-outline-variant">
+                                <h3 className="font-headline-md mb-md">Sandbox Details</h3>
+                                <div className="space-y-sm text-sm">
+                                    <div className="flex justify-between"><span className="text-outline">ID</span><span className="font-code-md">SBX_99A82B1</span></div>
+                                    <div className="flex justify-between"><span className="text-outline">UPTIME</span><span>12:22:01</span></div>
+                                </div>
+                            </div>
+                            <div className="flex-1 bg-surface-container-lowest p-md font-code-md text-xs space-y-2 overflow-auto">
+                                <div className="text-outline/50">[14:22:01] System checking node status...</div>
+                                <div className="text-tertiary-container">&gt; Auth service initialized</div>
+                                <div className="text-on-surface">&gt; Pulling latest changes from origin...</div>
+                                <div className="active-log-line text-primary">&gt; Ready on auth-v2.clarity.dev</div>
+                                <div className="text-on-surface animate-pulse">&gt; Waiting for connections..._</div>
+                            </div>
+                        </aside>
+                    </div>
+
+                    {showForkModal && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
+                            <div className="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-xl shadow-2xl overflow-hidden">
+                                <div className="p-lg border-b border-outline-variant bg-surface-container-high flex justify-between items-center">
+                                    <h2 className="font-headline-md text-primary">Fork Sandbox</h2>
+                                    <button onClick={() => setShowForkModal(false)} className="material-symbols-outlined text-outline">close</button>
+                                </div>
+                                <div className="p-lg space-y-lg">
+                                    <div><label className="text-outline text-[10px] font-label-caps block mb-1">New Sandbox Name</label><input className="w-full bg-surface-container-high border-outline-variant rounded-lg p-2 text-white" type="text" defaultValue="bugfix-stripe-v2" /></div>
+                                    <div><label className="text-outline text-[10px] font-label-caps block mb-1">Inherits From</label><div className="bg-surface-container-high p-2 rounded text-primary font-code-md">fix-stripe</div></div>
+                                    <div className="flex gap-md pt-md">
+                                        <button onClick={() => navigate('/deploying')} className="flex-1 py-md bg-primary-container text-on-primary font-bold rounded-lg active:scale-95 transition-all">Create Fork</button>
+                                        <button onClick={() => setShowForkModal(false)} className="flex-1 py-md bg-surface-container-high border border-outline-variant rounded-lg active:scale-95">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const Editor = () => {
+            return (
+                <div className="h-screen flex flex-col bg-surface-container-lowest overflow-hidden">
+                    <header className="h-14 bg-surface border-b border-outline-variant flex items-center px-4 justify-between">
+                        <div className="flex items-center gap-md">
+                            <span className="font-bold text-primary">DevSandbox</span>
+                            <div className="h-4 w-px bg-outline-variant"></div>
+                            <span className="text-sm font-medium">feat-payment-flow • route.ts</span>
+                            <span className="text-[10px] bg-tertiary-container/10 text-tertiary-container px-2 py-0.5 rounded-full border border-tertiary-container/20">Running</span>
+                        </div>
+                        <button className="bg-primary-container text-on-primary text-[10px] px-4 py-1.5 rounded font-bold shadow-lg">Commit & Push</button>
+                    </header>
+                    <div className="flex-1 flex overflow-hidden">
+                        <aside className="w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col p-4 gap-4">
+                            <span className="font-label-caps text-[10px] text-outline tracking-widest">EXPLORER</span>
+                            <div className="space-y-2 text-sm text-on-surface-variant">
+                                <div className="flex items-center gap-2"><span className="material-symbols-outlined text-sm">folder_open</span> <span>src</span></div>
+                                <div className="pl-6 flex items-center gap-2"><span className="material-symbols-outlined text-sm">folder</span> <span>api</span></div>
+                                <div className="pl-12 flex items-center gap-2 text-primary border-l-2 border-primary bg-primary/5 px-2"><span>route.ts</span></div>
+                                <div className="pl-12 flex items-center gap-2"><span>layout.tsx</span></div>
+                            </div>
+                        </aside>
+                        <main className="flex-1 bg-surface editor-bg p-8 font-code-md text-sm leading-relaxed overflow-auto">
+                            <div className="text-on-surface-variant mb-4">// Next.js API Route for Stripe Checkout</div>
+                            <div><span className="text-tertiary">import</span> {'{ NextRequest, NextResponse }'} <span className="text-tertiary">from</span> <span className="text-tertiary-fixed-dim">'next/server'</span>;</div>
+                            <div><span className="text-tertiary">import</span> Stripe <span className="text-tertiary">from</span> <span className="text-tertiary-fixed-dim">'stripe'</span>;</div>
+                            <div className="my-4"></div>
+                            <div><span className="text-tertiary">const</span> stripe = <span className="text-tertiary">new</span> <span className="text-primary-container">Stripe</span>(process.env.STRIPE_KEY!);</div>
+                            <div className="my-4"></div>
+                            <div><span className="text-tertiary">export async function</span> <span className="text-primary-container">POST</span>(req: <span className="text-secondary-fixed-dim">NextRequest</span>) {'{'}</div>
+                            <div className="pl-8"><span className="text-tertiary">const</span> body = <span className="text-tertiary">await</span> req.json();</div>
+                            <div className="pl-8"><span className="text-tertiary">try</span> {'{'}</div>
+                            <div className="pl-16"><span className="text-tertiary">const</span> session = <span className="text-tertiary">await</span> stripe.checkout.sessions.create({'{'}</div>
+                            <div className="pl-24">line_items: [{'{'} price: body.id, quantity: 1 {'}'}],</div>
+                            <div className="pl-24">mode: 'payment',</div>
+                            <div className="pl-16">{'}'});</div>
+                            <div className="pl-16 text-tertiary">return <span className="text-on-surface">NextResponse.json({'{'} url: session.url {'}'});</span></div>
+                            <div className="pl-8">{'}'} <span className="text-tertiary">catch</span> (err) {'{'}...{'}'}</div>
+                            <div>{'}'}</div>
+                        </main>
+                        <aside className="w-[320px] bg-surface-container-low border-l border-outline-variant flex flex-col">
+                            <div className="h-1/2 p-4 border-b border-outline-variant">
+                                <span className="font-label-caps text-[10px] text-outline block mb-4">LIVE PREVIEW</span>
+                                <div className="bg-white rounded shadow-inner aspect-video flex flex-col items-center justify-center p-4">
+                                    <div className="w-16 h-10 bg-indigo-600 rounded mb-2"></div>
+                                    <div className="w-24 h-2 bg-slate-200 rounded mb-1"></div>
+                                    <div className="w-16 h-2 bg-slate-100 rounded"></div>
+                                </div>
+                            </div>
+                            <div className="h-1/2 p-4 font-code-md text-[10px] bg-black/40 overflow-auto">
+                                <span className="font-label-caps text-outline block mb-2">TERMINAL</span>
+                                <div className="text-tertiary-container">✓ Compiled successfully in 1.2s</div>
+                                <div className="text-outline">[14:22:11] POST /api/checkout 200</div>
+                                <div className="text-primary animate-pulse">_</div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            );
+        };
+
+        const Deploying = () => {
+            const navigate = useNavigate();
+            const [progress, setProgress] = useState(0);
+            
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setProgress(prev => {
+                        if (prev >= 100) {
+                            clearInterval(interval);
+                            setTimeout(() => navigate('/success'), 500);
+                            return 100;
+                        }
+                        return prev + Math.random() * 15;
+                    });
+                }, 800);
+                return () => clearInterval(interval);
+            }, [navigate]);
+
+            return (
+                <div className="h-screen bg-background grid-bg flex items-center justify-center p-4">
+                    <div className="scanline"></div>
+                    <div className="w-full max-w-2xl bg-surface-container-lowest border border-outline-variant rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+                        <div className="p-lg border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+                            <div className="flex items-center gap-md">
+                                <div className="w-3 h-3 rounded-full bg-primary-container animate-pulse"></div>
+                                <h2 className="font-headline-md text-primary tracking-tight">INITIALIZING_PROJECT</h2>
+                            </div>
+                            <span className="font-code-md text-[10px] text-outline px-2 py-1 bg-surface-container rounded border border-outline-variant">PID: 8829</span>
+                        </div>
+                        <div className="bg-surface-container-high h-1 w-full overflow-hidden">
+                            <div className="h-full bg-primary-container shadow-[0_0_10px_#00f0ff] transition-all duration-700" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="p-xl space-y-lg">
+                            <div className="space-y-md">
+                                {[
+                                    { label: 'Connecting to GitHub...', done: progress > 30 },
+                                    { label: 'Running AI Heuristics...', done: progress > 60 },
+                                    { label: 'Preparing Isolated DB...', done: progress > 85 },
+                                    { label: 'Initializing Network Map...', done: false }
+                                ].map((step, i) => (
+                                    <div key={i} className={`flex justify-between font-code-md text-sm ${step.done ? 'text-primary' : 'text-outline'}`}>
+                                        <div className="flex gap-3">
+                                            {step.done ? <span className="material-symbols-outlined text-sm">check_circle</span> : <span className="w-4 h-4 border-2 border-outline rounded-full animate-spin border-t-transparent"></span>}
+                                            {step.label}
+                                        </div>
+                                        <span>{step.done ? '[ DONE ]' : 'PROVISIONING'}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="bg-surface-container-lowest border border-outline-variant rounded-lg p-md mt-xl font-code-md text-[10px] text-outline h-32 overflow-hidden relative">
+                                <div className="absolute top-2 right-2 flex gap-1"><div className="w-1.5 h-1.5 rounded-full bg-outline"></div><div className="w-1.5 h-1.5 rounded-full bg-outline"></div></div>
+                                <div>&gt; Syncing master baseline to edge nodes...</div>
+                                <div>&gt; Verified 48/48 security compliance checks.</div>
+                                <div className="text-primary-container">&gt; Constructing blueprint visualization graph...</div>
+                                <div className="animate-pulse text-primary">&gt; Provisioning cloud resource_</div>
+                            </div>
+                        </div>
+                        <div className="p-lg bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+                            <p className="font-label-caps text-[10px] text-outline">ESTIMATED TIME: 45s</p>
+                            <button onClick={() => navigate('/dashboard')} className="px-lg py-sm border border-outline-variant rounded-lg font-label-caps text-[10px] text-outline hover:text-error transition-all">ABORT_DEPLOYMENT</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Success = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="h-screen bg-background grid-bg flex items-center justify-center p-4">
+                    <main className="relative z-10 w-full max-w-[560px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-2xl overflow-hidden backdrop-blur-md p-xl text-center">
+                        <div className="mb-lg relative flex h-24 w-24 mx-auto items-center justify-center rounded-full bg-surface-container-high border border-tertiary-fixed-dim/30 animate-success shadow-[0_0_30px_rgba(78,222,163,0.2)]">
+                            <span className="material-symbols-outlined text-[48px] text-tertiary-fixed-dim" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                        </div>
+                        <h1 className="font-headline-lg text-headline-lg text-on-background tracking-tight mb-sm">Project Ready!</h1>
+                        <p className="font-body-lg text-on-surface-variant max-w-sm mx-auto mb-2xl">Your workspace for <span className="text-primary font-code-md">nexus-core-prod</span> is now active and ready for orchestration.</p>
+                        <div className="grid grid-cols-2 gap-md mb-2xl">
+                            <div className="bg-surface-container-low border border-outline-variant p-md rounded-lg text-left">
+                                <p className="font-label-caps text-[10px] text-outline mb-xs">PROJECT ID</p>
+                                <p className="font-code-md text-primary">PX-240-STABLE</p>
+                            </div>
+                            <div className="bg-surface-container-low border border-outline-variant p-md rounded-lg text-left">
+                                <p className="font-label-caps text-[10px] text-outline mb-xs">STATUS</p>
+                                <div className="flex items-center gap-1">
+                                    <span className="h-2 w-2 rounded-full bg-tertiary animate-pulse"></span>
+                                    <p className="font-code-md text-tertiary">ACTIVE</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="space-y-md">
+                            <button onClick={() => navigate('/graph')} className="w-full h-12 flex items-center justify-center gap-sm bg-primary-container text-on-primary font-bold rounded-lg shadow-lg active:scale-95 transition-all">Open Project <span className="material-symbols-outlined">arrow_forward</span></button>
+                            <button onClick={() => navigate('/dashboard')} className="w-full h-12 flex items-center justify-center gap-sm bg-transparent border border-outline-variant text-on-surface font-bold rounded-lg hover:bg-surface-container-high active:scale-95 transition-all">Go to Dashboard</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const Settings = () => {
+            return (
+                <div className="p-margin-desktop space-y-xl max-w-4xl mx-auto">
+                    <div className="flex items-end justify-between mb-xl">
+                        <div>
+                            <p className="text-primary font-code-md text-xs">Projects / nexus-core-api</p>
+                            <h1 className="font-headline-lg">Project Settings</h1>
+                        </div>
+                    </div>
+                    <div className="flex border-b border-outline-variant gap-8 mb-xl">
+                        {['General', 'Team', 'Sandbox Defaults', 'Danger Zone'].map((tab, i) => (
+                            <button key={i} className={`pb-4 px-2 font-label-caps text-[10px] tracking-widest ${i === 1 ? 'text-primary border-b-2 border-primary' : 'text-outline hover:text-primary transition-colors'}`}>{tab.toUpperCase()}</button>
+                        ))}
+                    </div>
+                    <div className="space-y-8">
+                        <section className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+                            <div className="p-xl border-b border-outline-variant flex justify-between items-center">
+                                <div><h3 className="font-bold text-lg">Team Members</h3><p className="text-sm text-outline">Manage who has access to the production keys.</p></div>
+                                <button className="bg-primary text-on-primary px-4 py-2 rounded text-[10px] font-bold">Invite New Member</button>
+                            </div>
+                            <div className="divide-y divide-outline-variant/30">
+                                {[
+                                    { name: 'Alex', email: 'alex@nexus.io', role: 'OWNER' },
+                                    { name: 'Jordan', email: 'j.vance@devstack.com', role: 'USER' }
+                                ].map((mem, i) => (
+                                    <div key={i} className="p-xl flex justify-between items-center">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-surface-container-high border-2 border-primary/20"></div>
+                                            <div><p className="font-bold">{mem.name} <span className="text-[8px] bg-primary/10 text-primary px-1.5 py-0.5 rounded ml-2">{mem.role}</span></p><p className="text-xs text-outline">{mem.email}</p></div>
+                                        </div>
+                                        <button className="material-symbols-outlined text-outline">more_vert</button>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        <section className="bg-surface-container-lowest border border-error/20 rounded-xl overflow-hidden">
+                            <div className="p-xl bg-error/5 border-b border-error/20"><h3 className="text-error font-bold">Danger Zone</h3></div>
+                            <div className="p-xl space-y-4">
+                                <div className="flex justify-between items-center p-4 border border-outline-variant rounded-lg">
+                                    <div><p className="font-bold">Archive Project</p><p className="text-xs text-outline">Mark this project as read-only.</p></div>
+                                    <button className="border border-error text-error px-4 py-2 rounded text-[10px] font-bold">Archive</button>
+                                </div>
+                                <div className="flex justify-between items-center p-4 border border-error/20 rounded-lg">
+                                    <div><p className="font-bold">Delete Project</p><p className="text-xs text-outline">Permanently remove all associated API keys.</p></div>
+                                    <button className="bg-error text-on-error px-4 py-2 rounded text-[10px] font-bold shadow-lg">Delete Permanently</button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            );
+        };
+
+        const AuthPage = ({ type = 'login' }) => {
+            const navigate = useNavigate();
+            return (
+                <div className="flex min-h-screen">
+                    <section className="hidden lg:flex lg:w-1/2 relative flex-col justify-center items-center p-3xl bg-surface-container-lowest border-r border-outline-variant/30 overflow-hidden">
+                        <div className="absolute inset-0 cyber-grid opacity-30"></div>
+                        <div className="z-10 text-center">
+                            <h1 className="font-display-lg text-6xl tracking-tighter mb-4">Welcome Back</h1>
+                            <p className="text-outline text-lg max-w-sm mx-auto">Infrastructure that feels like magic. Test and scale with isolated sandboxes.</p>
+                        </div>
+                    </section>
+                    <section className="w-full lg:w-1/2 flex items-center justify-center p-8">
+                        <div className="w-full max-w-[400px] space-y-8">
+                            <div className="text-center">
+                                <div className="flex items-center justify-center gap-2 mb-8 cursor-pointer" onClick={() => navigate('/')}>
+                                    <span className="material-symbols-outlined text-primary text-4xl">dataset</span>
+                                    <span className="text-2xl font-bold text-primary">Clarity Machine</span>
+                                </div>
+                                <h2 className="text-3xl font-bold mb-2">{type === 'login' ? 'Sign in to workspace' : 'Create free account'}</h2>
+                                <p className="text-outline">{type === 'login' ? 'Access your clusters' : 'No credit card required'}</p>
+                            </div>
+                            <div className="space-y-4">
+                                <input className="w-full bg-surface-container border border-outline-variant rounded-lg p-3 outline-none focus:border-primary transition-all" placeholder="Email Address" />
+                                <input className="w-full bg-surface-container border border-outline-variant rounded-lg p-3 outline-none focus:border-primary transition-all" type="password" placeholder="Password" />
+                                {type === 'signup' && <input className="w-full bg-surface-container border border-outline-variant rounded-lg p-3 outline-none focus:border-primary transition-all" type="password" placeholder="Confirm Password" />}
+                                <button onClick={() => navigate('/dashboard')} className="w-full bg-primary text-on-primary py-3 rounded-lg font-bold shadow-xl active:scale-95 transition-all">{type === 'login' ? 'Sign In' : 'Create Account'}</button>
+                            </div>
+                            <div className="text-center text-sm">
+                                {type === 'login' ? (
+                                    <p>Don't have an account? <Link to="/signup" className="text-primary font-bold">Sign up</Link></p>
+                                ) : (
+                                    <p>Already have an account? <Link to="/login" className="text-primary font-bold">Sign in</Link></p>
+                                )}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            );
+        };
+
+        // --- Main App ---
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <Routes>
+                        <Route path="/" element={<Layout hideSidebar><LandingPage /></Layout>} />
+                        <Route path="/pricing" element={<Layout hideSidebar><Pricing /></Layout>} />
+                        <Route path="/login" element={<AuthPage type="login" />} />
+                        <Route path="/signup" element={<AuthPage type="signup" />} />
+                        <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
+                        <Route path="/graph" element={<Layout hideSidebar><GraphView /></Layout>} />
+                        <Route path="/editor" element={<Editor />} />
+                        <Route path="/deploying" element={<Deploying />} />
+                        <Route path="/success" element={<Success />} />
+                        <Route path="/settings" element={<Layout><Settings /></Layout>} />
+                        {/* Catch-all redirects back to dashboard in this prototype */}
+                        <Route path="*" element={<Layout><Dashboard /></Layout>} />
+                    </Routes>
+                </MemoryRouter>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Templates &amp; Starters | Clarity Machine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#00363a",
+                      "on-primary-fixed": "#002022",
+                      "on-error-container": "#ffdad6",
+                      "on-background": "#e5e2e1",
+                      "tertiary-container": "#65f2b5",
+                      "on-secondary-fixed": "#0b1c2f",
+                      "on-primary-fixed-variant": "#004f54",
+                      "surface-container-low": "#1c1b1b",
+                      "error": "#ffb4ab",
+                      "surface-dim": "#131313",
+                      "inverse-primary": "#006970",
+                      "surface-container-highest": "#353534",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-error": "#690005",
+                      "surface-container-lowest": "#0e0e0e",
+                      "inverse-on-surface": "#313030",
+                      "on-tertiary-container": "#006d4a",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-variant": "#353534",
+                      "on-surface-variant": "#b9cacb",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "on-secondary": "#213145",
+                      "on-tertiary-fixed": "#002113",
+                      "surface-container-high": "#2a2a2a",
+                      "primary-container": "#00f0ff",
+                      "surface-tint": "#00dbe9",
+                      "primary-fixed": "#7df4ff",
+                      "surface-container": "#201f1f",
+                      "on-primary-container": "#006970",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "tertiary": "#d8ffe7",
+                      "on-secondary-container": "#a6b6cf",
+                      "secondary-container": "#38485d",
+                      "background": "#131313",
+                      "primary-fixed-dim": "#00dbe9",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "inverse-surface": "#e5e2e1",
+                      "secondary": "#b7c8e1",
+                      "primary": "#dbfcff",
+                      "outline-variant": "#3b494b",
+                      "on-surface": "#e5e2e1",
+                      "error-red": "#ffb4ab",
+                      "on-tertiary": "#003824",
+                      "surface-bright": "#3a3939",
+                      "secondary-fixed": "#d3e4fe",
+                      "outline": "#849495",
+                      "error-container": "#93000a",
+                      "surface": "#131313",
+                      "glow-rgba": "rgba(0, 240, 255, 0.2)"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "2xl": "48px",
+                      "lg": "24px",
+                      "xs": "4px",
+                      "3xl": "64px",
+                      "unit": "4px",
+                      "xl": "32px",
+                      "gutter": "24px",
+                      "md": "16px",
+                      "margin-desktop": "40px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "code-md": ["JetBrains Mono"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .primary-glow {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1c1b1b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b494b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00dbe9;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)] h-16 flex items-center justify-between px-margin-desktop">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg text-primary-container tracking-tighter">Clarity Machine</span>
+<nav class="hidden md:flex gap-lg items-center">
+<a class="text-primary-container font-bold font-body-md transition-colors" href="#">Templates</a>
+<a class="text-on-surface-variant hover:text-primary-fixed hover:bg-surface-container-highest px-md py-xs rounded transition-colors font-body-md" href="#">Infrastructure</a>
+<a class="text-on-surface-variant hover:text-primary-fixed hover:bg-surface-container-highest px-md py-xs rounded transition-colors font-body-md" href="#">API Reference</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-1.5 w-64 focus:outline-none focus:border-primary-container text-body-md" placeholder="Search templates..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-container transition-colors">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile Avatar" data-alt="A professional headshot of a software engineer with soft cinematic lighting, featuring a modern tech-focused background with subtle blue and cyan tones. The person is smiling confidently, wearing a dark minimal hoodie, set against a blurred high-tech office environment. The style is clean, modern, and high-end digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt63lLs49Gw8sOodJ86MwX4KD2O_CKMAXgIzmcSazJhW4veFO5BIWrC-LYisAtY26yydpPwDCvxDDjghxHq8DVm-3kKuVeikjLQWO5mTSJVG_Jp5AHPMiUnMYPL2Ma7NdLd6EvlKeaGF6VKNx_BMupusir4JUwsGjtdNMItdYsI4AmD86O__2zqRVDBPY5w1e2cTHg-Ey6fl4bkNnhjR3BrPcnalA_q_2-bgUtvOttrdERnKVoZuJMHy0mP81IuP0BDWeH_WMg110f"/>
+</div>
+</div>
+</header>
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low border-r border-outline-variant flex flex-col py-lg px-md space-y-sm hidden md:flex">
+<div class="mb-xl px-sm">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[16px] leading-tight text-primary-container">Clarity Machine</h3>
+<p class="font-code-md text-xs text-outline">API Sandbox Engine</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-2.5 rounded font-code-md text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span> Overview
+            </a>
+<a class="flex items-center gap-md px-md py-2.5 rounded font-code-md bg-secondary-container/30 text-primary-fixed-dim border-r-2 border-primary-fixed-dim active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">layers</span> Sandboxes
+            </a>
+<a class="flex items-center gap-md px-md py-2.5 rounded font-code-md text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">history</span> Activity
+            </a>
+<a class="flex items-center gap-md px-md py-2.5 rounded font-code-md text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">terminal</span> GitHub
+            </a>
+<div class="pt-lg border-t border-outline-variant/30 mt-lg"></div>
+<a class="flex items-center gap-md px-md py-2.5 rounded font-code-md text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">person</span> Account
+            </a>
+<a class="flex items-center gap-md px-md py-2.5 rounded font-code-md text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">security</span> Security
+            </a>
+<a class="flex items-center gap-md px-md py-2.5 rounded font-code-md text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">payments</span> Billing
+            </a>
+</nav>
+<button class="mt-auto w-full bg-primary-container text-on-primary-container font-code-md py-3 rounded-lg flex items-center justify-center gap-sm active:scale-95 transition-transform primary-glow">
+<span class="material-symbols-outlined text-[20px]">add</span>
+            Launch New Sandbox
+        </button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-16 min-h-screen">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-3xl py-3xl">
+<!-- Header Section -->
+<div class="mb-2xl flex flex-col md:flex-row md:items-end justify-between gap-lg">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary-container mb-xs">Templates &amp; Starters</h1>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">Deploy production-ready infrastructure in seconds. Select a verified blueprint to initialize your next high-performance API sandbox.</p>
+</div>
+<div class="flex items-center gap-sm text-outline font-code-md">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                    14 Active Official Blueprints
+                </div>
+</div>
+<!-- Search and Filter Bar -->
+<div class="mb-3xl bg-surface-container-low p-md rounded-xl border border-outline-variant flex flex-col md:flex-row gap-lg items-center">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary-container">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-12 pr-4 py-3 text-body-md focus:outline-none focus:border-primary-container transition-colors" type="text" value="Next.js + Supabase"/>
+</div>
+<div class="flex flex-wrap gap-sm">
+<button class="px-lg py-2 rounded-full bg-primary-container text-on-primary-container font-label-caps text-label-caps">All</button>
+<button class="px-lg py-2 rounded-full border border-outline-variant hover:bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps transition-colors">Backend</button>
+<button class="px-lg py-2 rounded-full border border-outline-variant hover:bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps transition-colors">Fullstack</button>
+<button class="px-lg py-2 rounded-full border border-outline-variant hover:bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps transition-colors">Database</button>
+<button class="px-lg py-2 rounded-full border border-outline-variant hover:bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps transition-colors">Mobile</button>
+</div>
+</div>
+<!-- Recommended Section -->
+<section class="mb-3xl">
+<div class="flex items-center gap-md mb-xl">
+<h2 class="font-headline-lg text-headline-lg">Recommended For You</h2>
+<div class="h-px flex-1 bg-gradient-to-r from-outline-variant to-transparent"></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Featured Card 1 -->
+<div class="group relative bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:border-primary-container/50 transition-all duration-300">
+<div class="absolute -top-3 left-6 px-3 py-1 bg-primary-container text-on-primary-container font-label-caps text-[10px] rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">trending_up</span> POPULAR
+                        </div>
+<div class="flex justify-between items-start mb-lg">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center border border-outline-variant group-hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary-container text-[32px]">bolt</span>
+</div>
+<div class="text-right">
+<p class="font-code-md text-xs text-outline">2.4k uses</p>
+<p class="font-code-md text-xs text-primary-container flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span> 18s spin up
+                                </p>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-sm">Next.js 15 + Prisma</h3>
+<p class="text-on-surface-variant text-body-md mb-lg line-clamp-2">Optimized for high-concurrency edge deployments with full type safety across the stack.</p>
+<div class="flex flex-wrap gap-xs mb-xl">
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">React</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">PostgreSQL</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">Tailwind</span>
+</div>
+<button class="w-full bg-on-surface text-background font-label-caps text-label-caps py-3 rounded-lg group-hover:bg-primary-container group-hover:text-on-primary-container transition-all active:scale-95">Use Template</button>
+</div>
+<!-- Featured Card 2 -->
+<div class="group relative bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:border-primary-container/50 transition-all duration-300">
+<div class="absolute -top-3 left-6 px-3 py-1 bg-tertiary-container text-on-tertiary-container font-label-caps text-[10px] rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span> OFFICIAL
+                        </div>
+<div class="flex justify-between items-start mb-lg">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center border border-outline-variant group-hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-tertiary-container text-[32px]">architecture</span>
+</div>
+<div class="text-right">
+<p class="font-code-md text-xs text-outline">1.8k uses</p>
+<p class="font-code-md text-xs text-primary-container flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span> 12s spin up
+                                </p>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-sm">NestJS + PostgreSQL</h3>
+<p class="text-on-surface-variant text-body-md mb-lg line-clamp-2">Standard enterprise-grade backend architecture with robust modular dependency injection.</p>
+<div class="flex flex-wrap gap-xs mb-xl">
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">Node.js</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">TypeScript</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">Redis</span>
+</div>
+<button class="w-full bg-on-surface text-background font-label-caps text-label-caps py-3 rounded-lg group-hover:bg-primary-container group-hover:text-on-primary-container transition-all active:scale-95">Use Template</button>
+</div>
+<!-- Featured Card 3 -->
+<div class="group relative bg-surface-container-lowest border border-outline-variant rounded-xl p-lg hover:border-primary-container/50 transition-all duration-300">
+<div class="flex justify-between items-start mb-lg">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center border border-outline-variant group-hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary-container text-[32px]">hub</span>
+</div>
+<div class="text-right">
+<p class="font-code-md text-xs text-outline">900 uses</p>
+<p class="font-code-md text-xs text-primary-container flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span> 22s spin up
+                                </p>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-sm">T3 Stack</h3>
+<p class="text-on-surface-variant text-body-md mb-lg line-clamp-2">The fastest way to build a type-safe full-stack application using Next.js and tRPC.</p>
+<div class="flex flex-wrap gap-xs mb-xl">
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">tRPC</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">Next.js</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-label-caps px-2 py-0.5 rounded border border-outline-variant">Zod</span>
+</div>
+<button class="w-full bg-on-surface text-background font-label-caps text-label-caps py-3 rounded-lg group-hover:bg-primary-container group-hover:text-on-primary-container transition-all active:scale-95">Use Template</button>
+</div>
+</div>
+</section>
+<!-- All Templates Grid -->
+<section>
+<div class="flex items-center gap-md mb-xl">
+<h2 class="font-headline-lg text-headline-lg">All Templates</h2>
+<div class="h-px flex-1 bg-gradient-to-r from-outline-variant to-transparent"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+<!-- Template 1 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">api</span>
+<span class="font-code-md text-[10px] text-outline">15s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Django + PostgreSQL</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">Reliable batteries-included framework for complex backends.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Python</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">DRF</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+<!-- Template 2 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">speed</span>
+<span class="font-code-md text-[10px] text-outline">8s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Go Fiber + SQLite</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">Ultra-lightweight microservice template for high-speed performance.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Go</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">SQL</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+<!-- Template 3 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">cloud_done</span>
+<span class="font-code-md text-[10px] text-outline">18s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Laravel + MySQL</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">Elegant PHP framework with built-in auth and queuing systems.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">PHP</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Blade</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+<!-- Template 4 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">devices</span>
+<span class="font-code-md text-[10px] text-outline">25s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Flutter + Firebase</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">Rapid mobile app development with real-time sync capabilities.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Dart</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">NoSQL</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+<!-- Template 5 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">train</span>
+<span class="font-code-md text-[10px] text-outline">20s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Rails + Postgres</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">The definitive framework for developer productivity and speed.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Ruby</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">MVC</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+<!-- Template 6 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">coffee</span>
+<span class="font-code-md text-[10px] text-outline">30s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Spring Boot + MongoDB</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">Reliable JVM ecosystem for heavy-duty data processing.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Java</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Reactive</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+<!-- Template 7 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">auto_awesome</span>
+<span class="font-code-md text-[10px] text-outline">12s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Astro + Supabase</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">Modern content-driven sites with integrated auth and DB.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Islands</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Static</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+<!-- Template 8 -->
+<div class="bg-surface-container p-lg rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors flex flex-col group">
+<div class="flex justify-between items-center mb-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors">auto_mode</span>
+<span class="font-code-md text-[10px] text-outline">16s launch</span>
+</div>
+<h4 class="font-headline-md text-[18px] leading-tight mb-xs">Remix + Neon</h4>
+<p class="text-on-surface-variant text-xs mb-md flex-1">Full-stack web framework with serverless Postgres integration.</p>
+<div class="flex flex-wrap gap-xs mb-lg">
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">SSR</span>
+<span class="text-[9px] font-code-md border border-outline-variant px-1.5 py-0.5 rounded">Edge</span>
+</div>
+<button class="text-primary-container border border-primary-container/30 py-2 rounded font-label-caps text-[10px] hover:bg-primary-container hover:text-on-primary-container transition-all">Use Template</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 pointer-events-none -z-10">
+<div class="absolute top-1/4 -right-20 w-96 h-96 bg-primary-container/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-secondary-container/5 rounded-full blur-[150px]"></div>
+<div class="absolute inset-0" style="background-image: radial-gradient(#1c1b1b 1px, transparent 1px); background-size: 40px 40px; opacity: 0.2;"></div>
+</div>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 w-full bg-surface-container border-t border-outline-variant flex justify-around py-2 px-md z-50">
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Overview</span>
+</button>
+<button class="flex flex-col items-center text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">layers</span>
+<span class="text-[10px]">Templates</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">terminal</span>
+<span class="text-[10px]">Launch</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Profile</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions and hover effects
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if(icon) {
+                    icon.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    icon.style.transform = 'scale(1.2) rotate(5deg)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if(icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body></html>

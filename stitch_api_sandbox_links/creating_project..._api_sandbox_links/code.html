@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NEXUS_OS | New Project Initialization</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-pulse {
+            animation: glow-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 240, 255, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+        }
+        .grid-bg {
+            background-image: linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #00f0ff, transparent);
+            position: absolute;
+            opacity: 0.3;
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#a6b6cf",
+                      "on-primary-container": "#006970",
+                      "error": "#ffb4ab",
+                      "surface-container-low": "#1c1b1b",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "primary-fixed": "#7df44",
+                      "on-error": "#690005",
+                      "on-surface-variant": "#b9cacb",
+                      "surface": "#131313",
+                      "tertiary": "#d8ffe7",
+                      "surface-variant": "#353534",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "surface-container-high": "#2a2a2a",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-primary": "#00363a",
+                      "background": "#131313",
+                      "error-container": "#93000a",
+                      "surface-container": "#201f1f",
+                      "on-background": "#e5e2e1",
+                      "on-tertiary": "#003824",
+                      "on-secondary": "#213145",
+                      "on-tertiary-fixed": "#002113",
+                      "primary-fixed-dim": "#00dbe9",
+                      "surface-tint": "#00dbe9",
+                      "primary-container": "#00f0ff",
+                      "surface-bright": "#3a3939",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "error-red": "#ffb4ab",
+                      "surface-dim": "#131313",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "secondary": "#b7c8e1",
+                      "inverse-on-surface": "#313030",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-container-highest": "#353534",
+                      "outline": "#849495",
+                      "inverse-surface": "#e5e2e1",
+                      "inverse-primary": "#006970",
+                      "on-primary-fixed": "#002022",
+                      "on-surface": "#e5e2e1",
+                      "primary": "#dbfcff",
+                      "on-error-container": "#ffdad6",
+                      "secondary-fixed": "#d3e4fe",
+                      "tertiary-container": "#65f2b5",
+                      "outline-variant": "#3b494b",
+                      "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                      "secondary-container": "#38485d",
+                      "on-primary-fixed-variant": "#004f54",
+                      "on-secondary-fixed": "#0b1c2f",
+                      "on-tertiary-container": "#006d4a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-desktop": "40px",
+                      "3xl": "64px",
+                      "margin-mobile": "16px",
+                      "sm": "8px",
+                      "2xl": "48px",
+                      "xl": "32px",
+                      "lg": "24px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "code-md": ["JetBrains Mono"],
+                      "label-caps": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-low dark:bg-surface-container-low border-b border-outline-variant shadow-sm flex justify-between items-center h-16 px-margin-desktop w-full backdrop-blur-xl">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">NEXUS_OS</span>
+<div class="hidden md:flex h-6 w-px bg-outline-variant mx-sm"></div>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="font-body-md text-body-md text-primary dark:text-primary-fixed border-b-2 border-primary py-4" href="#">Dashboard</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors px-md rounded-lg" href="#">Deployments</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-colors px-md rounded-lg" href="#">Infrastructure</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="bg-primary-container text-on-primary px-lg py-sm rounded-lg font-label-caps text-label-caps active:scale-95 transition-all duration-200 shadow-[0_0_15px_rgba(0,240,255,0.25)]">Deploy Sandbox</button>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant p-sm cursor-pointer hover:bg-surface-container transition-colors rounded-full">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant p-sm cursor-pointer hover:bg-surface-container transition-colors rounded-full">help</span>
+</div>
+<img alt="Lead DevOps Engineer" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional headshot of a female DevOps engineer in her late 30s with a confident expression, set against a blurred high-tech server room background with soft blue neon lighting. The image style is sharp and cinematic, with a narrow depth of field and high-contrast professional lighting that fits a dark-themed enterprise UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuQryhr6qEqHr2P95_pkSsQd9KmFXLUYI2ztumo3YFdvKhWBfXSWLyL0EnouBCo9g-ppDzo7CFafjOSpr_LOq_jomgsabBvfv2i8GnixOZ54Fnit6263_iVXOVrCl3YnwEGop0nKhDsqG_ydi1Oztq-4grjVrC_XWvvE_RKN6XNrlfxPKCkmNP6lcJETfNvZCAd1f8u1kJwn_HSoJSAlSbse7gmIXgCAmCkRgFmQ6MIwaL5sqKhv1MedC0qUzN-Y6ibliBMQh3lzhn"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 z-40 bg-surface-container-lowest dark:bg-surface-container-lowest border-r border-outline-variant shadow-none flex flex-col h-full pt-20 pb-lg px-md">
+<div class="mb-xl px-md">
+<div class="font-headline-md text-headline-md font-black text-primary">CONTROL_PLANE</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant opacity-70">v2.4.0-STABLE</div>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all active:translate-x-1 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">home</span>Home
+            </a>
+<a class="flex items-center gap-md bg-secondary-container dark:bg-secondary-container text-primary dark:text-primary-fixed rounded-lg p-md shadow-[0_0_15px_rgba(0,240,255,0.15)] font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">account_tree</span>Projects
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all active:translate-x-1 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">layers</span>All Sandboxes
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-surface-variant p-md hover:text-primary hover:bg-surface-container transition-all active:translate-x-1 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">history</span>Activity
+            </a>
+</nav>
+<div class="mt-auto space-y-xs">
+<a class="flex items-center gap-md text-on-surface-variant p-md font-label-caps text-label-caps hover:text-primary" href="#"><span class="material-symbols-outlined">menu_book</span>Documentation</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md font-label-caps text-label-caps hover:text-primary" href="#"><span class="material-symbols-outlined">logout</span>Logout</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="pl-64 pt-16 min-h-screen grid-bg relative overflow-hidden">
+<div class="scanline"></div>
+<!-- Dashboard Background Content (Simulated) -->
+<div class="p-margin-desktop opacity-20 pointer-events-none">
+<div class="flex justify-between items-end mb-3xl">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-sm">Project Overview</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Active infrastructure nodes and health metrics.</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-gutter">
+<div class="h-48 bg-surface-container rounded-xl border border-outline-variant"></div>
+<div class="h-48 bg-surface-container rounded-xl border border-outline-variant"></div>
+<div class="h-48 bg-surface-container rounded-xl border border-outline-variant"></div>
+</div>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-background/80 backdrop-blur-md">
+<div class="w-full max-w-2xl bg-surface-container-lowest border border-outline-variant rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+<!-- Modal Header -->
+<div class="p-lg border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<div class="flex items-center gap-md">
+<div class="w-3 h-3 rounded-full bg-primary-container glow-pulse"></div>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight">INITIALIZING_PROJECT</h2>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant px-sm py-xs bg-surface-container rounded border border-outline-variant">PID: 8829</span>
+</div>
+<!-- Progress Bar Container -->
+<div class="bg-surface-container-high h-1 w-full overflow-hidden">
+<div class="h-full bg-primary-container shadow-[0_0_10px_#00f0ff] transition-all duration-1000 ease-out" id="main-progress-bar" style="width: 65%;"></div>
+</div>
+<!-- Modal Content -->
+<div class="p-xl space-y-lg">
+<!-- Status List -->
+<div class="space-y-md">
+<!-- Step 1: Success -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="flex items-center justify-center w-6 h-6 rounded-full border border-primary-container/30 bg-primary-container/10">
+<span class="material-symbols-outlined text-primary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="font-code-md text-code-md text-primary">Creating Project...</span>
+</div>
+<span class="font-code-md text-code-md text-primary-container/60">[ DONE ]</span>
+</div>
+<!-- Step 2: Success -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="flex items-center justify-center w-6 h-6 rounded-full border border-primary-container/30 bg-primary-container/10">
+<span class="material-symbols-outlined text-primary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="font-code-md text-code-md text-primary">Connecting to GitHub Repository...</span>
+</div>
+<span class="font-code-md text-code-md text-primary-container/60">[ DONE ]</span>
+</div>
+<!-- Step 3: Loading -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="flex items-center justify-center w-6 h-6">
+<div class="w-4 h-4 border-2 border-primary-container border-t-transparent rounded-full animate-spin"></div>
+</div>
+<span class="font-code-md text-code-md text-on-surface">Running AI Analysis...</span>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant animate-pulse">ANALYZING_CORE</span>
+</div>
+<!-- Step 4: Pending -->
+<div class="flex items-center justify-between group opacity-40">
+<div class="flex items-center gap-md">
+<div class="flex items-center justify-center w-6 h-6 rounded-full border border-outline-variant">
+<div class="w-1.5 h-1.5 bg-outline-variant rounded-full"></div>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant">Creating Master Baseline Database...</span>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant">PENDING</span>
+</div>
+<!-- Step 5: Pending -->
+<div class="flex items-center justify-between group opacity-40">
+<div class="flex items-center gap-md">
+<div class="flex items-center justify-center w-6 h-6 rounded-full border border-outline-variant">
+<div class="w-1.5 h-1.5 bg-outline-variant rounded-full"></div>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant">Preparing Blueprint Graph...</span>
+</div>
+<span class="font-code-md text-code-md text-on-surface-variant">PENDING</span>
+</div>
+</div>
+<!-- Terminal Console Shadow Box -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md mt-xl font-code-md text-code-md text-on-surface-variant overflow-hidden h-32 relative">
+<div class="absolute top-2 right-2 flex gap-xs">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+<div class="space-y-xs overflow-y-auto h-full scrollbar-hide" id="terminal-output">
+<div class="text-primary-container opacity-60">&gt; Initializing vector embeddings...</div>
+<div class="text-primary-container opacity-70">&gt; Repository connection established: git@github.com:nexus-infra/core-api.git</div>
+<div class="text-primary-container opacity-80">&gt; Scanning 1,429 source files...</div>
+<div class="text-primary-container opacity-90">&gt; Analyzing dependency tree...</div>
+<div class="text-primary-container">&gt; [WARN] Outdated node-sass detected. Polyfilling architecture...</div>
+<div class="text-primary-container">&gt; Mapping neural nodes to container clusters...</div>
+<div class="text-primary-container animate-pulse">&gt; Initializing AI heuristic scan_</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-lg bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+<p class="font-label-caps text-label-caps text-on-surface-variant">ESTIMATED TIME: 45s</p>
+<button class="px-lg py-sm border border-outline-variant rounded-lg font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high hover:text-error transition-all active:scale-95">ABORT_DEPLOYMENT</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-md bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant flex justify-between items-center px-margin-desktop mt-auto z-40 fixed bottom-0">
+<div class="font-label-caps text-label-caps text-primary">NEXUS INFRASTRUCTURE</div>
+<div class="font-code-md text-code-md text-on-surface-variant dark:text-on-surface-variant">
+            © 2024 NEXUS INFRASTRUCTURE. OPERATIONAL STATE: OPTIMAL
+        </div>
+<div class="flex gap-lg">
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">Legal</a>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-colors" href="#">API Status</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Auto-scroll terminal and update progress
+        const terminal = document.getElementById('terminal-output');
+        const progressBar = document.getElementById('main-progress-bar');
+        
+        let progress = 65;
+        const logs = [
+            "> Fetching architecture blueprints...",
+            "> Optimizing container orchestration layer...",
+            "> Patching cluster vulnerability signatures...",
+            "> Syncing master baseline to edge nodes...",
+            "> Verified 48/48 security compliance checks.",
+            "> Constructing blueprint visualization graph..."
+        ];
+
+        setInterval(() => {
+            if (progress < 95) {
+                progress += Math.random() * 2;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            if (Math.random() > 0.7) {
+                const logLine = document.createElement('div');
+                logLine.className = 'text-primary-container';
+                logLine.textContent = logs[Math.floor(Math.random() * logs.length)];
+                terminal.appendChild(logLine);
+                terminal.scrollTop = terminal.scrollHeight;
+                
+                // Limit terminal lines
+                if (terminal.children.length > 15) {
+                    terminal.removeChild(terminal.firstChild);
+                }
+            }
+        }, 1500);
+
+        // Simple flicker effect for "technical" feel
+        setInterval(() => {
+            document.querySelector('.scanline').style.opacity = (Math.random() * 0.2) + 0.1;
+        }, 100);
+    </script>
+</body></html>

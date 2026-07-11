@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pricing | ClarityEngine API Sandbox</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-high": "#2a2a2a",
+                    "error-red": "#ffb4ab",
+                    "surface-variant": "#353534",
+                    "surface-container": "#201f1f",
+                    "on-secondary-fixed": "#0b1c2f",
+                    "outline-variant": "#3b494b",
+                    "on-secondary-container": "#a6b6cf",
+                    "surface-tint": "#00dbe9",
+                    "error-container": "#93000a",
+                    "inverse-primary": "#006970",
+                    "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                    "primary-fixed": "#7df4ff",
+                    "on-tertiary": "#003824",
+                    "on-primary": "#00363a",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-primary-container": "#006970",
+                    "primary-container": "#00f0ff",
+                    "secondary-fixed": "#d3e4fe",
+                    "inverse-on-surface": "#313030",
+                    "on-surface-variant": "#b9cacb",
+                    "on-secondary": "#213145",
+                    "on-surface": "#e5e2e1",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "tertiary": "#d8ffe7",
+                    "surface": "#131313",
+                    "on-error": "#690005",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#004f54",
+                    "surface-dim": "#131313",
+                    "on-background": "#e5e2e1",
+                    "primary-fixed-dim": "#00dbe9",
+                    "background": "#131313",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "primary": "#dbfcff",
+                    "on-tertiary-container": "#006d4a",
+                    "secondary-container": "#38485d",
+                    "surface-container-low": "#1c1b1b",
+                    "outline": "#849495",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-container-highest": "#353534",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "tertiary-fixed": "#6ffbbe",
+                    "tertiary-container": "#65f2b5",
+                    "on-primary-fixed": "#002022",
+                    "on-error-container": "#ffdad6",
+                    "secondary": "#b7c8e1",
+                    "inverse-surface": "#e5e2e1",
+                    "surface-bright": "#3a3939"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "2xl": "48px",
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "margin-desktop": "40px",
+                    "3xl": "64px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "code-md": ["JetBrains Mono"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+        }
+        .circuit-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(59, 73, 75, 0.2) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .pricing-toggle-active {
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm shadow-glow-rgba">
+<div class="flex justify-between items-center px-margin-desktop py-md max-w-[1440px] mx-auto">
+<div class="flex items-center gap-xl">
+<span class="font-display-lg text-display-lg font-black tracking-tighter text-primary-container drop-shadow-[0_0_8px_rgba(0,240,255,0.4)] cursor-pointer">
+                    ClarityEngine
+                </span>
+<div class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-colors duration-200" href="#">Environments</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-colors duration-200" href="#">Clusters</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-colors duration-200" href="#">Registry</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-colors duration-200" href="#">Deployments</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden lg:flex items-center bg-surface-container rounded-lg px-md py-xs border border-outline-variant/50 mr-md">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">search</span>
+<span class="text-on-surface-variant font-body-md text-body-md">Search instances...</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="active:scale-95 transition-transform p-xs text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">terminal</span></button>
+<button class="active:scale-95 transition-transform p-xs text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">settings</span></button>
+<button class="active:scale-95 transition-transform p-xs text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">notifications</span></button>
+</div>
+<button class="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-lg py-sm rounded-lg font-bold shadow-sm shadow-glow-rgba hover:opacity-90 active:scale-95 transition-all ml-md">
+                    New Instance
+                </button>
+<img alt="User avatar" class="w-8 h-8 rounded-full border border-outline-variant ml-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgmYnu_TGPBJuJXBN29oK7ov80atTk_ZFEF3lsKsu11ICTB_HAtIkvywnb612lKrAwfEqvT7M7z21oE04V0eWyy9tkrLypLyPauMm9-_s-8iEbiGIOFreOeVPiYtnhbZe4pXc7E3NJrz7rCH2Bsw1DSaes4czke3HeFOFAIZg0-SuEnGBHGv7fvBey_uXqUxok3pCe8wP88GVjAZwn-bidqyw1J1aeBCB11F69-nbjaU3_VmakZaDYUiQsSFeqsuFuHatyuXl8SNXB"/>
+</div>
+</div>
+</nav>
+<main class="pt-[120px] circuit-bg">
+<!-- Hero Section -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop py-3xl text-center">
+<h1 class="font-display-lg text-display-lg md:text-[64px] md:leading-tight mb-md">
+                Simple, <span class="text-primary-container">Transparent</span> Pricing
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-2xl">
+                Start building instantly. Scale as you grow. No hidden compute fees or ingress surcharges.
+            </p>
+<!-- Pricing Toggle -->
+<div class="flex items-center justify-center gap-md">
+<span class="font-label-caps text-label-caps text-primary-container" id="label-monthly">Monthly</span>
+<div class="w-14 h-7 bg-surface-container-high rounded-full p-1 cursor-pointer relative transition-all border border-outline-variant hover:border-primary-container/50" onclick="togglePricing()">
+<div class="w-5 h-5 bg-primary-container rounded-full pricing-toggle-active transition-transform transform translate-x-0" id="toggle-knob"></div>
+</div>
+<div class="flex items-center gap-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant" id="label-yearly">Yearly</span>
+<span class="bg-tertiary-container text-on-tertiary-container font-label-caps text-[10px] px-xs rounded uppercase font-bold">Save 20%</span>
+</div>
+</div>
+</section>
+<!-- Pricing Cards -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop py-xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Free Tier -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl flex flex-col hover:border-primary-container/30 transition-all">
+<div class="mb-xl">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-xs block uppercase">Base</span>
+<h3 class="font-headline-lg text-headline-lg mb-sm">Free</h3>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg">$0</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/mo</span>
+</div>
+</div>
+<ul class="flex flex-col gap-md mb-2xl grow">
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" style="font-size: 20px;">check_circle</span>
+<span>10 Sandboxes/mo</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" style="font-size: 20px;">check_circle</span>
+<span>5 Active at once</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" style="font-size: 20px;">check_circle</span>
+<span>Basic Ephemeral DB</span>
+</li>
+<li class="flex items-center gap-sm text-body-md text-on-surface-variant/60">
+<span class="material-symbols-outlined" style="font-size: 20px;">check_circle</span>
+<span>Community Support</span>
+</li>
+<li class="flex items-center gap-sm text-body-md text-on-surface-variant/60">
+<span class="material-symbols-outlined" style="font-size: 20px;">public</span>
+<span>Public Projects Only</span>
+</li>
+</ul>
+<button class="w-full py-md border border-outline-variant font-label-caps text-label-caps font-bold rounded-lg hover:bg-surface-container-high transition-all active:scale-95">
+                        Get Started
+                    </button>
+</div>
+<!-- Pro Tier -->
+<div class="bg-surface-container border-2 border-primary-container rounded-xl p-xl flex flex-col relative glow-border scale-105 z-10">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-lg py-xs rounded-full font-label-caps text-[10px] font-bold uppercase tracking-wider">
+                        Most Popular
+                    </div>
+<div class="mb-xl">
+<span class="font-label-caps text-label-caps text-primary-container mb-xs block uppercase">Professional</span>
+<h3 class="font-headline-lg text-headline-lg mb-sm">Pro</h3>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg price-pro">$29</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/mo</span>
+</div>
+</div>
+<ul class="flex flex-col gap-md mb-2xl grow">
+<li class="flex items-center gap-sm text-body-md font-semibold">
+<span class="material-symbols-outlined text-primary-container" data-weight="fill" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Unlimited Sandboxes</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" data-weight="fill" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>50 Active at once</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" data-weight="fill" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Copy-on-Write DB</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" data-weight="fill" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>AI Features Full Access</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" data-weight="fill" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Private Projects</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-primary-container" data-weight="fill" style="font-size: 20px; font-variation-settings: 'FILL' 1;">group</span>
+<span>Up to 5 Team Members</span>
+</li>
+</ul>
+<button class="w-full py-md bg-primary-container text-on-primary-container font-label-caps text-label-caps font-black rounded-lg shadow-sm shadow-glow-rgba hover:opacity-90 transition-all active:scale-95">
+                        Try Pro Free
+                    </button>
+</div>
+<!-- Enterprise Tier -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl flex flex-col hover:border-primary-container/30 transition-all">
+<div class="mb-xl">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-xs block uppercase">Custom</span>
+<h3 class="font-headline-lg text-headline-lg mb-sm">Enterprise</h3>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-lg text-display-lg">Custom</span>
+</div>
+</div>
+<ul class="flex flex-col gap-md mb-2xl grow">
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-size: 20px;">verified</span>
+<span>Everything in Pro</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-size: 20px;">lock</span>
+<span>SSO &amp; SCIM</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-size: 20px;">support_agent</span>
+<span>Dedicated Support</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-size: 20px;">hub</span>
+<span>Custom Resource Limits</span>
+</li>
+<li class="flex items-center gap-sm text-body-md">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-size: 20px;">history_edu</span>
+<span>Audit Logs &amp; SLA</span>
+</li>
+</ul>
+<button class="w-full py-md bg-surface-container-high text-on-surface font-label-caps text-label-caps font-bold rounded-lg hover:bg-surface-bright transition-all active:scale-95">
+                        Contact Sales
+                    </button>
+</div>
+</div>
+</section>
+<!-- Social Proof -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop py-2xl">
+<p class="font-label-caps text-label-caps text-on-surface-variant text-center mb-xl uppercase tracking-widest opacity-60">Trusted by developers at</p>
+<div class="flex flex-wrap justify-center items-center gap-3xl opacity-40 grayscale contrast-125">
+<div class="flex items-center gap-xs font-bold text-xl"><span class="material-symbols-outlined">api</span> NEXUS</div>
+<div class="flex items-center gap-xs font-bold text-xl"><span class="material-symbols-outlined">data_object</span> SYNAPSE</div>
+<div class="flex items-center gap-xs font-bold text-xl"><span class="material-symbols-outlined">cloud</span> ETHER</div>
+<div class="flex items-center gap-xs font-bold text-xl"><span class="material-symbols-outlined">memory</span> CORE</div>
+<div class="flex items-center gap-xs font-bold text-xl"><span class="material-symbols-outlined">terminal</span> BITLAB</div>
+</div>
+</section>
+<!-- Usage Calculator -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop py-3xl">
+<div class="bg-surface-container-low border border-outline-variant rounded-2xl p-2xl grid md:grid-cols-2 gap-2xl items-center overflow-hidden relative">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/5 blur-[120px] rounded-full"></div>
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-md">Usage Calculator</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl">Estimate your monthly investment based on your team's development velocity.</p>
+<div class="space-y-xl">
+<div>
+<div class="flex justify-between mb-sm font-label-caps text-label-caps">
+<span>Monthly Sandboxes</span>
+<span class="text-primary-container" id="val-sandboxes">120</span>
+</div>
+<input class="w-full accent-primary-container" max="1000" min="10" oninput="calculate(this.value, 'sandboxes')" type="range" value="120"/>
+</div>
+<div>
+<div class="flex justify-between mb-sm font-label-caps text-label-caps">
+<span>Build Minutes</span>
+<span class="text-primary-container" id="val-minutes">5,000</span>
+</div>
+<input class="w-full accent-primary-container" max="50000" min="100" oninput="calculate(this.value, 'minutes')" type="range" value="5000"/>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high border border-primary-container/20 p-xl rounded-xl text-center shadow-lg">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-sm uppercase">Estimated Cost</span>
+<div class="flex items-baseline justify-center gap-xs mb-md">
+<span class="font-display-lg text-[56px] text-primary-container" id="calc-total">$42</span>
+<span class="font-body-lg text-body-lg text-on-surface-variant">/mo</span>
+</div>
+<p class="font-code-md text-code-md text-on-surface-variant mb-xl border-t border-outline-variant pt-md">
+                        Includes 2 CPU Cores, 4GB RAM, and Pro Support Tier.
+                    </p>
+<button class="w-full py-md bg-primary-container text-on-primary-container font-label-caps text-label-caps font-bold rounded-lg shadow-sm shadow-glow-rgba active:scale-95 transition-all">
+                        Upgrade to this plan
+                    </button>
+</div>
+</div>
+</section>
+<!-- Feature Comparison -->
+<section class="max-w-[1440px] mx-auto px-margin-desktop py-3xl">
+<h2 class="font-headline-lg text-headline-lg mb-2xl text-center">Technical Specifications</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="py-md px-lg font-label-caps text-label-caps text-on-surface-variant uppercase">Resource</th>
+<th class="py-md px-lg font-label-caps text-label-caps uppercase">Free</th>
+<th class="py-md px-lg font-label-caps text-label-caps text-primary-container uppercase">Pro</th>
+<th class="py-md px-lg font-label-caps text-label-caps uppercase">Enterprise</th>
+</tr>
+</thead>
+<tbody class="font-code-md text-code-md">
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container/50 transition-colors">
+<td class="py-md px-lg">vCPU Allocation</td>
+<td class="py-md px-lg">1 vCPU</td>
+<td class="py-md px-lg text-primary-container">4 vCPU</td>
+<td class="py-md px-lg">Unlimited (Dedicated)</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container/50 transition-colors">
+<td class="py-md px-lg">RAM Buffer</td>
+<td class="py-md px-lg">512MB</td>
+<td class="py-md px-lg text-primary-container">8GB</td>
+<td class="py-md px-lg">Up to 128GB</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container/50 transition-colors">
+<td class="py-md px-lg">Storage (Persistent)</td>
+<td class="py-md px-lg">1GB</td>
+<td class="py-md px-lg text-primary-container">25GB</td>
+<td class="py-md px-lg">Custom Tier</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container/50 transition-colors">
+<td class="py-md px-lg">Network Throttling</td>
+<td class="py-md px-lg">100Mbps</td>
+<td class="py-md px-lg text-primary-container">1Gbps</td>
+<td class="py-md px-lg">Uncapped</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-container/50 transition-colors">
+<td class="py-md px-lg">Sandbox TTL</td>
+<td class="py-md px-lg">1 Hour</td>
+<td class="py-md px-lg text-primary-container">24 Hours</td>
+<td class="py-md px-lg">Permanent Options</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- FAQ -->
+<section class="max-w-4xl mx-auto px-margin-desktop py-3xl">
+<h2 class="font-headline-lg text-headline-lg mb-2xl text-center">Frequently Asked Questions</h2>
+<div class="space-y-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h4 class="font-headline-md text-headline-md text-md mb-xs">What happens if I exceed my sandbox limit?</h4>
+<p class="text-on-surface-variant font-body-md">On the Free tier, you'll need to wait for your monthly cycle to reset or upgrade. On Pro, we offer soft-limits with metered overage charges of $0.50 per additional sandbox.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h4 class="font-headline-md text-headline-md text-md mb-xs">Can I cancel my subscription at any time?</h4>
+<p class="text-on-surface-variant font-body-md">Yes. You can cancel through your dashboard instantly. You'll maintain Pro access until the end of your current billing period.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h4 class="font-headline-md text-headline-md text-md mb-xs">Do you offer educational discounts?</h4>
+<p class="text-on-surface-variant font-body-md">We provide 50% off Pro plans for verified students and researchers. Contact our support team with your .edu email to apply.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant w-full py-lg mt-3xl">
+<div class="flex justify-between items-center px-margin-desktop w-full max-w-[1440px] mx-auto">
+<div class="flex flex-col gap-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CLARITY ENGINE</span>
+<span class="font-code-md text-code-md text-tertiary-fixed-dim uppercase">© 2024 CLARITY MACHINE. ALL SYSTEMS OPERATIONAL.</span>
+</div>
+<div class="flex items-center gap-xl font-code-md text-code-md">
+<a class="text-on-surface-variant hover:text-tertiary transition-opacity" href="#">API Docs</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-opacity" href="#">System Status</a>
+<div class="flex items-center gap-xs text-tertiary-fixed">
+<span class="w-2 h-2 bg-tertiary-fixed-dim rounded-full animate-pulse"></span>
+                    Network Latency: 12ms
+                </div>
+</div>
+</div>
+</footer>
+<script>
+        let isYearly = false;
+        let sandboxes = 120;
+        let minutes = 5000;
+
+        function togglePricing() {
+            isYearly = !isYearly;
+            const knob = document.getElementById('toggle-knob');
+            const labelMonthly = document.getElementById('label-monthly');
+            const labelYearly = document.getElementById('label-yearly');
+            const pricePro = document.querySelector('.price-pro');
+
+            if (isYearly) {
+                knob.style.transform = 'translateX(28px)';
+                labelMonthly.classList.remove('text-primary-container');
+                labelMonthly.classList.add('text-on-surface-variant');
+                labelYearly.classList.add('text-primary-container');
+                labelYearly.classList.remove('text-on-surface-variant');
+                pricePro.innerText = '$24';
+            } else {
+                knob.style.transform = 'translateX(0)';
+                labelMonthly.classList.add('text-primary-container');
+                labelMonthly.classList.remove('text-on-surface-variant');
+                labelYearly.classList.remove('text-primary-container');
+                labelYearly.classList.add('text-on-surface-variant');
+                pricePro.innerText = '$29';
+            }
+            updateCalc();
+        }
+
+        function calculate(val, type) {
+            if (type === 'sandboxes') {
+                sandboxes = val;
+                document.getElementById('val-sandboxes').innerText = val;
+            } else {
+                minutes = val;
+                document.getElementById('val-minutes').innerText = val.toLocaleString();
+            }
+            updateCalc();
+        }
+
+        function updateCalc() {
+            // Pseudo math for aesthetic effect
+            let base = 15;
+            let sbCost = sandboxes * 0.15;
+            let minCost = minutes * 0.002;
+            let total = Math.round(base + sbCost + minCost);
+            if (isYearly) total = Math.round(total * 0.8);
+            document.getElementById('calc-total').innerText = '$' + total;
+        }
+
+        // Initialize calculator
+        updateCalc();
+    </script>
+</body></html>

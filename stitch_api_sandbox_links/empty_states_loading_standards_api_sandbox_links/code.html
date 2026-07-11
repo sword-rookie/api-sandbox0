@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Empty States &amp; Loading Standards - API Sandbox Links</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#93000a",
+                    "tertiary": "#d8ffe7",
+                    "on-surface": "#e5e2e1",
+                    "secondary-container": "#38485d",
+                    "surface-container-low": "#1c1b1b",
+                    "primary": "#dbfcff",
+                    "on-tertiary-container": "#006d4a",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-surface": "#e5e2e1",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed": "#0b1c2f",
+                    "on-primary-fixed": "#002022",
+                    "outline": "#849495",
+                    "on-secondary": "#213145",
+                    "tertiary-container": "#65f2b5",
+                    "secondary": "#b7c8e1",
+                    "primary-fixed-dim": "#00dbe9",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-high": "#2a2a2a",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "primary-fixed": "#7df4ff",
+                    "primary-container": "#00f0ff",
+                    "on-error": "#690005",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-primary-fixed-variant": "#004f54",
+                    "on-tertiary": "#003824",
+                    "on-secondary-container": "#a6b6cf",
+                    "surface-variant": "#353534",
+                    "secondary-fixed": "#d3e4fe",
+                    "inverse-primary": "#006970",
+                    "surface-container": "#201f1f",
+                    "outline-variant": "#3b494b",
+                    "surface-container-highest": "#353534",
+                    "on-surface-variant": "#b9cacb",
+                    "on-background": "#e5e2e1",
+                    "error-red": "#ffb4ab",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-dim": "#131313",
+                    "on-primary-container": "#006970",
+                    "surface": "#131313",
+                    "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                    "inverse-on-surface": "#313030",
+                    "background": "#131313",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-tint": "#00dbe9",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-primary": "#00363a",
+                    "surface-bright": "#3a3939"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "lg": "24px",
+                    "2xl": "48px",
+                    "3xl": "64px",
+                    "sm": "8px",
+                    "xl": "32px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "xs": "4px",
+                    "unit": "4px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "code-md": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-lg": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Inter"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "headline-lg-mobile": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "label-caps": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "code-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+<style>
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+        .pulse-border {
+            animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(0, 240, 255, 0.5); }
+            50% { border-color: rgba(0, 240, 255, 0.1); }
+        }
+        .skeleton-shimmer {
+            background: linear-gradient(90deg, #2a2a2a 25%, #353534 50%, #2a2a2a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl font-body-md text-body-md fixed top-0 w-full z-50 border-b border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)] flex justify-between items-center px-margin-desktop h-16 md:flex hidden">
+<div class="flex items-center gap-lg">
+<span class="font-headline-md text-headline-md font-bold text-primary-container dark:text-primary-container">API Sandbox Links</span>
+<div class="flex items-center gap-md ml-lg">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors duration-200 active:scale-95 transition-transform px-sm py-xs" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors duration-200 active:scale-95 transition-transform px-sm py-xs" href="#">Projects</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors duration-200 active:scale-95 transition-transform px-sm py-xs" href="#">Blueprints</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="bg-transparent border border-outline-variant text-on-surface font-body-md text-body-md px-lg py-sm rounded hover:bg-surface-container transition-colors active:scale-95">New Project</button>
+<button class="bg-primary-container text-on-primary-container font-headline-md text-body-md font-bold px-lg py-sm rounded glow-effect active:scale-95 transition-transform">Create Sandbox</button>
+</div>
+</nav>
+<!-- SideNavBar (Desktop/Tablet) -->
+<aside class="bg-surface-container-lowest dark:bg-surface-container-lowest fixed left-0 top-16 h-[calc(100vh-64px)] w-64 border-r border-outline-variant flex flex-col py-lg px-md gap-sm hidden md:flex z-40">
+<div class="mb-lg px-sm">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="account_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+<div>
+<h2 class="font-headline-md text-body-md text-primary m-0 p-0">Clarity Machine</h2>
+<p class="font-code-md text-code-md text-on-surface-variant m-0 p-0">v2.4.0-alpha</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-xs font-label-caps text-label-caps">
+<a class="flex items-center gap-md px-md py-sm rounded-md text-on-surface-variant dark:text-on-secondary-container hover:bg-surface-container-high hover:text-primary active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Overview
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-md text-on-surface-variant dark:text-on-secondary-container hover:bg-surface-container-high hover:text-primary active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                Blueprints
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-md text-on-surface-variant dark:text-on-secondary-container hover:bg-surface-container-high hover:text-primary active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+                Infrastructure
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-md text-on-surface-variant dark:text-on-secondary-container hover:bg-surface-container-high hover:text-primary active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+                Deployments
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-md text-on-surface-variant dark:text-on-secondary-container hover:bg-surface-container-high hover:text-primary active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs font-label-caps text-label-caps border-t border-outline-variant pt-md">
+<button class="w-full mb-md bg-transparent border border-primary text-primary px-sm py-sm rounded hover:bg-primary/10 transition-colors active:scale-95">Upgrade Storage</button>
+<a class="flex items-center gap-md px-md py-sm rounded-md text-on-surface-variant dark:text-on-secondary-container hover:bg-surface-container-high hover:text-primary active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                Documentation
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-md text-on-surface-variant dark:text-on-secondary-container hover:bg-surface-container-high hover:text-primary active:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 md:ml-64 p-margin-mobile md:p-margin-desktop overflow-y-auto">
+<header class="mb-3xl">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-sm">Empty States &amp; Loading</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Design standards for moments of transition and initial user onboarding.</p>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-xl">
+<!-- Empty States Column -->
+<section class="flex flex-col gap-xl">
+<!-- No Sandboxes Empty State -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-3xl flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-outline transition-colors min-h-[400px]">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div class="w-24 h-24 rounded-full bg-surface-container-high flex items-center justify-center mb-lg pulse-border border border-outline-variant">
+<span class="text-4xl">🌱</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-md">No Sandboxes Active</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl max-w-md">Your environment is clean. Spin up an isolated sandbox to test APIs, run scripts, or experiment without affecting production data.</p>
+<button class="bg-primary-container text-on-primary-container font-headline-md text-body-md font-bold px-xl py-md rounded glow-effect active:scale-95 transition-transform flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                        Create New Sandbox
+                    </button>
+</article>
+<!-- No Projects Empty State -->
+<article class="bg-surface-container-lowest border border-outline-variant border-dashed rounded-xl p-3xl flex flex-col items-center justify-center text-center min-h-[300px]">
+<span class="material-symbols-outlined text-outline-variant mb-md" data-icon="cable" style="font-size: 48px;">cable</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">No Projects Connected</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-sm">Link a Git repository to automatically deploy and manage your API environments.</p>
+<button class="bg-transparent border border-outline-variant text-on-surface font-body-md text-body-md px-lg py-sm rounded hover:bg-surface-container transition-colors active:scale-95 flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="link">link</span>
+                        Connect Repository
+                    </button>
+</article>
+</section>
+<!-- Loading Standards Column -->
+<section class="flex flex-col gap-xl">
+<!-- Skeleton Loader Example -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-md uppercase tracking-wider">Project List Skeleton</h4>
+<div class="flex flex-col gap-md">
+<!-- Card 1 -->
+<div class="p-md rounded-lg border border-surface-container-high bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded skeleton-shimmer"></div>
+<div class="flex flex-col gap-xs">
+<div class="h-5 w-32 rounded skeleton-shimmer"></div>
+<div class="h-4 w-48 rounded skeleton-shimmer"></div>
+</div>
+</div>
+<div class="h-8 w-24 rounded skeleton-shimmer hidden sm:block"></div>
+</div>
+<!-- Card 2 -->
+<div class="p-md rounded-lg border border-surface-container-high bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded skeleton-shimmer"></div>
+<div class="flex flex-col gap-xs">
+<div class="h-5 w-40 rounded skeleton-shimmer"></div>
+<div class="h-4 w-32 rounded skeleton-shimmer"></div>
+</div>
+</div>
+<div class="h-8 w-24 rounded skeleton-shimmer hidden sm:block"></div>
+</div>
+</div>
+</div>
+<!-- Build Progress Example -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-md uppercase tracking-wider">Active Build State</h4>
+<div class="p-lg rounded-lg border border-primary/20 bg-surface-container-high relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 animate-pulse"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-end mb-md">
+<div>
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-primary animate-spin" data-icon="progress_activity" style="font-size: 20px;">progress_activity</span>
+<h5 class="font-headline-md text-body-md text-on-surface m-0">Nixpacks Build</h5>
+</div>
+<p class="font-code-md text-code-md text-on-surface-variant m-0">Resolving dependencies...</p>
+</div>
+<div class="text-right">
+<span class="font-headline-md text-headline-md text-primary block">65%</span>
+<span class="font-code-md text-label-caps text-on-surface-variant">ETA: ~45s</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full relative" style="width: 65%;">
+<div class="absolute inset-0 bg-white/20 w-full h-full animate-[shimmer_1s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+</div>
+</div>
+<!-- Console Snippet -->
+<div class="mt-md bg-surface-dim border border-outline-variant rounded p-sm font-code-md text-label-caps text-on-surface-variant opacity-70">
+                                &gt; [1/4] Resolving packages...<br/>
+                                &gt; [2/4] Fetching base image nixpacks/node:18...<br/>
+                                &gt; [3/4] Installing dependencies... <span class="text-primary animate-pulse">_</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

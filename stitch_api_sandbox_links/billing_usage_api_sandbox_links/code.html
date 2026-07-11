@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#38485d",
+                    "on-primary-fixed": "#002022",
+                    "secondary": "#b7c8e1",
+                    "background": "#131313",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-dim": "#131313",
+                    "on-secondary-container": "#a6b6cf",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-bright": "#3a3939",
+                    "on-secondary-fixed": "#0b1c2f",
+                    "error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "tertiary-container": "#65f2b5",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary": "#d8ffe7",
+                    "on-primary": "#00363a",
+                    "on-surface": "#e5e2e1",
+                    "inverse-surface": "#e5e2e1",
+                    "error-red": "#ffb4ab",
+                    "on-tertiary": "#003824",
+                    "surface-tint": "#00dbe9",
+                    "on-tertiary-container": "#006d4a",
+                    "on-surface-variant": "#b9cacb",
+                    "surface": "#131313",
+                    "error": "#ffb4ab",
+                    "outline-variant": "#3b494b",
+                    "inverse-primary": "#006970",
+                    "surface-container-highest": "#353534",
+                    "outline": "#849495",
+                    "on-primary-container": "#006970",
+                    "primary": "#dbfcff",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#353534",
+                    "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                    "primary-fixed": "#7df4ff",
+                    "primary-fixed-dim": "#00dbe9",
+                    "surface-container": "#201f1f",
+                    "inverse-on-surface": "#313030",
+                    "primary-container": "#00f0ff",
+                    "on-error": "#690005",
+                    "on-secondary": "#213145",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-background": "#e5e2e1",
+                    "on-primary-fixed-variant": "#004f54",
+                    "tertiary-fixed": "#6ffbbe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "3xl": "64px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "xl": "32px",
+                    "2xl": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "code-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+        }
+        .progress-glow {
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl flex justify-between items-center h-16 px-margin-desktop border-b border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)]">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary-container tracking-tight">API Sandbox Links</span>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors duration-200">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors duration-200">settings</button>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a developer in a high-tech office environment. The image is crisp and modern, featuring cool blue and cyan ambient lighting that reflects a sophisticated developer persona. The background is slightly blurred with soft bokeh from server rack indicators, maintaining a technical and focused mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVXCaRRsE9tedDw8UzwOi1TORNHIpocV6Wc7ZLPxku3KC6zDYAZibEvvdp7jA5LWYB22RrdCQt_tLG1FGIN-O1dQnYG4v-XRp2Y3oWyzMcg4BbqgoDMHodS-Qf6wQkQPV-Yee5UtIiBFNeA8oR8s17MgxY9b9YDWok1O7O4vSxfzYe7FKPq2ZG3YxQODWJFz87pP_hoO_iyQxo1Wz6v-aVn7k4TZ3i2oOiXGThPMZLCNZlcqPVo83lgWapyWm7TYzBZKGlRqBa11PC"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-md px-sm z-40 hidden md:flex">
+<div class="mb-xl px-sm">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-8 h-8 bg-primary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface leading-none">Main Infrastructure</h3>
+<p class="text-[10px] text-on-surface-variant font-code-md">VPC-East-1</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-primary-fixed transition-all duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-primary-fixed transition-all duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">folder</span> Projects
+            </a>
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-primary-fixed transition-all duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">layers</span> Sandboxes
+            </a>
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-primary-fixed transition-all duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">history</span> Activity
+            </a>
+<!-- Active State -->
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-primary-container bg-secondary-container/30 border-r-4 border-primary-container transition-all duration-200 ease-in-out font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span> Billing
+            </a>
+</nav>
+<div class="mt-auto space-y-1 pt-md border-t border-outline-variant">
+<button class="w-full bg-primary-container text-on-primary-fixed py-sm rounded font-bold text-label-caps mb-lg active:scale-95 transition-transform">Deploy New Sandbox</button>
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">menu_book</span> Documentation
+            </a>
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:text-primary-fixed transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">headset_mic</span> Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 ml-0 md:ml-64 px-margin-mobile md:px-margin-desktop min-h-screen">
+<div class="max-w-[1440px] mx-auto">
+<!-- Page Header -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-3xl">
+<div>
+<div class="flex items-center gap-sm mb-xs">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Billing &amp; Usage</h1>
+<span class="bg-primary-container/10 text-primary-container px-sm py-1 rounded text-label-caps border border-primary-container/20">PRO</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your organization's subscription and resource allocation.</p>
+</div>
+<div class="flex items-center gap-md bg-surface-container p-md rounded-xl border border-outline-variant">
+<div class="text-right">
+<p class="text-label-caps text-on-surface-variant">Next Billing Date</p>
+<p class="font-code-md text-code-md text-primary-container">June 25, 2026</p>
+</div>
+<button class="bg-primary-container text-on-primary-fixed px-lg py-sm rounded-lg font-bold text-label-caps active:scale-95 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)]">Manage Subscription</button>
+</div>
+</header>
+<!-- Usage Dashboard (Metric Cards) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-3xl">
+<!-- Sandboxes Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-xl rounded-2xl glow-border group hover:border-primary-container transition-colors">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<p class="text-label-caps text-on-surface-variant mb-xs">Active Sandboxes</p>
+<h2 class="font-display-lg text-display-lg text-on-surface">47 <span class="text-on-surface-variant font-headline-md">/ ∞</span></h2>
+</div>
+<span class="material-symbols-outlined text-primary-container p-sm bg-primary-container/10 rounded-lg">inventory_2</span>
+</div>
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container progress-glow" style="width: 25%;"></div>
+</div>
+<p class="mt-sm font-code-md text-[12px] text-primary-container/80">Usage: Unlimited for Pro</p>
+</div>
+<!-- Build Minutes Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-xl rounded-2xl glow-border group hover:border-primary-container transition-colors">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<p class="text-label-caps text-on-surface-variant mb-xs">Build Minutes</p>
+<h2 class="font-display-lg text-display-lg text-on-surface">842 <span class="text-on-surface-variant font-headline-md">/ 2k</span></h2>
+</div>
+<span class="material-symbols-outlined text-primary-container p-sm bg-primary-container/10 rounded-lg">timer</span>
+</div>
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container progress-glow" style="width: 42.1%;"></div>
+</div>
+<p class="mt-sm font-code-md text-[12px] text-on-surface-variant">42.1% of monthly quota used</p>
+</div>
+<!-- Storage Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-xl rounded-2xl glow-border group hover:border-primary-container transition-colors">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<p class="text-label-caps text-on-surface-variant mb-xs">Disk Storage</p>
+<h2 class="font-display-lg text-display-lg text-on-surface">4.8 <span class="text-on-surface-variant font-headline-md">/ 50GB</span></h2>
+</div>
+<span class="material-symbols-outlined text-primary-container p-sm bg-primary-container/10 rounded-lg">database</span>
+</div>
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container progress-glow" style="width: 9.6%;"></div>
+</div>
+<p class="mt-sm font-code-md text-[12px] text-on-surface-variant">9.6% capacity utilized</p>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+<!-- Usage Breakdown -->
+<section class="lg:col-span-2 bg-surface-container-low border border-outline-variant rounded-2xl p-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xl">Usage Breakdown</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-lg">
+<div class="flex items-center justify-between p-lg bg-surface-container-lowest rounded-xl border border-outline-variant/30">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Active Sandboxes</span>
+</div>
+<span class="font-code-md text-code-md font-bold text-primary-container">12</span>
+</div>
+<div class="flex items-center justify-between p-lg bg-surface-container-lowest rounded-xl border border-outline-variant/30">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">bedtime</span>
+<span class="font-body-md text-body-md text-on-surface">Hibernated</span>
+</div>
+<span class="font-code-md text-code-md font-bold text-on-surface">35</span>
+</div>
+<div class="flex items-center justify-between p-lg bg-surface-container-lowest rounded-xl border border-outline-variant/30">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">schedule</span>
+<span class="font-body-md text-body-md text-on-surface">Total Build Time</span>
+</div>
+<span class="font-code-md text-code-md font-bold text-primary-container">14.2 hrs</span>
+</div>
+<div class="flex items-center justify-between p-lg bg-surface-container-lowest rounded-xl border border-outline-variant/30">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">storage</span>
+<span class="font-body-md text-body-md text-on-surface">Ephemeral DBs</span>
+</div>
+<span class="font-code-md text-code-md font-bold text-on-surface">3.1 GB</span>
+</div>
+<div class="flex items-center justify-between p-lg bg-surface-container-lowest rounded-xl border border-outline-variant/30 sm:col-span-2">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">auto_awesome</span>
+<span class="font-body-md text-body-md text-on-surface">AI Seeding Requests</span>
+</div>
+<span class="font-code-md text-code-md font-bold text-primary-container">87 / month</span>
+</div>
+</div>
+</section>
+<!-- Plan Comparison / Retention -->
+<section class="bg-surface-container-high border border-outline-variant rounded-2xl p-xl flex flex-col h-full">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-lg">What's in your plan</h3>
+<ul class="space-y-md flex-1">
+<li class="flex gap-sm items-start">
+<span class="material-symbols-outlined text-primary-container text-sm">check</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Unlimited public &amp; private sandboxes</span>
+</li>
+<li class="flex gap-sm items-start">
+<span class="material-symbols-outlined text-primary-container text-sm">check</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Advanced security auditing</span>
+</li>
+<li class="flex gap-sm items-start">
+<span class="material-symbols-outlined text-primary-container text-sm">check</span>
+<span class="font-body-md text-body-md text-on-surface-variant">High-performance AI generation</span>
+</li>
+<li class="flex gap-sm items-start">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">info</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Shared team infrastructure</span>
+</li>
+</ul>
+<div class="mt-xl pt-xl border-t border-outline-variant/50">
+<p class="text-label-caps text-on-surface-variant mb-md text-center">Need dedicated VPC &amp; SSO?</p>
+<button class="w-full border border-primary-container/40 text-primary-container py-md rounded-lg font-bold text-label-caps hover:bg-primary-container/5 transition-colors">Enterprise Inquiry</button>
+</div>
+</section>
+</div>
+<!-- Billing History -->
+<section class="mt-3xl">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xl">Billing History</h3>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden overflow-x-auto hide-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-xl py-lg font-label-caps text-label-caps text-on-surface-variant">Invoice Period</th>
+<th class="px-xl py-lg font-label-caps text-label-caps text-on-surface-variant">Amount</th>
+<th class="px-xl py-lg font-label-caps text-label-caps text-on-surface-variant">Status</th>
+<th class="px-xl py-lg font-label-caps text-label-caps text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 font-code-md text-code-md">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-xl py-lg text-on-surface">May 2026</td>
+<td class="px-xl py-lg text-on-surface">$29.00</td>
+<td class="px-xl py-lg">
+<span class="px-sm py-1 bg-tertiary-container/10 text-tertiary-fixed-dim rounded-full text-[10px] font-bold border border-tertiary-fixed-dim/20">PAID</span>
+</td>
+<td class="px-xl py-lg text-right">
+<button class="flex items-center gap-xs ml-auto text-primary-container hover:underline group transition-all">
+                                        Download PDF <span class="material-symbols-outlined text-sm">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-xl py-lg text-on-surface">April 2026</td>
+<td class="px-xl py-lg text-on-surface">$29.00</td>
+<td class="px-xl py-lg">
+<span class="px-sm py-1 bg-tertiary-container/10 text-tertiary-fixed-dim rounded-full text-[10px] font-bold border border-tertiary-fixed-dim/20">PAID</span>
+</td>
+<td class="px-xl py-lg text-right">
+<button class="flex items-center gap-xs ml-auto text-primary-container hover:underline group transition-all">
+                                        Download PDF <span class="material-symbols-outlined text-sm">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-xl py-lg text-on-surface">March 2026</td>
+<td class="px-xl py-lg text-on-surface">$29.00</td>
+<td class="px-xl py-lg">
+<span class="px-sm py-1 bg-tertiary-container/10 text-tertiary-fixed-dim rounded-full text-[10px] font-bold border border-tertiary-fixed-dim/20">PAID</span>
+</td>
+<td class="px-xl py-lg text-right">
+<button class="flex items-center gap-xs ml-auto text-primary-container hover:underline group transition-all">
+                                        Download PDF <span class="material-symbols-outlined text-sm">download</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-md mt-auto bg-surface-dim border-t border-outline-variant flex justify-between items-center px-margin-desktop ml-0 md:ml-64">
+<p class="font-code-md text-code-md text-on-surface-variant">© 2024 API Sandbox Links. All systems operational.</p>
+<div class="flex items-center gap-lg">
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-code-md text-code-md text-on-surface-variant hover:text-tertiary-fixed-dim transition-colors opacity-80 hover:opacity-100" href="#">System Status</a>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.glow-border').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                card.style.borderColor = 'rgba(0, 240, 255, 0.5)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(59, 73, 75, 1)';
+            });
+        });
+    </script>
+</body></html>

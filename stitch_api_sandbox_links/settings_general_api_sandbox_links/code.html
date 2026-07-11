@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings | API Sandbox Links</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#38485d",
+                    "primary-fixed": "#7df4ff",
+                    "on-secondary-container": "#a6b6cf",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e5e2e1",
+                    "on-primary-fixed": "#002022",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface": "#131313",
+                    "outline-variant": "#3b494b",
+                    "on-tertiary-container": "#006d4a",
+                    "secondary-container": "#38485d",
+                    "on-primary-container": "#006970",
+                    "background": "#131313",
+                    "on-error": "#690005",
+                    "surface-dim": "#131313",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-background": "#e5e2e1",
+                    "surface-variant": "#353534",
+                    "surface-container-highest": "#353534",
+                    "on-tertiary-fixed": "#002113",
+                    "on-secondary-fixed": "#0b1c2f",
+                    "primary": "#dbfcff",
+                    "on-secondary": "#213145",
+                    "on-tertiary": "#003824",
+                    "surface-container-high": "#2a2a2a",
+                    "outline": "#849495",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-surface-variant": "#b9cacb",
+                    "tertiary-fixed": "#6ffbbe",
+                    "primary-fixed-dim": "#00dbe9",
+                    "error-container": "#93000a",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "tertiary-container": "#65f2b5",
+                    "on-surface": "#e5e2e1",
+                    "tertiary": "#d8ffe7",
+                    "surface-tint": "#00dbe9",
+                    "inverse-on-surface": "#313030",
+                    "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                    "surface-bright": "#3a3939",
+                    "on-primary": "#00363a",
+                    "surface-container": "#201f1f",
+                    "inverse-primary": "#006970",
+                    "on-primary-fixed-variant": "#004f54",
+                    "secondary": "#b7c8e1",
+                    "error-red": "#ffb4ab",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "primary-container": "#00f0ff",
+                    "error": "#ffb4ab"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "3xl": "64px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "margin-desktop": "40px",
+                    "2xl": "48px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "unit": "4px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "code-md": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3b494b;
+            border-radius: 10px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none !important;
+            border-color: #00f0ff !important;
+            box-shadow: 0 0 0 1px #00f0ff !important;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden h-screen flex">
+<!-- SideNavBar (The Anchor) -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-xl hidden md:flex">
+<div class="px-lg mb-xl">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded bg-primary-container/20 flex items-center justify-center border border-primary-container/30">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary-container leading-none">Project Alpha</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mt-1">Production Cluster</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1 px-sm custom-scrollbar overflow-y-auto">
+<!-- Labels and Icons strictly from JSON -->
+<a class="flex items-center gap-md px-md py-sm text-primary-container bg-primary/10 border-r-2 border-primary-container font-body-md text-body-md transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>General</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">code</span>
+<span>GitHub</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Members</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">security</span>
+<span>Security</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span>Resources</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span>Sandbox</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span>AI</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Billing</span>
+</a>
+</nav>
+<div class="px-sm pt-xl border-t border-outline-variant/30 mt-auto">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150 mb-1" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Docs</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-md text-body-md transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span>Support</span>
+</a>
+<button class="mt-xl mx-md py-sm px-md bg-primary-container text-on-primary-fixed font-bold rounded-lg shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:scale-[1.02] active:scale-95 transition-all">
+                Deploy New Sandbox
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 flex flex-col relative">
+<!-- TopNavBar (The Anchor) -->
+<header class="fixed top-0 right-0 left-0 md:left-64 z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)] flex justify-between items-center px-margin-desktop h-16">
+<div class="flex items-center gap-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary-container">Settings</h1>
+<div class="hidden sm:flex items-center bg-surface-container-low border border-outline-variant px-md py-1.5 rounded-full w-80 group focus-within:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-body-md">search</span>
+<input class="bg-transparent border-none text-body-md w-full focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50" placeholder="Search settings, members, logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-container transition-colors duration-200">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-container transition-colors duration-200">settings</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-container transition-colors duration-200">help</button>
+</div>
+<div class="h-8 w-px bg-outline-variant"></div>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional headshot of a software engineer with a neutral expression, set against a dark, tech-oriented studio background with subtle cyan rim lighting. The style is modern and high-resolution, conveying expertise and technical authority. Deep blacks and sharp contrasts define the aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi4nggGp59Uufk8XlmFIGZ9hmetdzNDzCuocOsIp0eSx9omH-VTV0TJPWkyDVIgHXX8gYJzHtxZZgP3Lcjb8TI3lbLUJlhVKXccp49ZyCFRX6CubNpwixivkEVDKvZZU1eJGN15X-sMS0JsLxbnftJbhkIa7VUXvW4Q-ZW1ZmmGb3e6xR6pVmOt1rpJ7HKnkHvYe3jsT8JDGWHlbmDIoYFzyTJdsEPqu277mRBWC2XiP59_6a6ygiynZFWUsjmbthAyPiyfSTvtOB4"/>
+</div>
+</header>
+<!-- Page Canvas -->
+<section class="mt-16 p-margin-desktop overflow-y-auto custom-scrollbar flex-1">
+<div class="max-w-5xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- General Settings Column -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- Project Information Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl hover:border-primary-container/30 transition-colors">
+<div class="flex items-center justify-between mb-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface">Project Information</h3>
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+</div>
+<div class="space-y-lg">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Project Name</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-code-md text-code-md text-primary-container" onchange="toggleSaveBar()" type="text" value="nexus-core-api"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Description</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface" onchange="toggleSaveBar()" rows="2">Core API services for Nexus Infrastructure</textarea>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Default Branch</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-code-md text-code-md text-on-surface cursor-pointer" onchange="toggleSaveBar()">
+<option selected="">main</option>
+<option>develop</option>
+<option>staging</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Visibility Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xl">Visibility</h3>
+<div class="space-y-md">
+<label class="flex items-start gap-md p-md rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors cursor-pointer group">
+<input class="mt-1 text-primary-container bg-surface focus:ring-primary-container" name="visibility" onchange="toggleSaveBar()" type="radio" value="public"/>
+<div class="flex-1">
+<div class="font-body-md font-bold text-on-surface">Public</div>
+<div class="text-on-surface-variant text-body-md">Anyone on the internet can see this project.</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">public</span>
+</label>
+<label class="flex items-start gap-md p-md rounded-lg border border-primary-container/50 bg-primary-container/5 hover:bg-primary-container/10 transition-colors cursor-pointer group">
+<input checked="" class="mt-1 text-primary-container bg-surface focus:ring-primary-container" name="visibility" onchange="toggleSaveBar()" type="radio" value="private"/>
+<div class="flex-1">
+<div class="font-body-md font-bold text-on-surface">Private</div>
+<div class="text-on-surface-variant text-body-md">Only members with access can see this project.</div>
+</div>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">lock</span>
+</label>
+</div>
+</div>
+<!-- Lifecycle Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xl">Sandbox Lifecycle</h3>
+<div class="space-y-xl">
+<div class="flex items-center justify-between gap-xl">
+<div class="flex-1">
+<div class="font-body-md font-bold text-on-surface">Default Sandbox Lifetime</div>
+<p class="text-on-surface-variant text-body-md">Automatically destroy sandboxes after this period.</p>
+</div>
+<div class="relative w-40">
+<select class="w-full appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-code-md text-code-md text-on-surface cursor-pointer" onchange="toggleSaveBar()">
+<option>4 hours</option>
+<option selected="">12 hours</option>
+<option>7 days</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30"></div>
+<div class="flex items-center justify-between gap-xl">
+<div class="flex-1">
+<div class="font-body-md font-bold text-on-surface">Auto-hibernate after inactivity</div>
+<p class="text-on-surface-variant text-body-md">Pause compute resources when idle.</p>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative w-24">
+<select class="w-full appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm font-code-md text-code-md text-on-surface cursor-pointer" onchange="toggleSaveBar()">
+<option selected="">10 mins</option>
+<option>30 mins</option>
+<option>1 hour</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+<!-- Toggle Switch -->
+<button class="w-12 h-6 rounded-full bg-primary-container relative transition-colors" onclick="toggleSwitch(this); toggleSaveBar()">
+<div class="w-4 h-4 bg-on-primary rounded-full absolute top-1 right-1 transition-all" id="toggle-knob"></div>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Info Column -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Status Card -->
+<div class="bg-surface-container border border-outline-variant rounded-xl p-lg">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-md uppercase">Audit Status</h4>
+<div class="flex items-start gap-md">
+<span class="material-symbols-outlined text-tertiary-fixed text-[32px]">history</span>
+<div>
+<p class="text-body-md text-on-surface">Settings last updated <span class="text-primary-container font-code-md">2 days ago</span></p>
+<div class="mt-2 flex items-center gap-xs">
+<img alt="Blaster avatar" class="w-5 h-5 rounded-full border border-outline-variant" data-alt="A futuristic digital avatar portrait of a developer nicknamed 'Blaster'. The style is a minimalist 3D render with clean lines, featuring a stylized helmet or glasses that glow with faint cyan light. The overall mood is cool, technical, and slightly cyberpunk-adjacent, set against a dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqZoPAw5BNROw3YK_uMWuvoc7Rgye8jgS_JBQScIDhXDOX1Q_0rIUEAc8TWCJqLDFCybYj0Wf6eXGKZNMBm5H8SFSefCCSNQhhEzx7BNB2wsMz6HEonrvyTPL0JKkdp3dGRv8YRKzqoMEMj2TElFFRdfeinuxYLSANQss_UUjp_eLmUeZuDckPLmwNREKtQaM7VnIs6rjdd412TZ_HNVtDhVR9AtQ6HvJog6F1F9JUqtHkTQ2RvWILcOOIOhOkHAPfe7lglCFjJmDG"/>
+<span class="font-code-md text-code-md text-on-surface-variant">@blaster</span>
+</div>
+</div>
+</div>
+<button class="mt-xl w-full py-sm border border-outline-variant rounded-lg text-on-surface hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+                                View Activity Log
+                            </button>
+</div>
+<!-- Technical Details -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-lg bg-surface-container-low border-b border-outline-variant">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Resource Stats</h4>
+</div>
+<div class="p-lg space-y-md">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-body-md">Active Sandboxes</span>
+<span class="font-code-md text-primary-container">12 / 50</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-[24%] shadow-[0_0_8px_rgba(0,240,255,0.5)]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-body-md">Daily API Requests</span>
+<span class="font-code-md text-on-surface">144k</span>
+</div>
+</div>
+</div>
+<!-- Documentation Callout -->
+<div class="relative rounded-xl overflow-hidden h-40 group cursor-pointer">
+<img alt="Technical background" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A close-up, macro shot of a server circuit board with intricate copper pathways and microchips. The lighting is low and atmospheric, dominated by deep shadows and intense cyan glowing highlights that trace the data paths. The visual is sharp, technical, and hyper-detailed, reinforcing a high-performance infrastructure theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpWz0d6MJpkc70Vp1G-79yCIAHRTZyKTrhUF5-ArXXGrj0U8V0bg75LdnU65AfxSKN6qm40_Tn9ZqTVxDXn--XJwQ-A5xsT4Ife3x3xA8UEqNrVVZWNIt6CoWILQRp4-LfU8S7vBDW8s8K9HqkJEn2xVhodgaFnGMSYagreeLjwGRoAnFO-_6vqOe7V7ZrnM8Dfe2SX88orlRoRR6Wpg8Jq0OYpiu-TcuAC5WSE-mCFht1lxp-BGp4Och9cMofCWwQPgWOZGqX6Azm"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-lg flex flex-col justify-end">
+<p class="font-bold text-on-surface mb-xs">Infrastructure Docs</p>
+<p class="text-sm text-on-surface-variant leading-tight">Learn about sandbox lifecycles and API limits.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Floating Save Bar (Hidden by default) -->
+<div class="fixed bottom-margin-desktop left-1/2 -translate-x-1/2 bg-surface-container-highest border border-primary-container/40 px-xl py-md rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.5),0_0_20px_rgba(0,240,255,0.1)] flex items-center gap-xl transition-all duration-300 translate-y-24 opacity-0 pointer-events-none z-[60]" id="save-bar">
+<p class="text-body-md text-on-surface font-semibold">Careful — you have unsaved changes!</p>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md px-md py-sm" onclick="resetSettings()">Reset</button>
+<button class="bg-primary-container text-on-primary-fixed font-bold px-xl py-sm rounded-full active:scale-95 transition-transform hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]" onclick="saveSettings()">
+                    Save Changes
+                </button>
+</div>
+</div>
+</main>
+<script>
+        let isChanged = false;
+
+        function toggleSaveBar() {
+            const bar = document.getElementById('save-bar');
+            if (!isChanged) {
+                isChanged = true;
+                bar.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function saveSettings() {
+            const bar = document.getElementById('save-bar');
+            isChanged = false;
+            bar.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            // Mock feedback
+            alert("Settings saved successfully.");
+        }
+
+        function resetSettings() {
+            const bar = document.getElementById('save-bar');
+            isChanged = false;
+            bar.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            location.reload();
+        }
+
+        function toggleSwitch(el) {
+            const knob = el.querySelector('#toggle-knob');
+            if (el.classList.contains('bg-primary-container')) {
+                el.classList.replace('bg-primary-container', 'bg-surface-container-high');
+                knob.classList.replace('right-1', 'left-1');
+                knob.classList.replace('bg-on-primary', 'bg-on-surface-variant');
+            } else {
+                el.classList.replace('bg-surface-container-high', 'bg-primary-container');
+                knob.classList.replace('left-1', 'right-1');
+                knob.classList.replace('bg-on-surface-variant', 'bg-on-primary');
+            }
+        }
+    </script>
+</body></html>

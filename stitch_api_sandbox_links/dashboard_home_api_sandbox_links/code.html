@@ -1,0 +1,486 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Clarity Machine - API Sandbox Links</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-border:hover {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            border-color: #00f0ff;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b494b;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#00f0ff",
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary-container": "#38485d",
+                        "primary": "#dbfcff",
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#006970",
+                        "on-secondary": "#213145",
+                        "surface-container-highest": "#353534",
+                        "surface-container": "#201f1f",
+                        "background": "#131313",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "error-red": "#ffb4ab",
+                        "on-primary-fixed": "#002022",
+                        "outline-variant": "#3b494b",
+                        "on-tertiary-fixed": "#002113",
+                        "secondary": "#b7c8e1",
+                        "primary-fixed-dim": "#00dbe9",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-variant": "#353534",
+                        "surface-container-high": "#2a2a2a",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-container": "#006970",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#006d4a",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-secondary-container": "#a6b6cf",
+                        "tertiary": "#d8ffe7",
+                        "primary-fixed": "#7df4ff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "outline": "#849495",
+                        "surface-dim": "#131313",
+                        "tertiary-container": "#65f2b5",
+                        "on-tertiary": "#003824",
+                        "on-background": "#e5e2e1",
+                        "on-surface-variant": "#b9cacb",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "surface": "#131313",
+                        "surface-tint": "#00dbe9",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "on-primary": "#00363a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "3xl": "64px",
+                        "xs": "4px",
+                        "margin-desktop": "40px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "2xl": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "code-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">Clarity Machine</span>
+<div class="hidden md:flex items-center bg-surface-container rounded-full px-md py-xs border border-outline-variant w-96 ml-xl">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+<input class="bg-transparent border-none text-body-md focus:ring-0 w-full text-on-surface placeholder:text-on-surface-variant" placeholder="Search sandbox..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden lg:flex items-center gap-sm">
+<button class="bg-surface-container-high border border-outline-variant text-on-surface px-md py-xs rounded-lg font-label-caps text-label-caps hover:bg-surface-container transition-all active:scale-95">+ New Project</button>
+<button class="bg-primary-container text-on-primary-container px-md py-xs rounded-lg font-label-caps text-label-caps hover:brightness-110 transition-all active:scale-95 shadow-[0_0_15px_rgba(0,240,255,0.3)]">+ New Sandbox</button>
+</div>
+<div class="flex items-center gap-sm border-l border-outline-variant pl-md ml-sm">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface transition-colors">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary-container">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a technology professional with a confident expression, set against a dark, cinematic background with subtle cyan lighting accents that reflect a high-tech developer environment. The lighting is soft and directional, highlighting the person's features while maintaining a sophisticated, minimalist aesthetic consistent with a high-end software dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyid4KhRn3uPKxkbFa5PN6Z6eoQ31wjDP9cyfcPoyH7D5pA23M9dJUlChexrPpOYNC_g-rzXuEyWs2W2JI7VVZI8u9_qMhuq9MnHo7L5DYjKjnsw8BW7oOdolU_YzE-vdm24k5A915uk8jZKhgw0KeFqaZW3FFrJAeDjzttfUkzkmLpFurLES2LWZm32GuKwcPfIXF4yTXOyzEcxAAcycZoxna4fQjWgHNkvNFocHiLUsF9fdp9tBjGYJlcaGhMnZqEUwLfY2vel6S">
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 bottom-0 w-64 flex flex-col py-md px-sm bg-surface-container-lowest dark:bg-surface-container-lowest border-r border-outline-variant hidden md:flex">
+<div class="px-md mb-xl flex items-center gap-sm">
+<div class="w-10 h-10 bg-secondary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">deployed_code</span>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface font-bold">Project Alpha</h3>
+<p class="font-body-md text-xs text-on-surface-variant">Production Cluster</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md px-md py-3 bg-secondary-container text-on-secondary-container rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span class="font-body-md text-body-md">Projects</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">All Sandboxes</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-md text-body-md">Activity</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Team</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto space-y-4 px-md">
+<div class="bg-surface-container rounded-xl p-md border border-outline-variant">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-sm">STORAGE USED</p>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden mb-xs">
+<div class="h-full bg-primary-container w-3/4"></div>
+</div>
+<div class="flex justify-between items-center mb-md">
+<span class="font-body-md text-xs text-on-surface">1.2GB / 2.0GB</span>
+</div>
+<button class="w-full py-xs rounded-lg border border-primary-container/30 text-primary-container font-label-caps text-label-caps hover:bg-primary-container/10 transition-colors">Upgrade Storage</button>
+</div>
+<div class="flex items-center justify-around border-t border-outline-variant pt-md">
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">Active</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:scale-110 transition-transform">nights_stay</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">Sleeping</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-16 min-h-screen">
+<div class="max-w-[1440px] mx-auto p-margin-desktop space-y-3xl">
+<!-- Welcome Section -->
+<section class="space-y-sm">
+<h1 class="font-display-lg text-display-lg text-on-surface">Welcome back, Alex</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">What would you like to do today? Your project clusters are healthy and 5 sandboxes are currently active.</p>
+</section>
+<!-- Quick Action Cards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<button class="group flex flex-col items-start p-xl bg-surface-container-lowest border border-outline-variant rounded-xl glow-border transition-all text-left">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center mb-md group-hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-primary-container">create_new_folder</span>
+</div>
+<h3 class="font-headline-md text-lg text-on-surface mb-xs">Create New Project</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Initialize a fresh infrastructure cluster.</p>
+</button>
+<button class="group flex flex-col items-start p-xl bg-surface-container-lowest border border-outline-variant rounded-xl glow-border transition-all text-left">
+<div class="w-12 h-12 rounded-lg bg-tertiary-container/10 flex items-center justify-center mb-md group-hover:bg-tertiary-container/20 transition-colors">
+<span class="material-symbols-outlined text-tertiary-fixed-dim">terminal</span>
+</div>
+<h3 class="font-headline-md text-lg text-on-surface mb-xs">Create New Sandbox</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Spin up a temporary API environment.</p>
+</button>
+<button class="group flex flex-col items-start p-xl bg-surface-container-lowest border border-outline-variant rounded-xl glow-border transition-all text-left">
+<div class="w-12 h-12 rounded-lg bg-secondary-container/10 flex items-center justify-center mb-md group-hover:bg-secondary-container/20 transition-colors">
+<span class="material-symbols-outlined text-secondary">explore</span>
+</div>
+<h3 class="font-headline-md text-lg text-on-surface mb-xs">View All Sandboxes</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Manage your existing active deployments.</p>
+</button>
+<button class="group flex flex-col items-start p-xl bg-surface-container-lowest border border-outline-variant rounded-xl glow-border transition-all text-left">
+<div class="w-12 h-12 rounded-lg bg-outline-variant/10 flex items-center justify-center mb-md group-hover:bg-outline-variant/20 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">person_add</span>
+</div>
+<h3 class="font-headline-md text-lg text-on-surface mb-xs">Invite Team Member</h3>
+<p class="font-body-md text-sm text-on-surface-variant">Collaborate with fellow developers.</p>
+</button>
+</section>
+<!-- Recent Projects Grid -->
+<section class="space-y-xl">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Recent Projects</h2>
+<a class="text-primary-container font-label-caps text-label-caps hover:underline" href="#">VIEW ALL PROJECTS</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Project Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:border-primary-container/50 transition-colors">
+<div class="h-24 bg-gradient-to-br from-secondary-container/30 to-surface-container relative">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#00f0ff 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+<div class="absolute bottom-4 left-4 flex gap-xs">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold">HEALTHY</span>
+</div>
+</div>
+<div class="p-md space-y-md">
+<div>
+<h4 class="font-headline-md text-lg text-on-surface">Project Alpha</h4>
+<p class="text-xs text-on-surface-variant font-code-md">alpha-production.infra</p>
+</div>
+<div class="grid grid-cols-2 gap-sm pt-md border-t border-outline-variant">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">SANDBOXES</p>
+<p class="font-body-md font-bold text-on-surface">12 Active</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">UPDATED</p>
+<p class="font-body-md font-bold text-on-surface">2m ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:border-primary-container/50 transition-colors">
+<div class="h-24 bg-gradient-to-br from-error-container/20 to-surface-container relative">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffb4ab 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+<div class="absolute bottom-4 left-4 flex gap-xs">
+<span class="bg-error text-on-error text-[10px] px-2 py-0.5 rounded-full font-bold">ISSUES (2)</span>
+</div>
+</div>
+<div class="p-md space-y-md">
+<div>
+<h4 class="font-headline-md text-lg text-on-surface">Beta Service</h4>
+<p class="text-xs text-on-surface-variant font-code-md">beta-service.test</p>
+</div>
+<div class="grid grid-cols-2 gap-sm pt-md border-t border-outline-variant">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">SANDBOXES</p>
+<p class="font-body-md font-bold text-on-surface">5 Active</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">UPDATED</p>
+<p class="font-body-md font-bold text-on-surface">14h ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:border-primary-container/50 transition-colors">
+<div class="h-24 bg-gradient-to-br from-primary-container/10 to-surface-container relative">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#00f0ff 0.5px, transparent 0.5px); background-size: 10px 10px;"></div>
+<div class="absolute bottom-4 left-4 flex gap-xs">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold">HEALTHY</span>
+</div>
+</div>
+<div class="p-md space-y-md">
+<div>
+<h4 class="font-headline-md text-lg text-on-surface">Delta Analytics</h4>
+<p class="text-xs text-on-surface-variant font-code-md">delta-v3.analytics</p>
+</div>
+<div class="grid grid-cols-2 gap-sm pt-md border-t border-outline-variant">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">SANDBOXES</p>
+<p class="font-body-md font-bold text-on-surface">3 Active</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">UPDATED</p>
+<p class="font-body-md font-bold text-on-surface">2d ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Active Sandboxes Table -->
+<section class="space-y-xl">
+<div class="flex justify-between items-center">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Active Sandboxes</h2>
+<div class="flex items-center gap-md">
+<span class="font-body-md text-sm text-on-surface-variant">Showing 5 of 20 active</span>
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container rounded-lg">filter_list</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-md py-4 font-label-caps text-label-caps text-on-surface-variant">SANDBOX NAME</th>
+<th class="px-md py-4 font-label-caps text-label-caps text-on-surface-variant">PROJECT</th>
+<th class="px-md py-4 font-label-caps text-label-caps text-on-surface-variant">STATUS</th>
+<th class="px-md py-4 font-label-caps text-label-caps text-on-surface-variant">LIVE URL</th>
+<th class="px-md py-4 font-label-caps text-label-caps text-on-surface-variant">LAST ACTIVE</th>
+<th class="px-md py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_#00f0ff]"></div>
+<span class="font-body-md font-bold text-on-surface">auth-v2-dev</span>
+</div>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">Project Alpha</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center gap-1 bg-primary-container/10 text-primary-container px-2 py-1 rounded text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span> RUNNING
+                                    </span>
+</td>
+<td class="px-md py-4">
+<a class="font-code-md text-xs text-primary-fixed-dim hover:underline flex items-center gap-1" href="#">
+                                        auth-v2.clarity.dev <span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">Just now</td>
+<td class="px-md py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-body-md font-bold text-on-surface">payment-gate-test</span>
+</div>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">Beta Service</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[11px] font-bold">
+                                        SLEEPING
+                                    </span>
+</td>
+<td class="px-md py-4">
+<a class="font-code-md text-xs text-primary-fixed-dim hover:underline flex items-center gap-1" href="#">
+                                        pay-test.clarity.dev <span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">45m ago</td>
+<td class="px-md py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed"></div>
+<span class="font-body-md font-bold text-on-surface">worker-node-4</span>
+</div>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">Project Alpha</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center gap-1 bg-tertiary-container/10 text-tertiary-fixed-dim px-2 py-1 rounded text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-bounce"></span> BUILDING
+                                    </span>
+</td>
+<td class="px-md py-4">
+<span class="font-code-md text-xs text-outline italic">Provisioning...</span>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">2m ago</td>
+<td class="px-md py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_#00f0ff]"></div>
+<span class="font-body-md font-bold text-on-surface">admin-panel-fix</span>
+</div>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">Delta Analytics</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center gap-1 bg-primary-container/10 text-primary-container px-2 py-1 rounded text-[11px] font-bold">
+                                        RUNNING
+                                    </span>
+</td>
+<td class="px-md py-4">
+<a class="font-code-md text-xs text-primary-fixed-dim hover:underline flex items-center gap-1" href="#">
+                                        admin-fix.clarity.dev <span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+</td>
+<td class="px-md py-4 font-body-md text-on-surface-variant">1h ago</td>
+<td class="px-md py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Action Button (FAB) - Suppression Logic: Usually FAB is only for primary home action -->
+<button class="fixed bottom-xl right-xl w-14 h-14 rounded-full bg-primary-container text-on-primary-container shadow-[0_4px_20px_rgba(0,240,255,0.4)] flex items-center justify-center group hover:scale-110 active:scale-95 transition-all z-[60]">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform">add</span>
+</button>
+<script>
+        // Micro-interactions and atmospheric effects
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.createElement('div');
+            // Logic for a subtle cursor trailing effect could go here if performance allows
+        });
+
+        // Simple tab switching simulation for the sidebar
+        const navItems = document.querySelectorAll('aside nav a');
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                navItems.forEach(i => {
+                    i.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+                    i.classList.add('text-on-surface-variant', 'hover:bg-surface-container-high', 'hover:text-on-surface');
+                });
+                item.classList.add('bg-secondary-container', 'text-on-secondary-container');
+                item.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-high', 'hover:text-on-surface');
+            });
+        });
+    </script>
+</body></html>

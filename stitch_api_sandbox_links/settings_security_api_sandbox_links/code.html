@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Security Settings - API Sandbox</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#a6b6cf",
+                        "error-red": "#ffb4ab",
+                        "surface-tint": "#00dbe9",
+                        "outline-variant": "#3b494b",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-fixed": "#7df4ff",
+                        "surface-dim": "#131313",
+                        "tertiary": "#d8ffe7",
+                        "surface": "#131313",
+                        "primary": "#dbfcff",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "surface-container": "#201f1f",
+                        "on-primary-fixed-variant": "#004f54",
+                        "surface-bright": "#3a3939",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#213145",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary": "#b7c8e1",
+                        "primary-container": "#00f0ff",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "background": "#131313",
+                        "surface-container-highest": "#353534",
+                        "tertiary-container": "#65f2b5",
+                        "on-primary-fixed": "#002022",
+                        "error": "#ffb4ab",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-error": "#690005",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-container": "#006d4a",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#849495",
+                        "secondary-container": "#38485d",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#b9cacb",
+                        "on-primary": "#00363a",
+                        "on-tertiary": "#003824",
+                        "on-tertiary-fixed": "#002113",
+                        "primary-fixed-dim": "#00dbe9",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#006970",
+                        "inverse-primary": "#006970"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "3xl": "64px",
+                        "2xl": "48px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xl": "32px",
+                        "margin-desktop": "40px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "code-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl text-primary-container dark:text-primary-container font-body-md text-body-md fixed top-0 w-full z-50 border-b border-outline-variant shadow-sm hidden md:block">
+<div class="flex justify-between items-center h-16 px-margin-desktop max-w-[1440px] mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary-fixed-dim">API Sandbox</span>
+<div class="relative hidden lg:flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant">search</span>
+<input class="bg-surface-container border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-on-surface focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none font-code-md text-code-md w-64 transition-colors" placeholder="Search resources..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden cursor-pointer active:scale-95 duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">person</span>
+</div>
+</div>
+</div>
+</nav>
+<div class="flex pt-16 h-screen overflow-hidden max-w-[1440px] mx-auto">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-lowest dark:bg-surface-container-lowest text-primary-fixed-dim font-code-md text-code-md fixed left-0 top-16 h-[calc(100vh-64px)] w-64 border-r border-outline-variant hidden md:flex flex-col py-md gap-xs z-40">
+<div class="px-md mb-lg">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center border border-primary-container/30">
+<span class="material-symbols-outlined text-primary-container text-sm">terminal</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary text-sm tracking-tight leading-tight">DevOps Mission Control</h2>
+</div>
+</div>
+<p class="text-on-surface-variant text-xs opacity-80">Active Session: US-East-1</p>
+</div>
+<div class="flex-1 overflow-y-auto flex flex-col gap-xs px-sm">
+<!-- Nav Items (JSON Data) -->
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span> Overview
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">person</span> Account
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-primary-fixed-dim bg-secondary-container/30 border-r-2 border-primary-container active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">security</span> Security
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">terminal</span> GitHub
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">history</span> Activity
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">layers</span> Sandboxes
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">payments</span> Billing
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">notifications</span> Notifications
+                </a>
+</div>
+<div class="px-sm mt-auto flex flex-col gap-xs pb-md border-t border-outline-variant pt-md mx-sm">
+<button class="w-full py-2 bg-primary-container text-on-primary-container font-headline-md text-sm font-bold rounded shadow-[0_0_15px_rgba(0,240,255,0.2)] active:scale-95 transition-transform">
+                    Upgrade Plan
+                </button>
+<a class="flex items-center gap-sm px-md py-2 mt-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined">help</span> Support
+                </a>
+<a class="flex items-center gap-sm px-md py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined">logout</span> Sign Out
+                </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 overflow-y-auto p-margin-mobile md:p-3xl bg-background">
+<div class="max-w-4xl mx-auto space-y-xl">
+<header class="border-b border-outline-variant pb-md">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Security Settings</h1>
+<p class="text-on-surface-variant mt-sm">Manage your authentication methods and connection keys to maintain a secure environment.</p>
+</header>
+<!-- Authentication Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-tint/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Authentication</h3>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md p-md bg-surface-container rounded border border-outline-variant">
+<div>
+<div class="flex items-center gap-sm mb-xs">
+<h4 class="font-bold text-on-surface">Two-Factor Authentication (2FA)</h4>
+<span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container font-label-caps text-label-caps border border-primary-container/20 flex items-center gap-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span> Active
+                                </span>
+</div>
+<p class="text-on-surface-variant text-sm">Protects your account by requiring an additional code during sign in.</p>
+</div>
+<button class="bg-transparent border border-outline-variant text-on-surface hover:bg-surface-container-high px-4 py-2 rounded font-headline-md text-sm transition-colors">
+                            Manage 2FA
+                        </button>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md p-md mt-sm bg-surface-container rounded border border-outline-variant">
+<div>
+<h4 class="font-bold text-on-surface mb-xs">Recovery Codes</h4>
+<p class="text-on-surface-variant text-sm">Use these codes to access your account if you lose your 2FA device.</p>
+</div>
+<button class="bg-transparent border border-outline-variant text-on-surface hover:bg-surface-container-high px-4 py-2 rounded font-headline-md text-sm transition-colors">
+                            View Codes
+                        </button>
+</div>
+</section>
+<!-- Sessions Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg">
+<div class="flex justify-between items-end mb-md">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Active Sessions</h3>
+<p class="text-on-surface-variant mt-xs text-sm">Devices currently logged into your account.</p>
+</div>
+<button class="text-error-red border border-error-red/30 hover:bg-error-red/10 px-4 py-2 rounded font-headline-md text-sm transition-colors">
+                            Sign out of all others
+                        </button>
+</div>
+<div class="overflow-x-auto border border-outline-variant rounded">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant text-on-surface-variant font-code-md text-xs uppercase tracking-wider">
+<th class="p-md font-medium">Device &amp; Browser</th>
+<th class="p-md font-medium">Location (IP)</th>
+<th class="p-md font-medium">Last Activity</th>
+<th class="p-md font-medium text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-code-md text-code-md text-on-surface divide-y divide-outline-variant">
+<tr class="bg-surface-container-low">
+<td class="p-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container">laptop_mac</span>
+<span>Mac OS • Chrome</span>
+<span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant text-[10px] uppercase ml-2">Current</span>
+</td>
+<td class="p-md text-on-surface-variant">Seattle, WA (192.168.1.1)</td>
+<td class="p-md text-primary-fixed-dim">Just now</td>
+<td class="p-md text-right"></td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">smartphone</span>
+<span>iOS 16 • Safari</span>
+</td>
+<td class="p-md text-on-surface-variant">Seattle, WA (10.0.0.42)</td>
+<td class="p-md text-on-surface-variant">2 hours ago</td>
+<td class="p-md text-right">
+<button class="text-on-surface-variant hover:text-error-red transition-colors">Revoke</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Git Access Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Git &amp; CLI Access</h3>
+<!-- SSH Keys -->
+<div class="mb-lg">
+<div class="flex justify-between items-center mb-sm">
+<h4 class="font-bold text-on-surface">SSH Keys</h4>
+<button class="bg-primary-container text-on-primary-container px-3 py-1.5 rounded font-headline-md text-sm font-bold shadow-[0_0_10px_rgba(0,240,255,0.15)] active:scale-95 transition-transform flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">add</span> Add New
+                            </button>
+</div>
+<div class="border border-outline-variant rounded divide-y divide-outline-variant bg-surface-container-low">
+<div class="p-md flex items-start justify-between gap-md">
+<div class="flex gap-md items-start">
+<span class="material-symbols-outlined text-primary-container mt-1">key</span>
+<div>
+<div class="font-bold text-on-surface">dev-machine-rsa</div>
+<div class="font-code-md text-sm text-on-surface-variant mt-xs bg-surface-container px-2 py-1 rounded inline-block border border-outline-variant/50">
+                                            SHA256:xX8y/ZZz1234567890abcdefghijklmnopqrstuvwxyz
+                                        </div>
+<div class="text-xs text-on-surface-variant mt-xs">Added on Oct 24, 2023</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error-red transition-colors p-1"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</div>
+</div>
+<!-- API Tokens -->
+<div class="pt-md border-t border-outline-variant">
+<h4 class="font-bold text-on-surface mb-xs">Personal Access Tokens</h4>
+<p class="text-on-surface-variant text-sm mb-md">Tokens used for authenticating with the CLI or API directly.</p>
+<div class="bg-surface-container p-md rounded border border-outline-variant flex items-center gap-md">
+<div class="flex-1 font-code-md text-code-md text-on-surface bg-surface-container-highest px-3 py-2 rounded border border-outline-variant tracking-widest relative overflow-hidden group">
+<span class="blur-sm group-hover:blur-none transition-all duration-300 select-none group-hover:select-auto">api_sandbox_live_xxxxxxxxxxxxxxxxxxxx</span>
+<div class="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-surface-container-highest to-transparent pointer-events-none group-hover:opacity-0 transition-opacity"></div>
+</div>
+<button class="bg-surface-variant hover:bg-surface-bright text-on-surface p-2 rounded border border-outline-variant transition-colors" title="Copy to clipboard">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+<button class="bg-transparent border border-outline-variant text-on-surface hover:bg-surface-container-high px-4 py-2 rounded font-headline-md text-sm transition-colors">
+                                Generate New
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

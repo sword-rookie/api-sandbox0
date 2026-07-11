@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Overview - @blaster</title>
+<!-- Tailwind CSS via CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#a6b6cf",
+                        "error-red": "#ffb4ab",
+                        "surface-tint": "#00dbe9",
+                        "outline-variant": "#3b494b",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-fixed": "#7df4ff",
+                        "surface-dim": "#131313",
+                        "tertiary": "#d8ffe7",
+                        "surface": "#131313",
+                        "primary": "#dbfcff",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "surface-container": "#201f1f",
+                        "on-primary-fixed-variant": "#004f54",
+                        "surface-bright": "#3a3939",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#213145",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "tertiary-fixed": "#6ffbbe",
+                        "secondary": "#b7c8e1",
+                        "primary-container": "#00f0ff",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "background": "#131313",
+                        "surface-container-highest": "#353534",
+                        "tertiary-container": "#65f2b5",
+                        "on-primary-fixed": "#002022",
+                        "error": "#ffb4ab",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-error": "#690005",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-container": "#006d4a",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#849495",
+                        "secondary-container": "#38485d",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#b9cacb",
+                        "on-primary": "#00363a",
+                        "on-tertiary": "#003824",
+                        "on-tertiary-fixed": "#002113",
+                        "primary-fixed-dim": "#00dbe9",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#006970",
+                        "inverse-primary": "#006970"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "3xl": "64px",
+                        "2xl": "48px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xl": "32px",
+                        "margin-desktop": "40px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "label-caps": ["Inter", "sans-serif"],
+                        "code-md": ["JetBrains Mono", "monospace"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "code-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for cyber aesthetic */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #131313; }
+        ::-webkit-scrollbar-thumb { background: #3b494b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00dbe9; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-sm border-b border-outline-variant transition-all duration-300">
+<div class="flex justify-between items-center h-16 px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Left Side: Brand & Search -->
+<div class="flex items-center gap-lg">
+<div class="font-headline-md text-headline-md font-bold text-primary-fixed-dim cursor-pointer hover:text-primary transition-colors active:scale-95 duration-200">
+                    API Sandbox
+                </div>
+<div class="hidden md:flex items-center bg-surface-container-lowest border border-outline-variant rounded-full px-4 py-2 focus-within:border-primary-fixed-dim focus-within:shadow-[0_0_10px_rgba(0,240,255,0.2)] transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" style="font-size: 20px;">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md text-on-surface placeholder:text-on-surface-variant w-64 outline-none" placeholder="Search resources..." type="text"/>
+</div>
+</div>
+<!-- Right Side: Actions -->
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 p-2 rounded-full hover:bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 p-2 rounded-full hover:bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer hover:border-primary transition-colors ml-sm active:scale-95 duration-200">
+<img alt="User profile avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_GQh8LEnLBW4mIGswhQ-ss8DZCBevY0av-vEX3NSca_iN9GDY6-MhLqQpCEIPI0EIIVF4n9c4wuzCVT-VZryQ5qTaWR_uIJ9puU9NU9ya0gHgrLX4GIQmnGnP6FFmzS2a0s9Vh6mzMUdy6Wl7ozKs5AfLyfM7StdlTfzrXOCp9wBr3W2SqPGkS8oW8wSeemB09Hk9TbrnQdqshJZGHZX9IZhMasPMw7wOMUsNEnqlJbkUJTFh3yj9kQUb2kLKj9E0gHWmB0WU1soN"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="bg-surface-container-lowest border-r border-outline-variant fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col py-md gap-xs hidden md:flex overflow-y-auto">
+<!-- SideNav Header -->
+<div class="px-md pb-md mb-xs border-b border-outline-variant/50">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-10 h-10 rounded border border-primary-container/30 overflow-hidden shrink-0">
+<img alt="Developer Avatar" class="w-full h-full object-cover grayscale contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrVKpwSFQBczULJo5kMCtB0_c_GSxzm6lpteIGzfw7a8uxF9ArbDE0MQ5EMCQylAMe-JWF4kY25ULWnoGwZ232vsal8M49rXerhQHmnJTZvg32nJhehB4PudlOM0udQ1Zk-6BGrd9FiIGYY9AX3kCI0Oub0Vb-BYbd2tftfDssn-AJTyX0EyAS8ZFbr3cjkpS-xBVNtvgas1qxCksH_aCuxRYaPmStsnlfvKXhXRBqmRT1TOCUTtsUJIKTepUElttuznVLUgo99MYs"/>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-headline-md text-[14px] leading-tight font-bold text-primary truncate">DevOps Mission Control</span>
+<span class="font-code-md text-[11px] text-on-surface-variant truncate">Active Session: US-East-1</span>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-xs px-sm">
+<!-- Active Tab: Overview -->
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-primary-fixed-dim bg-secondary-container/30 border-r-2 border-primary-container font-code-md text-code-md transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-code-md text-code-md" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Account</span>
+</a>
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-code-md text-code-md" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span>Security</span>
+</a>
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-code-md text-code-md" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>GitHub</span>
+</a>
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-code-md text-code-md" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>Activity</span>
+</a>
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-code-md text-code-md" href="#">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+<span>Sandboxes</span>
+</a>
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-code-md text-code-md" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Billing</span>
+</a>
+<a class="flex items-center gap-md px-md py-2 rounded-r-full mr-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-code-md text-code-md" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span>Notifications</span>
+</a>
+</div>
+<!-- Upgrade CTA & Footer -->
+<div class="px-md mt-auto pt-md border-t border-outline-variant/50">
+<button class="w-full py-2 mb-md bg-transparent border border-primary-container text-primary-container hover:bg-primary-container/10 rounded font-code-md text-[13px] transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">rocket_launch</span>
+                Upgrade Plan
+            </button>
+<div class="flex flex-col gap-xs pb-sm">
+<a class="flex items-center gap-md px-sm py-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded transition-all font-code-md text-[13px]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-md px-sm py-1.5 text-error hover:text-error-red hover:bg-error-container/20 rounded transition-all font-code-md text-[13px]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 mt-16 p-margin-mobile md:p-3xl min-h-[calc(100vh-64px)] max-w-[1176px] mx-auto">
+<!-- Profile Header Section -->
+<section class="relative mb-3xl">
+<!-- Banner Image -->
+<div class="w-full h-48 md:h-64 rounded-xl overflow-hidden relative border border-outline-variant shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent z-10"></div>
+<img class="w-full h-full object-cover object-center" data-alt="A sweeping, ultra-wide abstract digital art piece depicting a complex, futuristic circuit board glowing with neon cyan and deep blue energy lines over a pitch-black background. The lighting is dramatic and localized, emphasizing the intricate metallic pathways and microscopic technological nodes that resemble a highly advanced infrastructure network. The overall aesthetic is dark, sleek, and cybernetic, perfectly suiting a high-end DevOps or hacker profile banner. It conveys a sense of intense computational power and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc2Gbgk1AjShG9hozz5CEIP3RyBcDCV_JKprZIxHxvQPxWW5CPTPUh3abN0-vyVAjg7TdxNsP9O_sy9RcKBo6Q7tPmYhLxbAxeNl8vmTNQdfP71ksdKUHtsO0SlqGwTZwqnsWE6ElCgS1PcZgk6LEJEMDxxlW_kQ7GZ9jzgdtKx1UJSuVSSNlF5cucI8Es1KjMXFGUFbEoz4x0zpH-CdxCAC5ea6P0yfjW0kKWgT8jwku6qlJu1_6mMXwkBQ-ZRHzelX6ky2A4v9Yi"/>
+</div>
+<!-- Profile Info Container -->
+<div class="relative z-20 px-md md:px-xl -mt-16 md:-mt-20 flex flex-col md:flex-row gap-lg md:items-end justify-between">
+<!-- Avatar & Identity -->
+<div class="flex flex-col md:flex-row gap-lg items-start md:items-end">
+<div class="relative">
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden border-4 border-surface-container-lowest shadow-[0_0_20px_rgba(0,240,255,0.15)] bg-surface-container-lowest">
+<img class="w-full h-full object-cover grayscale contrast-125" data-alt="A striking, high-contrast digital portrait of a futuristic infrastructure architect. The subject is vaguely human but stylized with subtle cybernetic implants and geometric glowing cyan tattoos on their neck and jawline. They are set against a dark, featureless background that makes the neon highlights pop. The lighting is harsh and dramatic, casting deep shadows that emphasize a serious, focused expression, embodying the Technical Futurism aesthetic of a high-performance software environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVEIJ1kg84ObPxJbw9lPD_Cl_UbuFva43Z8SPeW8bqmzuxauITDn2IQJn3BoWafgP8KWwuCjuWaQp6W-iRNzHjbdBYKZ5RqpiCAHNcO1SIF8pIHaBQFjkTW8DWtqcmnxvldZx0DYjBPhfEFxI_BnpUjgiDsPUvKCm_6kM7BJUcDnT1CLtHTo0n-W-vGwgmke9CosaYwixilnIn4rZdS88mCoc1ha_AjGTXEk5eDkMWujDByKnCqsCk6_Gt-ie3KiR0mD80bQKtW8UD"/>
+</div>
+<!-- Status Dot -->
+<div class="absolute bottom-2 right-2 w-4 h-4 rounded-full bg-primary-container border-2 border-surface-container-lowest shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
+</div>
+<div class="flex flex-col pb-sm">
+<h1 class="font-display-lg text-display-lg text-on-surface m-0 leading-tight">Alex 'Blaster' Rivera</h1>
+<span class="font-code-md text-code-md text-primary-fixed-dim mt-xs">@blaster</span>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="flex flex-wrap gap-md pb-sm">
+<button class="bg-transparent border border-outline-variant text-on-surface hover:bg-surface-container px-lg py-2 rounded transition-colors font-headline-md text-[14px]">
+                        View Public Profile
+                    </button>
+<button class="bg-primary-container text-on-primary-container px-lg py-2 rounded font-headline-md text-[14px] font-bold shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all active:scale-95 duration-200">
+                        Edit Profile
+                    </button>
+</div>
+</div>
+<!-- Bio & Meta -->
+<div class="mt-lg px-md md:px-xl max-w-3xl">
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-md">
+                    Infrastructure Architect @ Nexus. Automating the future, one sandbox at a time. Building resilient, scalable backend systems with a focus on zero-downtime deployments.
+                </p>
+<div class="flex flex-wrap gap-xl items-center font-code-md text-[13px] text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Austin, TX</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span>Joined March 2024</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px] text-primary-fixed-dim">link</span>
+<a class="text-primary-fixed-dim hover:underline" href="#">nexus-infra.io/blaster</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Grid (Bento Style) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md md:gap-lg px-md md:px-xl">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between group hover:border-primary-fixed-dim transition-colors relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-primary-container/10 transition-all"></div>
+<div class="flex justify-between items-start mb-xl relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Total Sandboxes</span>
+<span class="material-symbols-outlined text-primary-fixed-dim">layers</span>
+</div>
+<div class="font-code-md text-display-lg text-on-surface relative z-10">
+                    87
+                </div>
+<div class="mt-sm h-1 w-full bg-surface-container rounded-full overflow-hidden relative z-10">
+<div class="h-full bg-primary-fixed-dim w-[87%] shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between group hover:border-primary-fixed-dim transition-colors relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary-container/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-tertiary-container/10 transition-all"></div>
+<div class="flex justify-between items-start mb-xl relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Projects Owned</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim">folder_managed</span>
+</div>
+<div class="font-code-md text-display-lg text-on-surface relative z-10">
+                    12
+                </div>
+<div class="mt-sm font-code-md text-[12px] text-on-surface-variant flex items-center gap-xs relative z-10">
+<span class="material-symbols-outlined text-[14px] text-tertiary-fixed-dim">trending_up</span>
+                    +3 this quarter
+                </div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between group hover:border-primary-fixed-dim transition-colors relative overflow-hidden">
+<div class="flex justify-between items-start mb-xl relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Commits Pushed</span>
+<span class="material-symbols-outlined text-primary-fixed">commit</span>
+</div>
+<div class="font-code-md text-display-lg text-on-surface relative z-10">
+                    243
+                </div>
+<!-- Simulated minimal activity graph -->
+<div class="mt-sm flex items-end gap-1 h-6 relative z-10 opacity-70 group-hover:opacity-100 transition-opacity">
+<div class="w-full bg-primary-fixed-dim/20 rounded-t h-[40%]"></div>
+<div class="w-full bg-primary-fixed-dim/40 rounded-t h-[60%]"></div>
+<div class="w-full bg-primary-fixed-dim/30 rounded-t h-[50%]"></div>
+<div class="w-full bg-primary-fixed-dim/80 rounded-t h-[90%] shadow-[0_0_8px_rgba(0,240,255,0.4)]"></div>
+<div class="w-full bg-primary-fixed-dim/50 rounded-t h-[70%]"></div>
+<div class="w-full bg-primary-fixed-dim/20 rounded-t h-[30%]"></div>
+<div class="w-full bg-primary-fixed-dim/90 rounded-t h-[100%] shadow-[0_0_8px_rgba(0,240,255,0.4)]"></div>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between group hover:border-primary-fixed-dim transition-colors relative overflow-hidden">
+<div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] pointer-events-none opacity-20"></div>
+<div class="flex justify-between items-start mb-xl relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Hours Saved</span>
+<span class="material-symbols-outlined text-secondary-fixed">timer</span>
+</div>
+<div class="font-code-md text-display-lg text-primary-fixed-dim relative z-10 drop-shadow-[0_0_10px_rgba(0,240,255,0.3)]">
+                    ~184<span class="text-headline-md text-on-surface-variant ml-1">hrs</span>
+</div>
+<div class="mt-sm font-code-md text-[12px] text-on-surface-variant relative z-10">
+                    Estimated via automation
+                </div>
+</div>
+</section>
+</main>
+</body></html>

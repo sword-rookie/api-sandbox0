@@ -1,0 +1,521 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Clarity Machine | Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .node-glow-primary { box-shadow: 0 0 15px rgba(0, 240, 255, 0.15); transition: box-shadow 0.3s ease, transform 0.3s ease; }
+        .node-glow-primary:hover { box-shadow: 0 0 25px rgba(0, 240, 255, 0.3); }
+        .node-glow-error { box-shadow: 0 0 15px rgba(255, 180, 171, 0.15); transition: box-shadow 0.3s ease, transform 0.3s ease; }
+        .node-glow-error:hover { box-shadow: 0 0 25px rgba(255, 180, 171, 0.3); }
+        
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(59, 73, 75, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 73, 75, 0.1) 1px, transparent 1px);
+            animation: grid-pulse 8s infinite ease-in-out;
+        }
+
+        @keyframes grid-pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .canvas-container { cursor: grab; }
+        .canvas-container:active { cursor: grabbing; }
+
+        @keyframes pulse-cyan {
+            0%, 100% { stroke-opacity: 0.8; stroke-width: 2; }
+            50% { stroke-opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 4px #00f0ff); }
+        }
+        @keyframes pulse-red {
+            0%, 100% { stroke-opacity: 0.8; stroke-width: 2; }
+            50% { stroke-opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 4px #ffb4ab); }
+        }
+        
+        .wire-healthy { animation: pulse-cyan 3s infinite ease-in-out; }
+        .wire-broken { animation: pulse-red 2s infinite ease-in-out; }
+
+        /* Flowing Particle Animation for SVG wires */
+        .flow-particle {
+            stroke-dasharray: 4, 20;
+            stroke-dashoffset: 24;
+            animation: flow 2s linear infinite;
+        }
+        @keyframes flow {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Floating Animation for Nodes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .node-float { animation: float 6s infinite ease-in-out; }
+        .node-float-delay-1 { animation-delay: -1.5s; }
+        .node-float-delay-2 { animation-delay: -3s; }
+        .node-float-delay-3 { animation-delay: -4.5s; }
+
+        /* Terminal Typing Effect */
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Sparkline animation */
+        .sparkline-bar {
+            transform-origin: bottom;
+            animation: grow-up 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            transform: scaleY(0);
+        }
+        @keyframes grow-up {
+            to { transform: scaleY(1); }
+        }
+
+        .terminal-scroll::-webkit-scrollbar { width: 4px; }
+        .terminal-scroll::-webkit-scrollbar-thumb { background: #3b494b; border-radius: 2px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .node-float, .flow-particle, .grid-bg, .wire-healthy, .wire-broken, .sparkline-bar {
+                animation: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004f54",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#002113",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-tertiary-container": "#006d4a",
+                        "secondary-fixed": "#d3e4fe",
+                        "error-red": "#ffb4ab",
+                        "background": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "on-error": "#690005",
+                        "outline": "#849495",
+                        "surface-container-low": "#1c1b1b",
+                        "error-container": "#93000a",
+                        "on-tertiary": "#003824",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-bright": "#3a3939",
+                        "on-primary": "#00363a",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "surface-tint": "#00dbe9",
+                        "surface": "#131313",
+                        "secondary-container": "#38485d",
+                        "outline-variant": "#3b494b",
+                        "tertiary": "#d8ffe7",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "primary-fixed": "#7df4ff",
+                        "on-primary-fixed": "#002022",
+                        "on-primary-container": "#006970",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-variant": "#353534",
+                        "primary-fixed-dim": "#00dbe9",
+                        "surface-container": "#201f1f",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-highest": "#353534",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-container": "#65f2b5",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary": "#213145",
+                        "primary": "#dbfcff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-container": "#00f0ff",
+                        "secondary": "#b7c8e1",
+                        "on-surface": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-primary": "#006970",
+                        "on-secondary-container": "#a6b6cf",
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#b9cacb",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px", "2xl": "48px", "3xl": "64px", "sm": "8px", "lg": "24px", "md": "16px", "unit": "4px", "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"], "label-caps": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"], "display-lg": ["Inter"], "code-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">Clarity Machine</span>
+<div class="hidden md:flex gap-md">
+<button class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1">Dashboard</button>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors">Infrastructure</button>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors">Logs</button>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative flex items-center bg-surface-container rounded-lg px-sm h-10 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-48 text-on-surface" placeholder="Search sandbox..." type="text">
+</div>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-md h-10 rounded-lg font-label-caps text-label-caps hover:brightness-110 transition-all active:scale-95 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                + New Sandbox
+            </button>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional headshot of a software engineer in a modern workspace, lit with soft neon blue ambient light. The person has a focused expression, wearing dark minimalist techwear. The background is slightly blurred showing high-end computer hardware." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbvDvTFXpKmXD24MVhMsuve8iF6uHShQtf2U_Sn-2rRZGl3LKefYGsTsrJ8zuZnlITA-tWL0YGiZCL5Txb3It0F6ASQYSCbdfGUjJ1wndjiz7579rf98p0R7zQJPFnvQKNJJNGBhsxC3F6mPyyPeIUY4LKFCWtqvB7j-qA0Gxo7uPX84XVsw1jdGKOjRnFGoT4woQtvvxrcI7byK0w75V7EEOmxdbRufcNMzCSVPL0ZBJEuyb5yqNxRBUzaWcmUszlI3M8k-0HrmV9">
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 bottom-0 w-64 flex flex-col py-md px-sm bg-surface-container-lowest dark:bg-surface-container-lowest border-r border-outline-variant z-40">
+<div class="px-md mb-lg">
+<div class="flex items-center gap-md p-sm bg-surface-container rounded-xl border border-outline-variant">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-primary font-bold">Project Alpha</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Production Cluster</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg group transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-md">All Sandboxes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-body-md">History</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md">Team</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant space-y-md">
+<div class="bg-surface-container-high p-md rounded-xl">
+<div class="flex justify-between items-center mb-sm">
+<span class="font-label-caps text-label-caps">Storage</span>
+<span class="text-[10px] text-on-surface-variant">85% Full</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error-red w-[85%]"></div>
+</div>
+<button class="w-full mt-md py-xs text-[11px] font-bold uppercase tracking-widest border border-primary-fixed-dim/30 text-primary-fixed-dim rounded hover:bg-primary-fixed-dim/10 transition-colors">Upgrade Storage</button>
+</div>
+<div class="flex justify-around py-sm">
+<button class="flex flex-col items-center gap-xs text-tertiary-fixed-dim">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="text-[9px] font-bold uppercase">Active</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant opacity-50">
+<span class="material-symbols-outlined" data-icon="nights_stay">nights_stay</span>
+<span class="text-[9px] font-bold uppercase">Sleeping</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Workspace Area -->
+<main class="ml-64 mt-16 mr-80 h-[calc(100vh-64px)] relative overflow-hidden grid-bg canvas-container" id="canvas">
+<!-- SVG Connections Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" id="canvas-svg">
+<defs>
+<filter id="glow">
+<feGaussianBlur result="coloredBlur" stdDeviation="2.5"></feGaussianBlur>
+<feMerge>
+<feMergeNode in="coloredBlur"></feMergeNode>
+<feMergeNode in="SourceGraphic"></feMergeNode>
+</feMerge>
+</filter>
+</defs>
+<!-- Connections -->
+<!-- Root to Prod -->
+<path class="wire-healthy" d="M 120 300 C 250 300, 250 180, 380 180" fill="none" filter="url(#glow)" id="wire-prod" stroke="#00f0ff" stroke-width="2"></path>
+<path class="flow-particle" d="M 120 300 C 250 300, 250 180, 380 180" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2"></path>
+<!-- Root to Staging -->
+<path class="wire-healthy" d="M 120 300 C 250 300, 250 300, 380 300" fill="none" filter="url(#glow)" id="wire-staging" stroke="#00f0ff" stroke-width="2"></path>
+<path class="flow-particle" d="M 120 300 C 250 300, 250 300, 380 300" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" style="animation-delay: -0.7s;"></path>
+<!-- Root to Feature-Auth -->
+<path class="wire-broken" d="M 120 300 C 250 300, 250 420, 380 420" fill="none" filter="url(#glow)" id="wire-feature" stroke="#ffb4ab" stroke-width="2"></path>
+<path class="flow-particle" d="M 120 300 C 250 300, 250 420, 380 420" fill="none" stroke="#ffdad6" stroke-opacity="0.3" stroke-width="1.5" style="animation-delay: -1.2s;"></path>
+</svg>
+<!-- Nodes -->
+<div class="absolute inset-0 p-3xl">
+<!-- Root Node -->
+<div class="absolute left-20 top-1/2 -translate-y-1/2 w-48 bg-surface-container-high border border-outline-variant rounded-xl p-md node-glow-primary node-float node-float-delay-3 group cursor-pointer" onmouseenter="highlightWire(['wire-prod', 'wire-staging', 'wire-feature'])" onmouseleave="resetWires()">
+<div class="flex items-center gap-sm mb-sm">
+<span class="material-symbols-outlined text-primary" data-icon="account_tree">account_tree</span>
+<span class="font-label-caps text-label-caps text-primary">MASTER BRANCH</span>
+</div>
+<div class="font-code-md text-code-md text-on-surface truncate">main-cluster-v4</div>
+<div class="mt-md flex items-center justify-between">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="text-[10px] text-on-surface-variant">V.2.0.41-STABLE</span>
+</div>
+</div>
+<!-- Child Node 1: PROD -->
+<div class="absolute left-[380px] top-[140px] w-56 bg-surface-container-lowest border border-tertiary-fixed-dim/30 rounded-xl p-md node-glow-primary node-float node-float-delay-1 group cursor-pointer" onmouseenter="highlightWire(['wire-prod'])" onmouseleave="resetWires()">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-tertiary-fixed-dim/10 text-tertiary-fixed-dim px-sm py-xs rounded text-[10px] font-bold">RUNNING</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="more_vert">more_vert</span>
+</div>
+<div class="font-headline-md text-[18px] text-on-surface mb-xs">prod-main</div>
+<div class="font-code-md text-[12px] text-on-surface-variant mb-md">branch: main</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-sm" data-icon="check_circle">check_circle</span>
+<span class="text-[11px] text-on-surface-variant">IN_SYNC</span>
+</div>
+</div>
+<!-- Child Node 2: STAGING -->
+<div class="absolute left-[380px] top-[260px] w-56 bg-surface-container-lowest border border-outline-variant rounded-xl p-md node-float node-float-delay-2 group cursor-pointer" onmouseenter="highlightWire(['wire-staging'])" onmouseleave="resetWires()">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded text-[10px] font-bold">SLEEPING</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="more_vert">more_vert</span>
+</div>
+<div class="font-headline-md text-[18px] text-on-surface mb-xs">staging-v2</div>
+<div class="font-code-md text-[12px] text-on-surface-variant mb-md">branch: staging</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-sm" data-icon="check_circle">check_circle</span>
+<span class="text-[11px] text-on-surface-variant">IN_SYNC</span>
+</div>
+</div>
+<!-- Child Node 3: FEATURE (Error State) -->
+<div class="absolute left-[380px] top-[380px] w-56 bg-surface-container-lowest border border-error-red/50 rounded-xl p-md node-glow-error ring-1 ring-error-red/20 transition-all node-float group cursor-pointer" onmouseenter="highlightWire(['wire-feature'])" onmouseleave="resetWires()">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-error-container text-on-error-container px-sm py-xs rounded text-[10px] font-bold animate-pulse">BUILDING</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="more_vert">more_vert</span>
+</div>
+<div class="font-headline-md text-[18px] text-on-surface mb-xs">feature-auth</div>
+<div class="font-code-md text-[12px] text-on-surface-variant mb-md">branch: auth-fix</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-error-red text-sm" data-icon="warning">warning</span>
+<span class="text-[11px] text-error-red font-bold">MISMATCH</span>
+</div>
+</div>
+</div>
+<!-- Canvas Controls -->
+<div class="absolute top-md right-md flex gap-sm">
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-md py-sm rounded-lg flex items-center gap-sm border border-outline-variant transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="auto_fix">auto_fix</span>
+<span class="font-label-caps text-label-caps">Auto Layout</span>
+</button>
+<div class="flex bg-surface-container-high rounded-lg border border-outline-variant overflow-hidden">
+<button class="p-sm hover:bg-surface-container-highest transition-colors"><span class="material-symbols-outlined" data-icon="add">add</span></button>
+<div class="w-[1px] bg-outline-variant"></div>
+<button class="p-sm hover:bg-surface-container-highest transition-colors"><span class="material-symbols-outlined" data-icon="remove">remove</span></button>
+</div>
+</div>
+</main>
+<!-- Context Panel (Right) -->
+<aside class="fixed right-0 top-16 bottom-0 w-80 bg-surface-container-lowest border-l border-outline-variant z-40 flex flex-col transition-transform duration-300" id="context-panel">
+<!-- Panel Header -->
+<div class="p-lg border-b border-outline-variant">
+<div class="flex justify-between items-start mb-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">feature-auth</h2>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors" onclick="document.getElementById('context-panel').classList.toggle('translate-x-full')">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="flex items-center gap-md mb-md">
+<span class="bg-error-container text-on-error-container px-sm py-xs rounded text-[10px] font-extrabold tracking-widest uppercase">BUILDING</span>
+<span class="text-[10px] text-on-surface-variant font-code-md">PID: 49201</span>
+</div>
+<a class="flex items-center justify-between p-sm bg-surface-container rounded-lg group hover:bg-surface-container-high transition-all" href="https://auth-fix.sandbox.links" target="_blank">
+<span class="font-code-md text-[11px] text-primary truncate">auth-fix.sandbox.links</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:text-primary" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+<!-- Panel Content -->
+<div class="flex-1 overflow-y-auto p-lg space-y-xl">
+<!-- Terminal -->
+<section>
+<div class="flex justify-between items-center mb-sm">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Live Build Logs</span>
+<span class="w-2 h-2 rounded-full bg-error-red animate-ping"></span>
+</div>
+<div class="bg-black rounded-lg p-md font-code-md text-[11px] h-48 overflow-y-auto terminal-scroll border border-outline-variant" id="terminal">
+<div class="text-on-surface-variant opacity-60 mb-1">[14:02:11] Starting build pipeline...</div>
+<div class="text-primary mb-1">λ Installing Nixpacks version 1.18...</div>
+<div class="text-primary mb-1">λ Detecting environment: NODE_JS</div>
+<div class="text-on-surface-variant mb-1">-----&gt; Installing dependencies</div>
+<div class="text-on-surface-variant mb-1">       found lockfile: package-lock.json</div>
+<div class="text-on-surface-variant mb-1">       running: npm install --frozen-lockfile</div>
+<div class="text-error-red mb-1" id="log-line-error">ERROR: Schema mismatch in user_table.v2</div>
+<div class="text-primary mt-1" id="typing-line"></div>
+<span class="text-on-surface-variant cursor-blink inline-block w-2 h-4 bg-on-surface-variant align-middle ml-1">_</span>
+</div>
+</section>
+<!-- Metrics -->
+<section>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block mb-sm">Resource Metrics</span>
+<div class="grid grid-cols-2 gap-md">
+<div class="bg-surface-container p-sm rounded-lg border border-outline-variant">
+<div class="text-[10px] text-on-surface-variant mb-xs">CPU</div>
+<div class="font-headline-md text-primary">12%</div>
+<div class="h-8 mt-xs flex items-end gap-[1px]">
+<div class="bg-primary/20 w-full sparkline-bar" style="height: 25%; animation-delay: 0.1s;"></div>
+<div class="bg-primary/20 w-full sparkline-bar" style="height: 50%; animation-delay: 0.2s;"></div>
+<div class="bg-primary/40 w-full sparkline-bar" style="height: 33%; animation-delay: 0.3s;"></div>
+<div class="bg-primary/60 w-full sparkline-bar" style="height: 75%; animation-delay: 0.4s;"></div>
+<div class="bg-primary w-full sparkline-bar" style="height: 50%; animation-delay: 0.5s;"></div>
+</div>
+</div>
+<div class="bg-surface-container p-sm rounded-lg border border-outline-variant">
+<div class="text-[10px] text-on-surface-variant mb-xs">Memory</div>
+<div class="font-headline-md text-primary">450MB</div>
+<div class="h-8 mt-xs flex items-end gap-[1px]">
+<div class="bg-primary/20 w-full sparkline-bar" style="height: 75%; animation-delay: 0.1s;"></div>
+<div class="bg-primary/40 w-full sparkline-bar" style="height: 66%; animation-delay: 0.2s;"></div>
+<div class="bg-primary/60 w-full sparkline-bar" style="height: 100%; animation-delay: 0.3s;"></div>
+<div class="bg-primary/30 w-full sparkline-bar" style="height: 50%; animation-delay: 0.4s;"></div>
+<div class="bg-primary w-full sparkline-bar" style="height: 66%; animation-delay: 0.5s;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Audit -->
+<section class="bg-error-container/10 border border-error-red/30 p-md rounded-xl">
+<div class="flex items-center gap-sm mb-xs text-error-red">
+<span class="material-symbols-outlined text-[20px]" data-icon="psychology">psychology</span>
+<span class="font-label-caps text-label-caps">AI Audit Insight</span>
+</div>
+<p class="text-[13px] text-on-error-container leading-relaxed">
+                    Schema mismatch detected in <code class="bg-error-container/20 px-1 rounded">user_table.v2</code>. The current branch expects a 'uuid' field but the database instance is using 'int'. 
+                </p>
+<button class="mt-md text-[11px] font-bold text-error-red flex items-center gap-xs hover:underline">
+                    VIEW RESOLUTION PATH <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</section>
+</div>
+<!-- Panel Actions -->
+<div class="p-lg bg-surface-container-high border-t border-outline-variant grid grid-cols-3 gap-sm">
+<button class="flex flex-col items-center gap-xs p-sm bg-surface-container border border-outline-variant rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all group">
+<span class="material-symbols-outlined" data-icon="fork_right">fork_right</span>
+<span class="text-[10px] font-bold uppercase">Fork</span>
+</button>
+<button class="flex flex-col items-center gap-xs p-sm bg-surface-container border border-outline-variant rounded-lg hover:bg-error-container hover:text-on-error-container transition-all group">
+<span class="material-symbols-outlined" data-icon="cancel">cancel</span>
+<span class="text-[10px] font-bold uppercase">Kill</span>
+</button>
+<button class="flex flex-col items-center gap-xs p-sm bg-surface-container border border-outline-variant rounded-lg hover:bg-secondary-container hover:text-on-secondary-container transition-all group">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="text-[10px] font-bold uppercase">Isolate</span>
+</button>
+</div>
+</aside>
+<!-- Floating Action Button (Only on Dashboard) -->
+<button class="fixed bottom-lg left-[calc(100%-320px-64px)] z-50 bg-primary-container text-on-primary-container w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all node-glow-primary">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+</button>
+<script>
+        // Interactive Hover Glow Logic
+        function highlightWire(wireIds) {
+            wireIds.forEach(id => {
+                const wire = document.getElementById(id);
+                if (wire) {
+                    wire.style.strokeWidth = '4';
+                    wire.style.filter = 'drop-shadow(0 0 8px currentColor)';
+                }
+            });
+        }
+
+        function resetWires() {
+            const wires = ['wire-prod', 'wire-staging', 'wire-feature'];
+            wires.forEach(id => {
+                const wire = document.getElementById(id);
+                if (wire) {
+                    wire.style.strokeWidth = '2';
+                    wire.style.filter = 'url(#glow)';
+                }
+            });
+        }
+
+        // Terminal Typing Animation
+        const typingLine = document.getElementById('typing-line');
+        const textToType = "λ Fetching resolution path from AI node...";
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textToType.length) {
+                typingLine.textContent += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 50 + Math.random() * 50);
+            } else {
+                setTimeout(() => {
+                    typingLine.textContent = "";
+                    charIndex = 0;
+                    type();
+                }, 5000);
+            }
+        }
+        
+        // Start typing after initial delay
+        setTimeout(type, 2000);
+
+        // Simple drag interaction for canvas (Visual only for now)
+        const canvas = document.getElementById('canvas');
+        let isDragging = false;
+        let startX, startY;
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - canvas.offsetLeft;
+            startY = e.pageY - canvas.offsetTop;
+        });
+
+        canvas.addEventListener('mouseleave', () => { isDragging = false; });
+        canvas.addEventListener('mouseup', () => { isDragging = false; });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            // Implementation for panning logic would go here
+        });
+
+        // Toggle context panel (demonstration)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('context-panel').classList.add('translate-x-full');
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+        .glass-panel {
+            background: rgba(19, 19, 19, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        /* Custom Slider Styling */
+        input[type='range']::-webkit-slider-runnable-track {
+            background: #3b494b;
+            height: 4px;
+            border-radius: 2px;
+        }
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -6px;
+            background-color: #00f0ff;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#38485d",
+                      "primary-fixed": "#7df4ff",
+                      "on-secondary-container": "#a6b6cf",
+                      "on-error-container": "#ffdad6",
+                      "inverse-surface": "#e5e2e1",
+                      "on-primary-fixed": "#002022",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface": "#131313",
+                      "outline-variant": "#3b494b",
+                      "on-tertiary-container": "#006d4a",
+                      "secondary-container": "#38485d",
+                      "on-primary-container": "#006970",
+                      "background": "#131313",
+                      "on-error": "#690005",
+                      "surface-dim": "#131313",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-background": "#e5e2e1",
+                      "surface-variant": "#353534",
+                      "surface-container-highest": "#353534",
+                      "on-tertiary-fixed": "#002113",
+                      "on-secondary-fixed": "#0b1c2f",
+                      "primary": "#dbfcff",
+                      "on-secondary": "#213145",
+                      "on-tertiary": "#003824",
+                      "surface-container-high": "#2a2a2a",
+                      "outline": "#849495",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "on-surface-variant": "#b9cacb",
+                      "tertiary-fixed": "#6ffbbe",
+                      "primary-fixed-dim": "#00dbe9",
+                      "error-container": "#93000a",
+                      "surface-container-low": "#1c1b1b",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary-container": "#65f2b5",
+                      "on-surface": "#e5e2e1",
+                      "tertiary": "#d8ffe7",
+                      "surface-tint": "#00dbe9",
+                      "inverse-on-surface": "#313030",
+                      "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                      "surface-bright": "#3a3939",
+                      "on-primary": "#00363a",
+                      "surface-container": "#201f1f",
+                      "inverse-primary": "#006970",
+                      "on-primary-fixed-variant": "#004f54",
+                      "secondary": "#b7c8e1",
+                      "error-red": "#ffb4ab",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary-container": "#00f0ff",
+                      "error": "#ffb4ab"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "3xl": "64px",
+                      "xs": "4px",
+                      "xl": "32px",
+                      "margin-desktop": "40px",
+                      "2xl": "48px",
+                      "lg": "24px",
+                      "sm": "8px",
+                      "unit": "4px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "code-md": ["JetBrains Mono"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "label-caps": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)] flex justify-between items-center px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-bold text-primary-container">API Sandbox Links</span>
+<div class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary-container transition-colors duration-200 font-body-md text-body-md active:scale-95 transition-transform" href="#">Dashboard</a>
+<a class="text-primary-container font-bold font-body-md text-body-md active:scale-95 transition-transform" href="#">AI Settings</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors duration-200 font-body-md text-body-md active:scale-95 transition-transform" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-container transition-colors active:scale-95">notifications</button>
+<button class="material-symbols-outlined text-primary-container font-bold active:scale-95">settings</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary-container transition-colors active:scale-95">help</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional high-resolution avatar of a software developer with sharp lighting and a tech-focused atmosphere. The background features blurred lines of neon cyan code, reflecting a technical futurism aesthetic. The overall mood is sophisticated and clean, matching a high-end developer tool interface. The lighting is cold and precise, using the brand's signature cyan and deep black palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyqnFZoqOgsCoMn1h2XwVOW5dFIywDbFUlL7jcn1qJfJge4gg6_m3s7mg8lrw7ij9hIAEdeXDkzV7CPtlxwzSmIDPr1DX_7M35pirfb1yYQOmoouzgtrSyi00DhYdE2VB0F3h9QbQ5c_mqrjsvmosTUFmtNqsREkXLp_Wi5Aqx0c7ZN4KwioZBYqLWwc1v--_0mLQ3sVPduQfGl67vlh_3H9CgKg8gB3AOxJ-9tmJVfQlO1I-ZvqwcRDdSpca12b6Kict5VYmPMhNI">
+</div>
+</div>
+</nav>
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-xl hidden lg:flex mt-16">
+<div class="px-lg mb-xl">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center border border-primary-container/20">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] text-primary-container">Project Alpha</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Production Cluster</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-xs px-sm">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">General</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">code</span>
+<span class="font-body-md text-body-md">GitHub</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Members</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md text-body-md">Security</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary-container bg-primary/10 border-r-2 border-primary-container active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-body-md text-body-md">AI Features</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-body-md text-body-md">Sandbox</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md text-body-md">Billing</span>
+</a>
+</nav>
+<div class="px-sm mt-auto">
+<button class="w-full bg-primary-container text-on-primary py-md rounded-lg font-bold hover:glow-cyan transition-all active:scale-95 mb-xl">
+                Deploy New Sandbox
+            </button>
+<div class="border-t border-outline-variant pt-lg flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-xs text-on-surface-variant hover:text-primary-container transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-caps text-label-caps uppercase">Docs</span>
+</a>
+<a class="flex items-center gap-md px-md py-xs text-on-surface-variant hover:text-primary-container transition-colors" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-caps text-label-caps uppercase">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 pt-32 pb-3xl px-margin-mobile md:px-margin-desktop min-h-screen relative overflow-hidden">
+<!-- Background Atmospheric Glow -->
+<div class="absolute -top-40 -right-40 w-96 h-96 bg-primary-container/5 blur-[120px] pointer-events-none"></div>
+<div class="absolute top-1/2 -left-40 w-80 h-80 bg-primary-fixed-dim/5 blur-[100px] pointer-events-none"></div>
+<div class="max-w-5xl mx-auto">
+<!-- Page Header -->
+<header class="mb-2xl flex flex-col gap-sm">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-container text-[40px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h1 class="font-display-lg text-display-lg text-primary">AI Features</h1>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    AI features are powered by <span class="text-primary-container font-semibold">Google Gemini</span> to maintain environment parity and assist in debugging complex infrastructure workflows.
+                </p>
+</header>
+<!-- Bento Layout Settings -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Automation Card -->
+<div class="surface-container-lowest border border-outline-variant rounded-xl p-xl flex flex-col gap-xl hover:border-primary-container/40 transition-colors group relative overflow-hidden">
+<div class="absolute top-0 right-0 p-lg opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[80px]">robot</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-container">automation</span>
+<h2 class="font-headline-md text-headline-md">Automation</h2>
+</div>
+<div class="space-y-lg">
+<!-- Toggle 1 -->
+<div class="flex items-center justify-between p-lg bg-surface-container-low rounded-lg border border-outline-variant/30">
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Enable AI Data Seeding</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Uses Gemini to generate realistic test data</p>
+</div>
+<button class="w-12 h-6 rounded-full bg-primary-container relative flex items-center px-1 transition-all glow-cyan cursor-pointer" onclick="toggleSwitch(this)">
+<div class="w-4 h-4 rounded-full bg-on-primary translate-x-6 transition-transform shadow-sm"></div>
+</button>
+</div>
+<!-- Toggle 2 -->
+<div class="flex items-center justify-between p-lg bg-surface-container-low rounded-lg border border-outline-variant/30">
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">AI Code Review on commit</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Automated PR checks for vulnerabilities</p>
+</div>
+<button class="w-12 h-6 rounded-full bg-surface-variant relative flex items-center px-1 transition-all cursor-pointer" onclick="toggleSwitch(this)">
+<div class="w-4 h-4 rounded-full bg-outline transition-transform shadow-sm"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Intelligence Card -->
+<div class="surface-container-lowest border border-outline-variant rounded-xl p-xl flex flex-col gap-xl hover:border-primary-container/40 transition-colors group relative overflow-hidden">
+<div class="absolute top-0 right-0 p-lg opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[80px]">neurology</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-container">insights</span>
+<h2 class="font-headline-md text-headline-md">Intelligence</h2>
+</div>
+<div class="space-y-lg">
+<!-- Slider Control -->
+<div class="p-lg bg-surface-container-low rounded-lg border border-outline-variant/30 space-y-md">
+<div class="flex justify-between items-center">
+<p class="font-body-md text-body-md text-on-surface font-semibold">Mismatch detection sensitivity</p>
+<span class="font-label-caps text-label-caps px-md py-xs bg-primary/10 text-primary-container rounded-full border border-primary-container/30" id="sensitivity-label">MEDIUM</span>
+</div>
+<input class="w-full h-1 bg-outline-variant rounded-lg appearance-none cursor-pointer accent-primary-container" max="3" min="1" oninput="updateSensitivity(this.value)" step="1" type="range" value="2">
+<div class="flex justify-between px-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">LOW</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">HIGH</span>
+</div>
+</div>
+<!-- Toggle 3 -->
+<div class="flex items-center justify-between p-lg bg-surface-container-low rounded-lg border border-outline-variant/30">
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">AI-powered suggestions</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Predictive input in sandbox editor</p>
+</div>
+<button class="w-12 h-6 rounded-full bg-primary-container relative flex items-center px-1 transition-all glow-cyan cursor-pointer" onclick="toggleSwitch(this)">
+<div class="w-4 h-4 rounded-full bg-on-primary translate-x-6 transition-transform shadow-sm"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Gemini Integration Card (Asymmetric Layout element) -->
+<div class="md:col-span-2 surface-container-high/50 backdrop-blur-md border border-primary-container/20 rounded-xl p-xl flex flex-col md:flex-row items-center gap-xl">
+<div class="w-full md:w-1/3 aspect-video rounded-lg overflow-hidden border border-outline-variant bg-surface relative">
+<img alt="AI Neural Interface" class="w-full h-full object-cover mix-blend-screen opacity-80" data-alt="A macro visualization of a neural network interface with intricate glowing nodes and neon cyan filaments connecting in a complex web. The lighting is low-key and dramatic, with the primary light source being the luminous cyan data paths. The aesthetic is ultra-modern technical futurism, reminiscent of high-end software development tools for DevOps and backend engineering. The background is a deep, textured black, creating a sense of immense digital space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4-xHXGeBrDqexd3MAv_4a0Xke1CgjWsUTUYhfEQml8JiDkUqV6Gp2hfKP8Op3DzLCiH3UsW3Jv94rCdZhKCRnuuCo5rymL5eX4yBrVMrorSH1TWt5rbJ9XAjNcbZCHzZoZRyqP0zhmsU66Qfbypo5NxwetPWYi-nwNvL3AH8t0EBw632-6K669COTP68E_66iGQuZAnEQY3D_URVxwrLbyArqzw4s8yoWexmf-fvo6E73AbvbqZE9r3AlcNh6WTsveaSw6QJz6K4-">
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+</div>
+<div class="flex-1 space-y-md text-center md:text-left">
+<span class="inline-flex items-center gap-xs font-label-caps text-label-caps text-primary-container border border-primary-container/30 px-md py-xs rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                            GEMINI MODEL ACTIVE
+                        </span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Precision Debugging with Gemini</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Leverage the world's most capable large language model to identify environment drift, optimize your cluster configuration, and automate repetitive sandbox tasks.
+                        </p>
+<div class="flex flex-wrap gap-md justify-center md:justify-start">
+<button class="bg-primary-container text-on-primary px-xl py-md rounded-lg font-bold hover:glow-cyan transition-all active:scale-95 font-body-md">
+                                View Model Specs
+                            </button>
+<button class="border border-outline-variant px-xl py-md rounded-lg font-bold hover:bg-surface-container transition-all active:scale-95 font-body-md">
+                                View History
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Meta -->
+<footer class="mt-3xl pt-xl border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-lg">
+<p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 Project Alpha • Enterprise AI Control</p>
+<div class="flex items-center gap-xl">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Safety Guidelines</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</footer>
+</div>
+</main>
+<!-- Floating Tooltip / Micro-interaction helper -->
+<div class="fixed bottom-lg right-lg bg-surface-container-highest border border-primary-container/50 text-primary-container px-xl py-md rounded-lg font-body-md shadow-2xl opacity-0 translate-y-10 transition-all pointer-events-none z-[100]" id="toast">
+        Settings updated successfully.
+    </div>
+<script>
+        function toggleSwitch(btn) {
+            const circle = btn.querySelector('div');
+            const isActive = btn.classList.contains('bg-primary-container');
+            
+            if (isActive) {
+                btn.classList.remove('bg-primary-container', 'glow-cyan');
+                btn.classList.add('bg-surface-variant');
+                circle.classList.remove('translate-x-6', 'bg-on-primary');
+                circle.classList.add('bg-outline');
+            } else {
+                btn.classList.add('bg-primary-container', 'glow-cyan');
+                btn.classList.remove('bg-surface-variant');
+                circle.classList.add('translate-x-6', 'bg-on-primary');
+                circle.classList.remove('bg-outline');
+            }
+            showToast();
+        }
+
+        function updateSensitivity(val) {
+            const label = document.getElementById('sensitivity-label');
+            const values = ["LOW", "MEDIUM", "HIGH"];
+            label.innerText = values[val - 1];
+            showToast();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('opacity-0', 'translate-y-10');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 2000);
+        }
+
+        // Particle effect on background
+        const createParticle = () => {
+            const particle = document.createElement('div');
+            particle.className = 'absolute w-[1px] h-[1px] bg-primary-container/20 pointer-events-none';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+        setInterval(createParticle, 500);
+    </script>
+<div class="absolute w-[1px] h-[1px] bg-primary-container/20 pointer-events-none" style="left: 33.7311%; top: 70.388%;"></div></body></html>

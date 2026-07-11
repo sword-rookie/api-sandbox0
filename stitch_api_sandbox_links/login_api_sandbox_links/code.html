@@ -1,0 +1,301 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Login | API Sandbox Links</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#dbfcff",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary": "#d8ffe7",
+                        "error-container": "#93000a",
+                        "secondary-container": "#38485d",
+                        "on-surface": "#e5e2e1",
+                        "tertiary-container": "#65f2b5",
+                        "secondary": "#b7c8e1",
+                        "primary-fixed-dim": "#00dbe9",
+                        "outline": "#849495",
+                        "on-secondary-fixed": "#0b1c2f",
+                        "on-primary-fixed": "#002022",
+                        "on-secondary": "#213145",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#006d4a",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#002113",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-primary-fixed-variant": "#004f54",
+                        "primary-container": "#00f0ff",
+                        "on-error": "#690005",
+                        "on-tertiary": "#003824",
+                        "on-secondary-container": "#a6b6cf",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#7df4ff",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#201f1f",
+                        "surface-variant": "#353534",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-primary": "#006970",
+                        "surface": "#131313",
+                        "on-primary-container": "#006970",
+                        "error-red": "#ffb4ab",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-dim": "#131313",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#b9cacb",
+                        "on-background": "#e5e2e1",
+                        "outline-variant": "#3b494b",
+                        "background": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-tint": "#00dbe9",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "surface-bright": "#3a3939",
+                        "on-primary": "#00363a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "3xl": "64px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .blueprint-bg {
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(0, 219, 233, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+        .canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen selection:bg-primary-container/30">
+<main class="flex min-h-screen overflow-hidden">
+<!-- Left Side: Visual Experience (55%) -->
+<section class="hidden lg:flex lg:w-[55%] relative flex-col justify-center items-center p-3xl bg-surface-container-lowest overflow-hidden border-r border-outline-variant/30">
+<!-- Animated Background Canvas -->
+<div class="canvas-container blueprint-bg">
+<canvas id="blueprintCanvas" width="703" height="854"></canvas>
+</div>
+<!-- Content -->
+<div class="relative z-10 text-center max-w-xl">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-md tracking-tighter">
+                    Welcome Back
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-3xl">
+                    Build faster with isolated sandboxes. Deploy, test, and scale with infrastructure that feels like magic.
+                </p>
+<!-- Micro-Graphic: Floating Node -->
+<div class="inline-flex items-center gap-md px-lg py-sm rounded-full bg-surface-container-high border border-primary-fixed-dim/20 glow-effect animate-pulse">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="font-code-md text-code-md text-primary-fixed-dim">SANDBOX_ID: CLARITY_BETA_01</span>
+</div>
+</div>
+<!-- Trusted Footer -->
+<div class="absolute bottom-xl left-0 w-full text-center px-margin-desktop">
+<p class="font-label-caps text-label-caps text-outline uppercase tracking-[0.2em]">
+                    Trusted by developers shipping 10x faster
+                </p>
+</div>
+</section>
+<!-- Right Side: Login Form (45%) -->
+<section class="w-full lg:w-[45%] flex flex-col justify-center items-center px-margin-mobile md:px-margin-desktop py-3xl bg-surface relative">
+<div class="w-full max-w-[420px]">
+<!-- Brand Header -->
+<div class="mb-3xl text-center">
+<div class="inline-flex items-center gap-xs mb-lg">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[32px]" style="font-variation-settings: 'FILL' 1;">dataset</span>
+<span class="font-headline-md text-headline-md font-bold text-primary-fixed-dim tracking-tight">API Sandbox Links</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">
+                        Sign in to your workspace
+                    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Access your projects and sandboxes
+                    </p>
+</div>
+<!-- Form -->
+<form class="space-y-lg" onsubmit="event.preventDefault();">
+<div class="space-y-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant px-xs" for="email">Email Address</label>
+<div class="relative group">
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg px-lg py-md text-on-surface focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all outline-none" id="email" name="email" placeholder="name@company.com" type="email">
+</div>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between items-center px-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="password">Password</label>
+<a class="font-label-caps text-label-caps text-primary-fixed-dim hover:underline" href="#">Forgot Password?</a>
+</div>
+<div class="relative group">
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg px-lg py-md text-on-surface focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all outline-none" id="password" name="password" placeholder="••••••••" type="password">
+<button class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary font-bold py-md rounded-lg glow-effect hover:opacity-90 active:scale-95 transition-all duration-200 font-headline-md text-[16px]" type="submit">
+                        Sign In
+                    </button>
+</form>
+<!-- Divider -->
+<div class="relative my-2xl text-center">
+<div class="absolute inset-0 flex items-center">
+<span class="w-full border-t border-outline-variant/30"></span>
+</div>
+<span class="relative px-lg bg-surface font-label-caps text-label-caps text-outline uppercase">Or continue with</span>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-md">
+<button class="flex items-center justify-center gap-sm bg-surface-container-low border border-outline-variant/50 py-md rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
+<img alt="Google" class="w-5 h-5 grayscale invert brightness-200" data-alt="Official Google logo with vibrant colors and high clarity, isolated on a transparent background, suitable for a dark mode software login interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTsz6sbjcx5qMqTtg3JBZuMcHT8nP4V-dB9ZsRpzan9bAhWiMkf8uHNaUpTQfZBCaPJ6wVLEtTA1nQ07DjcEDrKM8wWm3chojMSRN-UlusPslqWPbw9tFQ7p_hA2Urdog1VxH5pfXNCIoiujZFyG6FgeE6tTccZ2l_SnYTB3m17DTrDk7UErMXf18Ta5Vh8fyOY6CiJO3yqAjiIwbAvKMu99vkIx1v76UwnkE7TkjoXYRPgaPK1QE9Q9AetcM-zO3dPUxhIznHLiGp">
+<span class="font-label-caps text-label-caps text-on-surface">Google</span>
+</button>
+<button class="flex items-center justify-center gap-sm bg-surface-container-low border border-outline-variant/50 py-md rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[20px] text-on-surface">account_circle</span>
+<span class="font-label-caps text-label-caps text-on-surface">GitHub</span>
+</button>
+</div>
+<!-- Bottom Link -->
+<div class="mt-3xl text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Don't have an account? 
+                        <a class="text-primary-fixed-dim font-semibold hover:underline" href="#">Sign up</a>
+</p>
+</div>
+</div>
+<!-- Mobile Footer (Internal) -->
+<div class="lg:hidden mt-auto pt-2xl text-center">
+<p class="font-label-caps text-label-caps text-outline opacity-50">
+                    © 2024 API Sandbox Links
+                </p>
+</div>
+</section>
+</main>
+<script>
+        // Simple Canvas Animation for "Blueprint Graph"
+        const canvas = document.getElementById('blueprintCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let nodes = [];
+        const nodeCount = 15;
+
+        function resize() {
+            width = canvas.width = canvas.parentElement.offsetWidth;
+            height = canvas.height = canvas.parentElement.offsetHeight;
+            initNodes();
+        }
+
+        function initNodes() {
+            nodes = [];
+            for (let i = 0; i < nodeCount; i++) {
+                nodes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 2 + 1
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'rgba(0, 219, 233, 0.08)';
+            ctx.fillStyle = 'rgba(0, 219, 233, 0.2)';
+            ctx.lineWidth = 1;
+
+            // Update and draw connections
+            for (let i = 0; i < nodes.length; i++) {
+                let n1 = nodes[i];
+                n1.x += n1.vx;
+                n1.y += n1.vy;
+
+                if (n1.x < 0 || n1.x > width) n1.vx *= -1;
+                if (n1.y < 0 || n1.y > height) n1.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(n1.x, n1.y, n1.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                for (let j = i + 1; j < nodes.length; j++) {
+                    let n2 = nodes[j];
+                    let dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
+                    if (dist < 300) {
+                        ctx.beginPath();
+                        ctx.moveTo(n1.x, n1.y);
+                        // Quadratic curve for a more "blueprint" look
+                        ctx.quadraticCurveTo(
+                            (n1.x + n2.x) / 2 + 50, 
+                            (n1.y + n2.y) / 2 - 50, 
+                            n2.x, n2.y
+                        );
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        draw();
+    </script>
+</body></html>

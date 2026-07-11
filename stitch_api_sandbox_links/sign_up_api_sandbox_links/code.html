@@ -1,0 +1,294 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Sign Up | API Sandbox Links</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(circle, rgba(0, 240, 255, 0.07) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 8s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex overflow-hidden">
+<!-- THE SOURCE OF TRUTH: Shared Components Logic applied via Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#dbfcff",
+                      "surface-container-low": "#1c1b1b",
+                      "tertiary": "#d8ffe7",
+                      "error-container": "#93000a",
+                      "secondary-container": "#38485d",
+                      "on-surface": "#e5e2e1",
+                      "tertiary-container": "#65f2b5",
+                      "secondary": "#b7c8e1",
+                      "primary-fixed-dim": "#00dbe9",
+                      "outline": "#849495",
+                      "on-secondary-fixed": "#0b1c2f",
+                      "on-primary-fixed": "#002022",
+                      "on-secondary": "#213145",
+                      "error": "#ffb4ab",
+                      "on-tertiary-container": "#006d4a",
+                      "inverse-surface": "#e5e2e1",
+                      "on-tertiary-fixed": "#002113",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-primary-fixed-variant": "#004f54",
+                      "primary-container": "#00f0ff",
+                      "on-error": "#690005",
+                      "on-tertiary": "#003824",
+                      "on-secondary-container": "#a6b6cf",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "surface-container-high": "#2a2a2a",
+                      "primary-fixed": "#7df4ff",
+                      "on-error-container": "#ffdad6",
+                      "surface-container": "#201f1f",
+                      "surface-variant": "#353534",
+                      "secondary-fixed": "#d3e4fe",
+                      "inverse-primary": "#006970",
+                      "surface": "#131313",
+                      "on-primary-container": "#006970",
+                      "error-red": "#ffb4ab",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-dim": "#131313",
+                      "surface-container-highest": "#353534",
+                      "on-surface-variant": "#b9cacb",
+                      "on-background": "#e5e2e1",
+                      "outline-variant": "#3b494b",
+                      "background": "#131313",
+                      "inverse-on-surface": "#313030",
+                      "glow-rgba": "rgba(0, 240, 255, 0.2)",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "surface-tint": "#00dbe9",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "surface-bright": "#3a3939",
+                      "on-primary": "#00363a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "3xl": "64px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "2xl": "48px",
+                      "xl": "32px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "40px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "code-md": ["JetBrains Mono"],
+                      "headline-lg": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<!-- MAIN WRAPPER: Split Screen Layout -->
+<main class="flex w-full min-h-screen">
+<!-- LEFT SIDE: Visual Blueprint (55%) -->
+<section class="hidden lg:flex lg:w-[55%] relative bg-surface-container-lowest overflow-hidden flex-col items-center justify-center p-3xl">
+<!-- Animated Background Elements -->
+<div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,219,233,0.05),transparent_70%)]"></div>
+<!-- Canvas Placeholder for Animated Blueprint -->
+<div class="relative w-full max-w-2xl h-[400px] flex items-center justify-center">
+<div class="absolute w-[400px] h-[400px] border border-primary-fixed-dim/20 rounded-full animate-pulse-slow"></div>
+<div class="absolute w-[250px] h-[250px] border border-primary-fixed-dim/10 rounded-full animate-pulse-slow [animation-delay:2s]"></div>
+<!-- Schematic Lines Decoration -->
+<svg class="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+<path class="text-primary-fixed-dim" d="M10,50 L90,50 M50,10 L50,90" fill="none" stroke="currentColor" stroke-width="0.1"></path>
+<circle class="text-primary-fixed-dim" cx="50" cy="50" fill="currentColor" r="1"></circle>
+<rect class="text-primary-fixed-dim" fill="none" height="60" stroke="currentColor" stroke-width="0.1" width="60" x="20" y="20"></rect>
+</svg>
+<!-- Centered Text -->
+<div class="z-10 text-center space-y-md">
+<h1 class="font-display-lg text-display-lg text-primary leading-tight tracking-tighter">
+                        Start Building Today
+                    </h1>
+<p class="font-headline-md text-headline-md text-on-surface-variant max-w-md mx-auto">
+                        Create isolated environments in seconds
+                    </p>
+</div>
+</div>
+<!-- Bottom Floating Status Labels (Atmospheric) -->
+<div class="absolute bottom-lg left-lg right-lg flex justify-between items-end">
+<div class="flex flex-col gap-xs">
+<span class="font-code-md text-code-md text-primary-fixed-dim/60">SYS_CORE: STABLE</span>
+<span class="font-code-md text-code-md text-primary-fixed-dim/60">LATENCY: 12ms</span>
+</div>
+<div class="font-code-md text-code-md text-primary-fixed-dim/60">CLARITY_MACHINE_v4.2.0</div>
+</div>
+</section>
+<!-- RIGHT SIDE: Signup Form (45%) -->
+<section class="w-full lg:w-[45%] bg-surface flex items-center justify-center p-margin-mobile md:p-margin-desktop overflow-y-auto">
+<div class="w-full max-w-[480px] space-y-xl">
+<!-- Header & Brand -->
+<div class="text-center lg:text-left space-y-md">
+<div class="flex items-center gap-sm justify-center lg:justify-start">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[32px]">dataset</span>
+<span class="font-headline-md text-headline-md font-bold text-primary-fixed-dim tracking-tight">API Sandbox Links</span>
+</div>
+<div class="space-y-xs">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Create your free account</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">No credit card required</p>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-lg md:p-xl space-y-lg shadow-2xl">
+<form class="space-y-md" id="signupForm" onsubmit="return false">
+<!-- Full Name -->
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="name">Full Name</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-md py-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-fixed-dim/50 focus:border-primary-fixed-dim transition-all" id="name" placeholder="John Doe" type="text">
+</div>
+<!-- Email -->
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="email">Email Address</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-md py-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-fixed-dim/50 focus:border-primary-fixed-dim transition-all" id="email" placeholder="dev@company.com" type="email">
+</div>
+<!-- Password -->
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="password">Password</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-md py-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-fixed-dim/50 focus:border-primary-fixed-dim transition-all" id="password" placeholder="••••••••" type="password">
+<button class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<!-- Strength Indicator -->
+<div class="flex gap-xs mt-sm">
+<div class="h-1 flex-1 bg-primary-fixed-dim rounded-full"></div>
+<div class="h-1 flex-1 bg-primary-fixed-dim rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-variant rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-variant rounded-full"></div>
+<span class="text-[10px] font-label-caps text-primary-fixed-dim uppercase ml-xs">Moderate</span>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="confirm-password">Confirm Password</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-md py-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-fixed-dim/50 focus:border-primary-fixed-dim transition-all" id="confirm-password" placeholder="••••••••" type="password">
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container text-on-primary font-headline-md text-headline-md py-md rounded-lg glow-effect hover:brightness-110 active:scale-95 transition-all duration-200 mt-lg" type="submit">
+                            Create Account
+                        </button>
+</form>
+<!-- Divider -->
+<div class="relative py-md flex items-center gap-md">
+<div class="flex-grow border-t border-outline-variant/30"></div>
+<span class="font-label-caps text-label-caps text-outline uppercase shrink-0">Or continue with</span>
+<div class="flex-grow border-t border-outline-variant/30"></div>
+</div>
+<!-- Social Signups -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<button class="flex items-center justify-center gap-sm bg-surface-container-highest border border-primary-fixed-dim/40 hover:bg-primary-fixed-dim/10 text-on-surface font-label-caps text-label-caps py-sm px-md rounded-lg transition-all group">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+</svg>
+                            GitHub
+                        </button>
+<button class="flex items-center justify-center gap-sm bg-surface-container-highest border border-outline-variant hover:bg-surface-variant text-on-surface font-label-caps text-label-caps py-sm px-md rounded-lg transition-all group">
+<svg class="w-5 h-5" viewBox="0 0 48 48">
+<path d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" fill="#EA4335"></path>
+<path d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" fill="#4285F4"></path>
+<path d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" fill="#FBBC05"></path>
+<path d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" fill="#34A853"></path>
+</svg>
+                            Google
+                        </button>
+</div>
+</div>
+<!-- Bottom Links -->
+<div class="text-center space-y-md">
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[320px] mx-auto text-[14px] leading-relaxed">
+                        By signing up, you agree to our <a class="text-primary-fixed-dim hover:underline transition-all" href="#">Terms of Service</a> and <a class="text-primary-fixed-dim hover:underline transition-all" href="#">Privacy Policy</a>.
+                    </p>
+<p class="font-body-md text-body-md text-on-surface">
+                        Already have an account? <a class="text-primary-fixed-dim font-bold hover:underline transition-all" href="#">Sign in</a>
+</p>
+</div>
+</div>
+</section>
+</main>
+<!-- MICRO-INTERACTIONS: Custom Cursors or Atmospheric Effects -->
+<div class="fixed pointer-events-none w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(0,240,255,0.03)_0%,transparent_70%)] rounded-full -translate-x-1/2 -translate-y-1/2 z-0" id="cursor-glow"></div>
+<script>
+        // Atmospheric Mouse Tracking Effect
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            glow.style.left = `${x}px`;
+            glow.style.top = `${y}px`;
+        });
+
+        // Simple Form Validation Feedback
+        const form = document.getElementById('signupForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span>';
+            btn.classList.add('opacity-80');
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Success!';
+                btn.classList.remove('bg-primary-container');
+                btn.classList.add('bg-tertiary-container', 'text-on-tertiary-container');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-tertiary-container', 'text-on-tertiary-container', 'opacity-80');
+                    btn.classList.add('bg-primary-container');
+                }, 2000);
+            }, 1500);
+        });
+
+        // Image data-alt prompts (if needed for background generation)
+        // Though we used CSS/SVG, we keep placeholder awareness
+    </script>
+</body></html>
