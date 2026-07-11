@@ -11,7 +11,7 @@ import (
 func main() {
 	cfg := config.Load()
 
-	srv := server.NewServer()
+	srv := server.NewServer(cfg)
 
 	log.Printf("🚀 API Sandbox Orchestrator started on :%s", cfg.Port)
 	log.Fatal(http.ListenAndServe(":"+cfg.Port, srv.Router))
