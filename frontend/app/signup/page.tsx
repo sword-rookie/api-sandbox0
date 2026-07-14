@@ -3,6 +3,135 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
+const InteractiveNetworkCanvas = () => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const mouseRef = useRef({ x: -1000, y: -1000 });
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let animationFrameId: number;
+        let width: number;
+        let height: number;
+        let nodes: {x: number, y: number, vx: number, vy: number, radius: number}[] = [];
+        const nodeCount = 35; // Denser network
+
+        const initNodes = () => {
+            nodes = [];
+            for (let i = 0; i < nodeCount; i++) {
+                nodes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 1.2,
+                    vy: (Math.random() - 0.5) * 1.2,
+                    radius: Math.random() * 2 + 1
+                });
+            }
+        };
+
+        const resize = () => {
+            if (!canvas.parentElement) return;
+            width = canvas.width = canvas.parentElement.offsetWidth;
+            height = canvas.height = canvas.parentElement.offsetHeight;
+            initNodes();
+        };
+
+        const draw = () => {
+            ctx.clearRect(0, 0, width, height);
+            ctx.lineWidth = 1;
+
+            // Update and draw connections
+            for (let i = 0; i < nodes.length; i++) {
+                let n1 = nodes[i];
+                n1.x += n1.vx;
+                n1.y += n1.vy;
+
+                // Bounce
+                if (n1.x < 0 || n1.x > width) n1.vx *= -1;
+                if (n1.y < 0 || n1.y > height) n1.vy *= -1;
+
+                // Calculate mouse distance
+                const mouseDist = Math.hypot(n1.x - mouseRef.current.x, n1.y - mouseRef.current.y);
+                
+                // Repel and Fade out if near mouse
+                let nodeOpacity = 1;
+                if (mouseDist < 200 && mouseRef.current.x !== -1000) {
+                    nodeOpacity = Math.max(0, mouseDist / 200);
+                    // Add slight repelling physics
+                    const angle = Math.atan2(n1.y - mouseRef.current.y, n1.x - mouseRef.current.x);
+                    n1.x += Math.cos(angle) * (200 - mouseDist) * 0.05;
+                    n1.y += Math.sin(angle) * (200 - mouseDist) * 0.05;
+                }
+
+                ctx.beginPath();
+                ctx.arc(n1.x, n1.y, n1.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 240, 255, ${nodeOpacity})`;
+                ctx.fill();
+
+                // Connect nodes to each other
+                for (let j = i + 1; j < nodes.length; j++) {
+                    let n2 = nodes[j];
+                    let dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
+                    
+                    const mouseDist2 = Math.hypot(n2.x - mouseRef.current.x, n2.y - mouseRef.current.y);
+                    let nodeOpacity2 = 1;
+                    if (mouseDist2 < 200 && mouseRef.current.x !== -1000) {
+                        nodeOpacity2 = Math.max(0, mouseDist2 / 200);
+                    }
+
+                    if (dist < 150) {
+                        const lineOpacity = Math.min(nodeOpacity, nodeOpacity2) * (0.15 - dist/150 * 0.15);
+                        if (lineOpacity > 0.01) {
+                            ctx.beginPath();
+                            ctx.moveTo(n1.x, n1.y);
+                            ctx.lineTo(n2.x, n2.y);
+                            ctx.strokeStyle = `rgba(0, 240, 255, ${lineOpacity})`;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+            animationFrameId = requestAnimationFrame(draw);
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseRef.current = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        };
+        
+        const handleMouseLeave = () => {
+            mouseRef.current = { x: -1000, y: -1000 };
+        };
+
+        window.addEventListener('resize', resize);
+        canvas.addEventListener('mousemove', handleMouseMove);
+        canvas.addEventListener('mouseleave', handleMouseLeave);
+        
+        resize();
+        draw();
+
+        return () => {
+            window.removeEventListener('resize', resize);
+            canvas.removeEventListener('mousemove', handleMouseMove);
+            canvas.removeEventListener('mouseleave', handleMouseLeave);
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, []);
+
+    return (
+        <canvas 
+            ref={canvasRef} 
+            className="absolute top-0 left-0 w-full h-full z-0 cursor-crosshair"
+        />
+    );
+};
+
 export default function SignupPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -110,24 +239,18 @@ export default function SignupPage() {
                             backgroundSize: '32px 32px'
                         }}
                     ></div>
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,219,233,0.05),transparent_70%)]"></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,219,233,0.05),transparent_70%)]">
+                        <InteractiveNetworkCanvas />
+                    </div>
                     
-                    {/* Canvas Schematic Circle */}
-                    <div className="relative w-full max-w-2xl h-[400px] flex items-center justify-center">
-                        <div className="absolute w-[400px] h-[400px] border border-primary-fixed-dim/20 rounded-full animate-[pulse_8s_infinite_ease-in-out]"></div>
-                        <div className="absolute w-[250px] h-[250px] border border-primary-fixed-dim/10 rounded-full animate-[pulse_8s_infinite_ease-in-out] [animation-delay:2s]"></div>
+                    {/* Content Block */}
+                    <div className="relative w-full h-full flex flex-col items-center justify-center">
                         
-                        <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
-                            <path className="text-primary-fixed-dim" d="M10,50 L90,50 M50,10 L50,90" fill="none" stroke="currentColor" strokeWidth="0.1"></path>
-                            <circle className="text-primary-fixed-dim" cx="50" cy="50" fill="currentColor" r="1"></circle>
-                            <rect className="text-primary-fixed-dim" fill="none" height="60" stroke="currentColor" strokeWidth="0.1" width="60" x="20" y="20"></rect>
-                        </svg>
-                        
-                        <div className="z-10 text-center space-y-4">
+                        <div className="z-10 text-center space-y-4 max-w-[36rem] mx-auto">
                             <h1 className="font-display-lg text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tighter">
                                 Start Building Today
                             </h1>
-                            <p className="font-headline-md text-xl md:text-2xl text-on-surface-variant max-w-md mx-auto">
+                            <p className="font-headline-md text-xl md:text-2xl text-on-surface-variant max-w-[28rem] mx-auto">
                                 Create isolated environments in seconds
                             </p>
                         </div>
@@ -304,7 +427,7 @@ export default function SignupPage() {
                         {/* Bottom Links */}
                         <div className="text-center space-y-3">
                             <p className="text-xs text-on-surface-variant max-w-[320px] mx-auto leading-relaxed">
-                                By signing up, you agree to our <a className="text-primary-fixed-dim hover:underline transition-all" href="#">Terms of Service</a> and <a className="text-primary-fixed-dim hover:underline transition-all" href="#">Privacy Policy</a>.
+                                By signing up, you agree to our <Link className="text-primary-fixed-dim hover:underline transition-all" href="/terms">Terms of Service</Link> and <Link className="text-primary-fixed-dim hover:underline transition-all" href="/privacy">Privacy Policy</Link>.
                             </p>
                             <p className="text-sm text-on-surface">
                                 Already have an account? <Link className="text-primary-fixed-dim font-bold hover:underline transition-all" href="/login">Sign in</Link>
