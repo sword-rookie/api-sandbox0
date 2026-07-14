@@ -1,0 +1,40 @@
+# API Sandbox - Project Documentation
+
+## Overview
+The API Sandbox is a multi-container application orchestrated using Docker Compose. It is designed to provide a sandbox environment, likely for running, testing, or building API-driven interfaces and workflows with integrated AI capabilities (via Ollama). 
+
+The project consists of three main active services and a large repository of UI prototypes.
+
+## System Architecture
+
+The application is containerized and defined in `docker-compose.yml`.
+
+### 1. Frontend (`/frontend`)
+- **Framework:** Next.js (React)
+- **Port:** `3000` (mapped to `3000` on host)
+- **Role:** The user interface of the application. It communicates with the Orchestrator backend using the environment variable `NEXT_PUBLIC_API_URL` set to `http://localhost:8081`.
+
+### 2. Orchestrator (`/orchestrator`)
+- **Language/Framework:** Go (Golang)
+- **Port:** `8080` (mapped to `8081` on host to prevent conflicts)
+- **Role:** The backend service (API Sandbox Orchestrator). 
+- **Key Features:**
+  - Exposes an HTTP API for the frontend.
+  - Mounts the host's Docker socket (`/var/run/docker.sock`), allowing the Orchestrator to programmatically spin up, manage, and tear down Docker containers (sandbox environments).
+  - Mounts a local `./volumes` directory for persistent data sharing.
+  - Depends on the `ollama` service.
+
+### 3. Ollama (`ollama/ollama`)
+- **Port:** `11434` (mapped to `11434` on host)
+- **Role:** Provides local Large Language Model (LLM) inference capabilities. Used by the Orchestrator (and potentially frontend) for AI-driven features.
+- **Storage:** Uses a Docker named volume `ollama` mounted at `/root/.ollama` to persist downloaded AI models.
+
+### 4. UI Prototypes / Templates (`/stitch_api_sandbox_links`)
+- **Role:** A collection of 44 static UI prototypes and design components.
+- **Structure:** Each folder corresponds to a specific page or feature (e.g., `activity_feed`, `billing_usage`, `clarity_machine`, `sandbox_code_editor`, `settings_database_configuration`).
+- **Contents:** These folders typically contain raw `code.html` implementations and `screen.png` visual references. They likely act as the raw material or blueprints that the API Sandbox uses to render, generate, or test user interfaces dynamically.
+
+## Networking and Environment
+- Services communicate over Docker's internal network.
+- The Orchestrator exposes its API to the host on `8081`, which the local Frontend calls.
+- The Orchestrator has root-level Docker access to manage dynamic sandbox lifecycles.

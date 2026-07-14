@@ -2,9 +2,11 @@ package server
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/auth"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/builder"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/config"
 )
@@ -13,8 +15,36 @@ type Server struct {
 	Router *mux.Router
 }
 
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 func NewServer(cfg *config.Config) *Server {
 	r := mux.NewRouter()
+
+	// Apply CORS middleware globally
+	r.Use(corsMiddleware)
+
+	// Initialize Database Repository
+	dbPath := "/volumes/clarity.db"
+	repo, err := auth.NewSQLiteRepository(dbPath)
+	if err != nil {
+		log.Fatalf("❌ Failed to initialize user repository: %v", err)
+	}
+	log.Println("💾 User repository (SQLite) initialized successfully")
+
+	// Initialize Services & Handlers
+	authService := auth.NewService(repo)
+	authHandler := auth.NewHandler(authService)
 
 	// Health Check
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -23,6 +53,14 @@ func NewServer(cfg *config.Config) *Server {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"status":"ok","message":"API Sandbox Orchestrator is running"}`))
 	}).Methods("GET")
+
+	// Auth Endpoints
+	r.HandleFunc("/api/auth/register", authHandler.Register).Methods("POST", "OPTIONS")
+
+	// Profile Endpoints
+	r.HandleFunc("/api/users/{username}", authHandler.GetProfile).Methods("GET", "OPTIONS")
+	r.HandleFunc("/api/users/{id}", authHandler.UpdateProfile).Methods("PUT", "OPTIONS")
+	r.HandleFunc("/api/users/{id}", authHandler.DeleteProfile).Methods("DELETE", "OPTIONS")
 
 	// Build Endpoint
 	r.HandleFunc("/build", func(w http.ResponseWriter, r *http.Request) {

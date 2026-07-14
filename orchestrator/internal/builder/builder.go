@@ -42,3 +42,15 @@ func (b *Builder) BuildFromRepo(repoURL, branch string) (string, error) {
 
 	return "Image built successfully", nil
 }
+
+// RunContainer runs the built image
+func (b *Builder) RunContainer(imageName string) (string, error) {
+	cmd := exec.Command("docker", "run", "-d", "--rm", "-p", "0:3000", imageName)
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf("docker run failed: %s - %w", string(output), err)
+	}
+
+	containerID := string(output)
+	return containerID, nil
+}
