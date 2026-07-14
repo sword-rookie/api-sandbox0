@@ -195,11 +195,8 @@ export default function LandingPage() {
                         <a className="text-base text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Pricing</a>
                     </nav>
                     <div className="flex items-center gap-4">
-                        <Link href="/signup" className="text-base text-on-surface-variant hover:text-primary transition-colors">
+                        <Link href="/login" className="bg-primary-container text-on-primary-fixed-variant px-6 py-2 rounded-lg font-bold primary-glow active:scale-95 transition-all">
                             Login
-                        </Link>
-                        <Link href="/dashboard" className="bg-primary-container text-on-primary-fixed-variant px-4 py-2 rounded-lg font-bold primary-glow active:scale-95 transition-all">
-                            Try Demo
                         </Link>
                     </div>
                 </div>
@@ -222,7 +219,7 @@ export default function LandingPage() {
                             Give your team, QA, and clients a live, secure, shareable backend environment in seconds — complete with isolated database and realistic data.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                            <Link href="/signup" className="bg-primary-container text-on-primary-fixed-variant px-8 py-4 rounded-xl font-bold text-lg primary-glow hover:brightness-110 active:scale-95 transition-all">
+                            <Link href="/dashboard" className="bg-primary-container text-on-primary-fixed-variant px-8 py-4 rounded-xl font-bold text-lg primary-glow hover:brightness-110 active:scale-95 transition-all">
                                 Try Demo
                             </Link>
                             <button className="bg-transparent border border-outline-variant text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-surface-container transition-all flex items-center justify-center gap-2">
