@@ -69,8 +69,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const logout = async () => {
         try {
-            // Optional: call a backend /api/auth/logout endpoint if you create one
-            // For now, if we delete the cookies or clear state, it logs out locally
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081';
+            await fetch(`${baseUrl}/api/auth/logout`, {
+                method: 'POST',
+                credentials: 'include'
+            });
             setUser(null);
             router.push('/login');
         } catch (error) {

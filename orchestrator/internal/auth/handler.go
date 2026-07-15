@@ -3,8 +3,12 @@ package auth
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
+	"io"
 	"net"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -233,6 +237,32 @@ func (h *Handler) VerifyMFA(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "MFA enabled successfully"})
 }
 
+func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
+	// Clear the access token cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:     "access_token",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Unix(0, 0),
+		MaxAge:   -1,
+		HttpOnly: true,
+	})
+
+	// Clear the refresh token cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:     "refresh_token",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Unix(0, 0),
+		MaxAge:   -1,
+		HttpOnly: true,
+	})
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Logged out successfully"})
+}
+
 func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("access_token")
 	if err != nil {
@@ -436,4 +466,49 @@ func extractIP(r *http.Request) string {
 		return "0.0.0.0"
 	}
 	return parsedIP.String()
+}
+
+func (h *Handler) UploadAvatar(w http.ResponseWriter, r *http.Request) {
+	// 5MB limit
+	r.ParseMultipartForm(5 << 20)
+	
+	file, header, err := r.FormFile("avatar")
+	if err != nil {
+		http.Error(w, `{"error": "Failed to get avatar file"}`, http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	// Validate type
+	contentType := header.Header.Get("Content-Type")
+	if contentType != "image/jpeg" && contentType != "image/png" && contentType != "image/webp" {
+		http.Error(w, `{"error": "Invalid file type. Only JPEG, PNG, and WebP are allowed"}`, http.StatusBadRequest)
+		return
+	}
+
+	// Create unique filename
+	ext := filepath.Ext(header.Filename)
+	newFilename := uuid.New().String() + ext
+	savePath := filepath.Join("uploads", "avatars", newFilename)
+
+	// Save file
+	dst, err := os.Create(savePath)
+	if err != nil {
+		http.Error(w, `{"error": "Failed to save file"}`, http.StatusInternalServerError)
+		return
+	}
+	defer dst.Close()
+
+	if _, err := io.Copy(dst, file); err != nil {
+		http.Error(w, `{"error": "Failed to save file"}`, http.StatusInternalServerError)
+		return
+	}
+
+	// Construct URL
+	// Note: In production, read base URL from config or headers
+	url := fmt.Sprintf("http://localhost:8081/uploads/avatars/%s", newFilename)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"url": url})
 }

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../context/AuthContext';
 
 const InteractiveNetworkCanvas = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -124,6 +125,7 @@ const InteractiveNetworkCanvas = () => {
 
 export default function LoginPage() {
     const router = useRouter();
+    const { checkAuth } = useAuth();
     const [step, setStep] = useState<1 | 2>(1);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -166,6 +168,7 @@ export default function LoginPage() {
                     setTempToken(data.temp_token);
                     setStep(2);
                 } else {
+                    await checkAuth();
                     router.push('/dashboard');
                 }
             } else {
@@ -181,7 +184,7 @@ export default function LoginPage() {
                 if (!res.ok) {
                     throw new Error(data.error || 'Invalid authentication code');
                 }
-                
+                await checkAuth();
                 router.push('/dashboard');
             }
         } catch (err: any) {

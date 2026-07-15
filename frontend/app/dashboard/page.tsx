@@ -80,7 +80,7 @@ export default function DashboardHome() {
                     {/* Welcome Section */}
                     <section className="space-y-2">
                         <h1 className="text-4xl md:text-5xl font-bold text-on-surface tracking-tight">Welcome back, Alex</h1>
-                        <p className="text-lg text-on-surface-variant max-w-2xl">What would you like to do today? Your project clusters are healthy and 5 sandboxes are currently active.</p>
+                        <p className="text-lg text-on-surface-variant max-w-[672px]">What would you like to do today? Your project clusters are healthy and 5 sandboxes are currently active.</p>
                     </section>
 
                     {/* Quick Action Cards */}

@@ -73,12 +73,17 @@ func NewServer(cfg *config.Config) *Server {
 	authRouter.HandleFunc("/forgot-password", authHandler.ForgotPassword).Methods("POST", "OPTIONS")
 	authRouter.HandleFunc("/validate-reset-token", authHandler.ValidateResetToken).Methods("GET", "OPTIONS")
 	authRouter.HandleFunc("/reset-password", authHandler.ResetPassword).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/logout", authHandler.Logout).Methods("POST", "OPTIONS")
 	authRouter.HandleFunc("/profile/me", authHandler.GetMe).Methods("GET", "OPTIONS")
 
 	// Profile Endpoints
 	r.HandleFunc("/api/users/{username}", authHandler.GetProfile).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/users/me", authHandler.UpdateProfileMe).Methods("PUT", "OPTIONS")
+	r.HandleFunc("/api/upload/avatar", authHandler.UploadAvatar).Methods("POST", "OPTIONS")
 	r.HandleFunc("/api/users/{id}", authHandler.DeleteProfile).Methods("DELETE", "OPTIONS")
+
+	// Static files for uploads
+	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads"))))
 
 	// Build Endpoint
 	r.HandleFunc("/build", func(w http.ResponseWriter, r *http.Request) {

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import TopNavBar from '../../../components/TopNavBar';
@@ -9,6 +9,7 @@ import Link from 'next/link';
 export default function AccountSettingsPage() {
     const { user, loading, checkAuth } = useAuth();
     const router = useRouter();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -18,6 +19,7 @@ export default function AccountSettingsPage() {
         avatar_url: ''
     });
 
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const [status, setStatus] = useState<{type: 'idle' | 'loading' | 'success' | 'error', message?: string}>({ type: 'idle' });
 
     useEffect(() => {
@@ -38,28 +40,63 @@ export default function AccountSettingsPage() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setAvatarFile(file);
+            setFormData({ ...formData, avatar_url: URL.createObjectURL(file) });
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus({ type: 'loading' });
         
         try {
-            // First we need to get the token. 
-            // In a real app we'd use an Axios interceptor. Here we'll use credentials: 'include'.
             const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081';
+            let finalAvatarUrl = formData.avatar_url;
+
+            // 1. Upload Avatar if a new file was selected
+            if (avatarFile) {
+                const uploadData = new FormData();
+                uploadData.append('avatar', avatarFile);
+
+                const uploadRes = await fetch(`${apiURL}/api/upload/avatar`, {
+                    method: 'POST',
+                    body: uploadData,
+                    credentials: 'include' // Optional: if auth required later
+                });
+
+                if (!uploadRes.ok) {
+                    throw new Error('Failed to upload avatar image');
+                }
+
+                const uploadJson = await uploadRes.json();
+                finalAvatarUrl = uploadJson.url;
+            }
+
+            // 2. Submit Full Profile
+            const payload = { ...formData, avatar_url: finalAvatarUrl };
+
             const res = await fetch(`${apiURL}/api/users/me`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData),
-                credentials: 'include' // Important for sending the access_token cookie
+                body: JSON.stringify(payload),
+                credentials: 'include'
             });
 
             if (!res.ok) {
+                let errMsg = 'Failed to update profile. Please try again.';
+                try {
+                    const errJson = await res.json();
+                    if (errJson.error) errMsg = errJson.error;
+                } catch (e) {}
                 if (res.status === 409) {
                     throw new Error('This username is already taken. Please choose another one.');
                 }
-                throw new Error('Failed to update profile. Please try again.');
+                throw new Error(`Server returned ${res.status}: ${errMsg}`);
             }
 
             // Refresh user context so TopNav updates
@@ -119,6 +156,44 @@ export default function AccountSettingsPage() {
                     <form onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-[600px]">
                         
                         <div className="flex flex-col gap-2">
+                            <label className="text-sm font-semibold">Avatar</label>
+                            <div className="flex items-center gap-6">
+                                <div 
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="w-24 h-24 rounded-full overflow-hidden shrink-0 border-2 border-outline-variant bg-surface-container cursor-pointer hover:border-primary-fixed-dim transition-colors group relative"
+                                >
+                                    {formData.avatar_url ? (
+                                        <img src={formData.avatar_url} alt="Avatar preview" className="w-full h-full object-cover grayscale contrast-125 group-hover:opacity-50 transition-opacity" />
+                                    ) : (
+                                        <span className="material-symbols-outlined w-full h-full flex items-center justify-center text-[40px] text-on-surface-variant group-hover:opacity-50 transition-opacity">person</span>
+                                    )}
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                        <span className="material-symbols-outlined text-white drop-shadow-md">upload</span>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex flex-col gap-1">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="text-sm font-semibold text-primary-fixed-dim hover:text-primary-fixed text-left hover:underline transition-all"
+                                    >
+                                        Upload new picture
+                                    </button>
+                                    <span className="text-xs text-on-surface-variant">JPEG, PNG, or WebP. Max 5MB.</span>
+                                </div>
+
+                                <input 
+                                    type="file" 
+                                    accept="image/jpeg, image/png, image/webp"
+                                    className="hidden"
+                                    ref={fileInputRef}
+                                    onChange={handleFileChange}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
                             <label className="text-sm font-semibold">Display Name</label>
                             <input 
                                 type="text" 
@@ -168,27 +243,6 @@ export default function AccountSettingsPage() {
                                 className="bg-surface-container-lowest border border-outline-variant rounded-md px-4 py-2 text-sm focus:border-primary-fixed-dim focus:outline-none transition-colors"
                                 placeholder="E.g., Austin, TX"
                             />
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-                            <label className="text-sm font-semibold">Avatar URL</label>
-                            <div className="flex gap-4 items-center">
-                                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border border-outline-variant bg-surface-container">
-                                    {formData.avatar_url ? (
-                                        <img src={formData.avatar_url} alt="Avatar preview" className="w-full h-full object-cover grayscale contrast-125" />
-                                    ) : (
-                                        <span className="material-symbols-outlined w-full h-full flex items-center justify-center text-[32px] text-on-surface-variant">person</span>
-                                    )}
-                                </div>
-                                <input 
-                                    type="url" 
-                                    name="avatar_url"
-                                    value={formData.avatar_url}
-                                    onChange={handleChange}
-                                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-4 py-2 text-sm focus:border-primary-fixed-dim focus:outline-none transition-colors"
-                                    placeholder="https://example.com/avatar.png"
-                                />
-                            </div>
                         </div>
 
                         <div className="pt-4 border-t border-outline-variant">

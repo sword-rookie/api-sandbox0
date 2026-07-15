@@ -192,7 +192,7 @@ export default function ResetPasswordPage() {
         <main className="min-h-screen bg-surface flex relative overflow-hidden">
             <div className="hidden lg:flex w-1/2 relative bg-surface-dim items-center justify-center border-r border-outline-variant/20 z-10 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed-dim/10 to-transparent z-0"></div>
-                <div className="z-10 text-center space-y-6 max-w-lg px-8">
+                <div className="z-10 text-center space-y-6 max-w-[512px] px-8">
                     <h1 className="text-5xl font-bold text-on-surface tracking-tight leading-tight">
                         Reset <span className="text-primary-fixed">Password</span>
                     </h1>
@@ -203,7 +203,7 @@ export default function ResetPasswordPage() {
             </div>
 
             <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative z-20">
-                <div className="w-full max-w-md space-y-8">
+                <div className="w-full max-w-[448px] space-y-8">
                     <div className="text-center lg:text-left space-y-2">
                         <h2 className="text-3xl font-bold text-on-surface tracking-tight">Create New Password</h2>
                         <p className="text-on-surface-variant text-sm">
