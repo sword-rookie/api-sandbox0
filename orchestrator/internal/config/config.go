@@ -7,13 +7,36 @@ import (
 )
 
 type Config struct {
-	Port string
+	AppPort string `env:"APP_PORT" default:"8081"`
+
+	// Database
+	DBType     string `env:"DB_TYPE" default:"postgres"`
+	DBHost     string `env:"DB_HOST" default:"localhost"`
+	DBPort     string `env:"DB_PORT" default:"5432"`
+	DBUser     string `env:"DB_USER" default:"postgres"`
+	DBPassword string `env:"DB_PASSWORD"`
+	DBName     string `env:"DB_NAME" default:"clarity"`
+	DBSSLMode  string `env:"DB_SSL_MODE" default:"prefer"`
+
+	JWTSecret     string `env:"JWT_SECRET"`
+	EncryptionKey string `env:"ENCRYPTION_KEY"`
 }
 
 func Load() *Config {
-	godotenv.Load()
+	godotenv.Load("../.env") // Load from root workspace if running in orchestrator
+	godotenv.Load(".env")       // Load from CWD
+
 	return &Config{
-		Port: getEnv("PORT", "8080"),
+		AppPort:    getEnv("APP_PORT", "8081"),
+		DBType:     getEnv("DB_TYPE", "postgres"),
+		DBHost:     getEnv("DB_HOST", "localhost"),
+		DBPort:     getEnv("DB_PORT", "5432"),
+		DBUser:     getEnv("DB_USER", "postgres"),
+		DBPassword: getEnv("DB_PASSWORD", ""),
+		DBName:     getEnv("DB_NAME", "clarity"),
+		DBSSLMode:     getEnv("DB_SSL_MODE", "prefer"),
+		JWTSecret:     getEnv("JWT_SECRET", ""),
+		EncryptionKey: getEnv("ENCRYPTION_KEY", "12345678901234567890123456789012"),
 	}
 }
 

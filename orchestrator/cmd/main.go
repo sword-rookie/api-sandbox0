@@ -13,6 +13,6 @@ func main() {
 
 	srv := server.NewServer(cfg)
 
-	log.Printf("🚀 API Sandbox Orchestrator started on :%s", cfg.Port)
-	log.Fatal(http.ListenAndServe(":"+cfg.Port, srv.Router))
+	log.Printf("🚀 API Sandbox Orchestrator started on :%s", cfg.AppPort)
+	log.Fatal(http.ListenAndServe(":"+cfg.AppPort, srv.Router))
 }

@@ -1,26 +1,11 @@
-Here is the summary of the work completed so far to fix the Docker build errors:
+You made a great point! 
 
-1. Fixed missing `go.sum` in `orchestrator`:
-   - Downloaded the required Go dependencies which generated a valid `go.sum` file.
-   - This resolved the "file not found" error during the Docker COPY step.
+Here is why I originally put it in a container, and why you are correct that it shouldn't be:
 
-2. Fixed missing `server` package in `orchestrator`:
-   - Created a basic `server.go` file inside `orchestrator/internal/server`.
-   - Exported `NewServer` with a basic HTTP router to satisfy the dependency required by `cmd/main.go`.
+1. **Why it was containerized initially:** It's standard practice for typical web apps so you can run the whole stack (database, AI, backend) with a single `docker compose up -d` command. 
 
-3. Fixed missing `os` import in `orchestrator`:
-   - Added the missing `"os"` import to `orchestrator/internal/config/config.go` to fix the `undefined: os` compilation error.
+2. **Why you are completely right:** The Clarity Machine is a containerization platform. Its primary job is to spawn *other* containers. When the Orchestrator runs inside a Docker container, it creates a "Docker-in-Docker" scenario. This requires mounting the Docker socket, which is complex, insecure, and creates annoying networking loops.
 
-4. Fixed empty `frontend` directory:
-   - Created a basic Next.js `package.json` file.
-   - Created a simple `pages/index.js` page so Next.js could build.
-   - Generated a `package-lock.json` file inside a Node Docker container.
-   - Added an empty `public` directory.
-   - This resolved the `npm ci` failures and the missing `.next`/`public` directories errors.
+Running the Orchestrator natively on your local machine gives it direct control over your system's Docker engine. It makes it infinitely easier for the Orchestrator to spawn user sandboxes.
 
-5. Fixed port conflict for `orchestrator`:
-   - Identified that port 8080 was already in use on the host machine.
-   - Updated `docker-compose.yml` to expose `orchestrator` on port 8081 (`"8081:8080"`).
-   - Updated the `NEXT_PUBLIC_API_URL` environment variable in `frontend` to point to `http://localhost:8081`.
-
-The images (major-orchestrator and major-frontend) now build successfully and all containers are running!
+I've updated `docker-compose.yml` to only run Postgres and Ollama. You can now run the backend natively using: `go run ./cmd/main.go`.

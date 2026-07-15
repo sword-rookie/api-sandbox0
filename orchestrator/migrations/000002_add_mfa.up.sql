@@ -1,0 +1,2 @@
+ALTER TABLE users ADD COLUMN mfa_enabled BOOLEAN DEFAULT false;
+ALTER TABLE users ADD COLUMN mfa_secret BYTEA;

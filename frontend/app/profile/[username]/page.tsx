@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext';
+import TopNavBar from '../../../components/TopNavBar';
 
 interface UserProfile {
     id: string;
@@ -14,14 +16,37 @@ interface UserProfile {
     avatar_url: string;
 }
 
-export default function ProfileOverview() {
+// Generate a random contribution graph (365 days)
+const generateContributionData = () => {
+    const days = [];
+    for (let i = 0; i < 365; i++) {
+        // 0: none, 1: low, 2: medium, 3: high, 4: very high
+        const rand = Math.random();
+        let level = 0;
+        if (rand > 0.9) level = 4;
+        else if (rand > 0.75) level = 3;
+        else if (rand > 0.6) level = 2;
+        else if (rand > 0.4) level = 1;
+        days.push({ id: i, level });
+    }
+    return days;
+};
+
+export default function ProfilePage() {
     const params = useParams();
     const router = useRouter();
     const username = params.username as string;
+    const { user: currentUser } = useAuth();
 
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const [contributions, setContributions] = useState<{id: number, level: number}[]>([]);
+
+    useEffect(() => {
+        setContributions(generateContributionData());
+    }, []);
 
     useEffect(() => {
         if (!username) return;
@@ -50,6 +75,16 @@ export default function ProfileOverview() {
         fetchProfile();
     }, [username]);
 
+    const getColorForLevel = (level: number) => {
+        switch (level) {
+            case 4: return 'bg-primary-fixed drop-shadow-[0_0_2px_rgba(0,240,255,0.8)]';
+            case 3: return 'bg-primary-fixed-dim';
+            case 2: return 'bg-primary-fixed-dim/60';
+            case 1: return 'bg-primary-fixed-dim/30';
+            default: return 'bg-surface-container-high border border-outline-variant/30';
+        }
+    };
+
     if (loading) {
         return (
             <div className="bg-background min-h-screen flex items-center justify-center text-primary-fixed-dim">
@@ -69,150 +104,174 @@ export default function ProfileOverview() {
     }
 
     return (
-        <div className="bg-background text-on-surface font-sans min-h-screen overflow-x-hidden selection:bg-primary-container/30">
-            {/* TopNavBar */}
-            <nav className="bg-surface/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-sm border-b border-outline-variant transition-all duration-300">
-                <div className="flex justify-between items-center h-16 px-4 md:px-10 max-w-[1440px] mx-auto">
-                    <div className="flex items-center gap-6">
-                        <Link href="/" className="text-xl font-bold text-primary-fixed-dim cursor-pointer hover:text-primary transition-colors active:scale-95 duration-200">
-                            Clarity Machine
-                        </Link>
-                        <div className="hidden md:flex items-center bg-surface-container-lowest border border-outline-variant rounded-full px-4 py-2 focus-within:border-primary-fixed-dim focus-within:shadow-[0_0_10px_rgba(0,240,255,0.2)] transition-all">
-                            <span className="material-symbols-outlined text-on-surface-variant mr-2" style={{ fontSize: '20px' }}>search</span>
-                            <input className="bg-transparent border-none focus:ring-0 text-sm text-on-surface placeholder:text-on-surface-variant w-64 outline-none" placeholder="Search resources..." type="text" />
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <button className="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 p-2 rounded-full hover:bg-surface-container-low flex items-center justify-center">
-                            <span className="material-symbols-outlined">notifications</span>
-                        </button>
-                        <Link href="/settings/account" className="text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 p-2 rounded-full hover:bg-surface-container-low flex items-center justify-center">
-                            <span className="material-symbols-outlined">settings</span>
-                        </Link>
-                        <div className="h-8 w-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer hover:border-primary transition-colors ml-2 active:scale-95 duration-200">
-                            <img alt="User profile avatar" className="w-full h-full object-cover" src={profile.avatar_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuC_GQh8LEnLBW4mIGswhQ-ss8DZCBevY0av-vEX3NSca_iN9GDY6-MhLqQpCEIPI0EIIVF4n9c4wuzCVT-VZryQ5qTaWR_uIJ9puU9NU9ya0gHgrLX4GIQmnGnP6FFmzS2a0s9Vh6mzMUdy6Wl7ozKs5AfLyfM7StdlTfzrXOCp9wBr3W2SqPGkS8oW8wSeemB09Hk9TbrnQdqshJZGHZX9IZhMasPMw7wOMUsNEnqlJbkUJTFh3yj9kQUb2kLKj9E0gHWmB0WU1soN"} />
-                        </div>
-                    </div>
-                </div>
-            </nav>
+        <div className="bg-background text-on-surface font-sans min-h-screen">
+            {/* Top Navigation - Shared */}
+            <TopNavBar />
 
-            {/* SideNavBar */}
-            <aside className="bg-surface-container-lowest border-r border-outline-variant fixed left-0 top-16 h-[calc(100vh-64px)] w-64 hidden md:flex flex-col py-4 gap-1 overflow-y-auto">
-                <div className="px-4 pb-4 mb-1 border-b border-outline-variant/50">
-                    <div className="flex items-center gap-2 mb-1">
-                        <div className="w-10 h-10 rounded border border-primary-container/30 overflow-hidden shrink-0">
-                            <img alt="Developer Avatar" className="w-full h-full object-cover grayscale contrast-125" src={profile.avatar_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuCrVKpwSFQBczULJo5kMCtB0_c_GSxzm6lpteIGzfw7a8uxF9ArbDE0MQ5EMCQylAMe-JWF4kY25ULWnoGwZ232vsal8M49rXerhQHmnJTZvg32nJhehB4PudlOM0udQ1Zk-6BGrd9FiIGYY9AX3kCI0Oub0Vb-BYbd2tftfDssn-AJTyX0EyAS8ZFbr3cjkpS-xBVNtvgas1qxCksH_aCuxRYaPmStsnlfvKXhXRBqmRT1TOCUTtsUJIKTepUElttuznVLUgo99MYs"} />
+            <main className="pt-24 max-w-[1280px] mx-auto px-6 pb-20">
+                <div className="flex flex-col md:flex-row gap-8">
+                    
+                    {/* Left Sidebar */}
+                    <aside className="w-full md:w-1/4 flex flex-col gap-4">
+                        <div className="w-full aspect-square rounded-full overflow-hidden border border-outline-variant shadow-[0_0_20px_rgba(0,240,255,0.1)] mb-2 relative group">
+                            <img src={profile.avatar_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuBVEIJ1kg84ObPxJbw9lPD_Cl_UbuFva43Z8SPeW8bqmzuxauITDn2IQJn3BoWafgP8KWwuCjuWaQp6W-iRNzHjbdBYKZ5RqpiCAHNcO1SIF8pIHaBQFjkTW8DWtqcmnxvldZx0DYjBPhfEFxI_BnpUjgiDsPUvKCm_6kM7BJUcDnT1CLtHTo0n-W-vGwgmke9CosaYwixilnIn4rZdS88mCoc1ha_AjGTXEk5eDkMWujDByKnCqsCk6_Gt-ie3KiR0mD80bQKtW8UD"} className="w-full h-full object-cover grayscale contrast-125 transition-transform duration-500 group-hover:scale-105" />
+                            <div className="absolute inset-0 border-[6px] border-surface-container-lowest rounded-full pointer-events-none"></div>
                         </div>
-                        <div className="flex flex-col overflow-hidden">
-                            <span className="text-[14px] leading-tight font-bold text-primary truncate">DevOps Mission Control</span>
-                            <span className="font-mono text-[11px] text-on-surface-variant truncate">Active Session: US-East-1</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="flex-1 flex flex-col gap-1 px-2">
-                    <a className="flex items-center gap-4 px-4 py-2 rounded-r-full mr-2 text-primary-fixed-dim bg-secondary-container/30 border-r-2 border-primary-container font-mono text-sm transition-all" href="#">
-                        <span className="material-symbols-outlined">dashboard</span>
-                        <span>Overview</span>
-                    </a>
-                    <Link className="flex items-center gap-4 px-4 py-2 rounded-r-full mr-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-mono text-sm" href="/settings/account">
-                        <span className="material-symbols-outlined">person</span>
-                        <span>Account</span>
-                    </Link>
-                    <a className="flex items-center gap-4 px-4 py-2 rounded-r-full mr-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all font-mono text-sm" href="#">
-                        <span className="material-symbols-outlined">layers</span>
-                        <span>Sandboxes</span>
-                    </a>
-                </div>
-
-                <div className="px-4 mt-auto pt-4 border-t border-outline-variant/50">
-                    <div className="flex flex-col gap-1 pb-2">
-                        <a className="flex items-center gap-4 px-2 py-1.5 text-error hover:text-error-red hover:bg-error-container/20 rounded transition-all font-mono text-[13px]" href="#">
-                            <span className="material-symbols-outlined text-[18px]">logout</span>
-                            <span>Sign Out</span>
-                        </a>
-                    </div>
-                </div>
-            </aside>
-
-            {/* Main Content */}
-            <main className="md:ml-64 mt-16 p-4 md:p-16 min-h-[calc(100vh-64px)] max-w-[1176px] mx-auto">
-                <section className="relative mb-16">
-                    {/* Banner Image */}
-                    <div className="w-full h-48 md:h-64 rounded-xl overflow-hidden relative border border-outline-variant shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-                        <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent z-10"></div>
-                        <img className="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc2Gbgk1AjShG9hozz5CEIP3RyBcDCV_JKprZIxHxvQPxWW5CPTPUh3abN0-vyVAjg7TdxNsP9O_sy9RcKBo6Q7tPmYhLxbAxeNl8vmTNQdfP71ksdKUHtsO0SlqGwTZwqnsWE6ElCgS1PcZgk6LEJEMDxxlW_kQ7GZ9jzgdtKx1UJSuVSSNlF5cucI8Es1KjMXFGUFbEoz4x0zpH-CdxCAC5ea6P0yfjW0kKWgT8jwku6qlJu1_6mMXwkBQ-ZRHzelX6ky2A4v9Yi" />
-                    </div>
-
-                    {/* Profile Info Container */}
-                    <div className="relative z-20 px-4 md:px-8 -mt-16 md:-mt-20 flex flex-col md:flex-row gap-6 md:items-end justify-between">
-                        {/* Avatar & Identity */}
-                        <div className="flex flex-col md:flex-row gap-6 items-start md:items-end">
-                            <div className="relative">
-                                <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden border-4 border-surface-container-lowest shadow-[0_0_20px_rgba(0,240,255,0.15)] bg-surface-container-lowest">
-                                    <img className="w-full h-full object-cover grayscale contrast-125" src={profile.avatar_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuBVEIJ1kg84ObPxJbw9lPD_Cl_UbuFva43Z8SPeW8bqmzuxauITDn2IQJn3BoWafgP8KWwuCjuWaQp6W-iRNzHjbdBYKZ5RqpiCAHNcO1SIF8pIHaBQFjkTW8DWtqcmnxvldZx0DYjBPhfEFxI_BnpUjgiDsPUvKCm_6kM7BJUcDnT1CLtHTo0n-W-vGwgmke9CosaYwixilnIn4rZdS88mCoc1ha_AjGTXEk5eDkMWujDByKnCqsCk6_Gt-ie3KiR0mD80bQKtW8UD"} />
-                                </div>
-                                <div className="absolute bottom-2 right-2 w-4 h-4 rounded-full bg-primary-container border-2 border-surface-container-lowest shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
-                            </div>
-                            <div className="flex flex-col pb-2">
-                                <h1 className="text-4xl font-bold text-on-surface m-0 leading-tight tracking-tight">{profile.name}</h1>
-                                <span className="font-mono text-sm text-primary-fixed-dim mt-1">@{profile.username}</span>
-                            </div>
+                        
+                        <div>
+                            <h1 className="text-2xl font-bold text-on-surface leading-tight">{profile.name}</h1>
+                            <h2 className="text-xl text-on-surface-variant font-mono mb-4">@{profile.username}</h2>
                         </div>
 
-                        {/* Quick Actions */}
-                        <div className="flex flex-wrap gap-4 pb-2">
-                            <Link href="/settings/account" className="bg-primary-container text-on-primary-container px-6 py-2 rounded text-sm font-bold shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all active:scale-95 duration-200">
-                                Edit Profile
+                        {currentUser && currentUser.username === profile.username && (
+                            <Link href="/settings/account" className="w-full block text-center py-1.5 bg-surface-container-high border border-outline-variant rounded-md text-sm font-semibold hover:bg-surface-container transition-colors mb-2">
+                                Edit profile
                             </Link>
-                        </div>
-                    </div>
+                        )}
 
-                    {/* Bio & Meta */}
-                    <div className="mt-6 px-4 md:px-8 max-w-3xl">
-                        <p className="text-lg text-on-surface-variant mb-4">
-                            {profile.bio || "No bio provided yet."}
-                        </p>
-                        <div className="flex flex-wrap gap-8 items-center font-mono text-[13px] text-on-surface-variant">
+                        <div className="text-sm text-on-surface mb-2">
+                            {profile.bio || 'Building the future of infrastructure.'}
+                        </div>
+
+                        <div className="flex items-center gap-1 text-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer mb-4">
+                            <span className="material-symbols-outlined text-[16px]">group</span>
+                            <span className="font-bold text-on-surface">1.2k</span> followers
+                            <span className="mx-1">·</span>
+                            <span className="font-bold text-on-surface">14</span> following
+                        </div>
+
+                        <div className="flex flex-col gap-2 text-sm text-on-surface-variant">
                             {profile.location && (
-                                <div className="flex items-center gap-1">
-                                    <span className="material-symbols-outlined text-[18px]">location_on</span>
+                                <div className="flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-[16px]">location_on</span>
                                     <span>{profile.location}</span>
                                 </div>
                             )}
-                            <div className="flex items-center gap-1">
-                                <span className="material-symbols-outlined text-[18px] text-primary-fixed-dim">mail</span>
-                                <a className="text-primary-fixed-dim hover:underline" href={`mailto:${profile.email}`}>{profile.email}</a>
+                            <div className="flex items-center gap-2">
+                                <span className="material-symbols-outlined text-[16px]">mail</span>
+                                <a href={`mailto:${profile.email}`} className="hover:text-primary hover:underline">{profile.email}</a>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <span className="material-symbols-outlined text-[16px]">link</span>
+                                <a href="#" className="hover:text-primary hover:underline">claritymachine.io/{profile.username}</a>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </aside>
 
-                {/* Stats Grid */}
-                <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4 md:px-8">
-                    {/* Stat Card 1 */}
-                    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between group hover:border-primary-fixed-dim transition-colors relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-primary-container/10 transition-all"></div>
-                        <div className="flex justify-between items-start mb-8 relative z-10">
-                            <span className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">Total Sandboxes</span>
-                            <span className="material-symbols-outlined text-primary-fixed-dim">layers</span>
+                    {/* Right Content */}
+                    <div className="w-full md:w-3/4 flex flex-col gap-6">
+                        
+                        {/* Tabs */}
+                        <div className="flex items-center gap-6 border-b border-outline-variant overflow-x-auto pb-[1px]">
+                            <button className="flex items-center gap-2 py-2 border-b-2 border-primary-fixed-dim text-on-surface font-semibold text-sm whitespace-nowrap">
+                                <span className="material-symbols-outlined text-[18px]">menu_book</span>
+                                Overview
+                            </button>
+                            <button className="flex items-center gap-2 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:border-outline-variant font-semibold text-sm whitespace-nowrap transition-colors">
+                                <span className="material-symbols-outlined text-[18px]">terminal</span>
+                                Sandboxes <span className="bg-surface-container px-2 rounded-full text-xs ml-1">42</span>
+                            </button>
+                            <button className="flex items-center gap-2 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:border-outline-variant font-semibold text-sm whitespace-nowrap transition-colors">
+                                <span className="material-symbols-outlined text-[18px]">folder</span>
+                                Projects <span className="bg-surface-container px-2 rounded-full text-xs ml-1">8</span>
+                            </button>
+                            <button className="flex items-center gap-2 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:border-outline-variant font-semibold text-sm whitespace-nowrap transition-colors">
+                                <span className="material-symbols-outlined text-[18px]">star</span>
+                                Stars <span className="bg-surface-container px-2 rounded-full text-xs ml-1">128</span>
+                            </button>
                         </div>
-                        <div className="font-mono text-4xl font-bold text-on-surface relative z-10">
-                            0
+
+                        <div className="mt-4">
+                            <h3 className="text-sm font-semibold mb-3">Pinned</h3>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                {/* Pinned Card 1 */}
+                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
+                                    <div className="flex items-center justify-between">
+                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">alpha-production-cluster</a>
+                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
+                                    </div>
+                                    <p className="text-xs text-on-surface-variant line-clamp-2">Main production cluster for project Alpha. Contains critical microservices.</p>
+                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
+                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-yellow-400"></div>Go</div>
+                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 12</div>
+                                    </div>
+                                </div>
+                                {/* Pinned Card 2 */}
+                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
+                                    <div className="flex items-center justify-between">
+                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">sandbox-ai-inference</a>
+                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
+                                    </div>
+                                    <p className="text-xs text-on-surface-variant line-clamp-2">GPU-accelerated sandbox for running local LLM inference.</p>
+                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
+                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500"></div>Python</div>
+                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 45</div>
+                                    </div>
+                                </div>
+                                {/* Pinned Card 3 */}
+                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
+                                    <div className="flex items-center justify-between">
+                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">web-dashboard-ui</a>
+                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
+                                    </div>
+                                    <p className="text-xs text-on-surface-variant line-clamp-2">React based frontend interface for internal tooling.</p>
+                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
+                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-cyan-400"></div>TypeScript</div>
+                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 8</div>
+                                    </div>
+                                </div>
+                                {/* Pinned Card 4 */}
+                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
+                                    <div className="flex items-center justify-between">
+                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">rust-hyper-proxy</a>
+                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
+                                    </div>
+                                    <p className="text-xs text-on-surface-variant line-clamp-2">High performance network proxy written in Rust.</p>
+                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
+                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-orange-500"></div>Rust</div>
+                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 112</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        {/* Contribution Graph */}
+                        <div className="mt-8">
+                            <h3 className="text-sm font-semibold mb-3">1,842 contributions in the last year</h3>
+                            <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest overflow-hidden">
+                                <div className="flex gap-[3px] overflow-x-auto pb-4">
+                                    {/* 52 columns of 7 days */}
+                                    {Array.from({length: 52}).map((_, colIndex) => (
+                                        <div key={colIndex} className="flex flex-col gap-[3px]">
+                                            {contributions.slice(colIndex * 7, (colIndex + 1) * 7).map((day) => (
+                                                <div 
+                                                    key={day.id} 
+                                                    className={`w-3 h-3 rounded-[2px] ${getColorForLevel(day.level)}`}
+                                                    title={`Activity Level: ${day.level}`}
+                                                ></div>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex justify-between items-center mt-2 text-xs text-on-surface-variant">
+                                    <span>Learn how we count contributions</span>
+                                    <div className="flex items-center gap-2">
+                                        <span>Less</span>
+                                        <div className="flex gap-[3px]">
+                                            <div className="w-3 h-3 rounded-[2px] bg-surface-container-high border border-outline-variant/30"></div>
+                                            <div className="w-3 h-3 rounded-[2px] bg-primary-fixed-dim/30"></div>
+                                            <div className="w-3 h-3 rounded-[2px] bg-primary-fixed-dim/60"></div>
+                                            <div className="w-3 h-3 rounded-[2px] bg-primary-fixed-dim"></div>
+                                            <div className="w-3 h-3 rounded-[2px] bg-primary-fixed drop-shadow-[0_0_2px_rgba(0,240,255,0.8)]"></div>
+                                        </div>
+                                        <span>More</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    {/* Stat Card 2 */}
-                    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between group hover:border-primary-fixed-dim transition-colors relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-tertiary-container/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-tertiary-container/10 transition-all"></div>
-                        <div className="flex justify-between items-start mb-8 relative z-10">
-                            <span className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">Projects Owned</span>
-                            <span className="material-symbols-outlined text-tertiary-fixed-dim">folder_managed</span>
-                        </div>
-                        <div className="font-mono text-4xl font-bold text-on-surface relative z-10">
-                            0
-                        </div>
-                    </div>
-                </section>
+                </div>
             </main>
         </div>
     );

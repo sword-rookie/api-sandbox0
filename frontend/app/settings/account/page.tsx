@@ -1,248 +1,210 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext';
+import TopNavBar from '../../../components/TopNavBar';
+import Link from 'next/link';
 
-export default function AccountSettings() {
+export default function AccountSettingsPage() {
+    const { user, loading, checkAuth } = useAuth();
     const router = useRouter();
-    // For now, we'll mock the user ID for testing until JWT auth is fully connected
-    const [userId, setUserId] = useState<string>('');
-    const [loading, setLoading] = useState(false);
-    
+
     const [formData, setFormData] = useState({
         name: '',
         username: '',
-        email: '',
         bio: '',
         location: '',
         avatar_url: ''
     });
 
-    const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
+    const [status, setStatus] = useState<{type: 'idle' | 'loading' | 'success' | 'error', message?: string}>({ type: 'idle' });
 
-    // In a real flow with JWT, this would fetch the /api/auth/me or similar. 
-    // Here we'll just leave it empty initially so the user can test the UI, 
-    // or you could store the ID in localStorage upon signup to test end-to-end.
-
-    const handleUpdate = async () => {
-        if (!userId) {
-            setMessage({ type: 'error', text: 'You need to specify the User ID to update (until JWT is connected)' });
-            return;
-        }
-
-        setLoading(true);
-        setMessage(null);
-        try {
-            const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081';
-            const res = await fetch(`${apiURL}/api/users/${userId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+    useEffect(() => {
+        if (!loading && !user) {
+            router.push('/login');
+        } else if (user) {
+            setFormData({
+                name: user.name || '',
+                username: user.username || '',
+                bio: user.bio || '',
+                location: user.location || '',
+                avatar_url: user.avatar_url || ''
             });
-
-            if (!res.ok) {
-                const errData = await res.json();
-                throw new Error(errData.error || 'Failed to update profile');
-            }
-
-            setMessage({ type: 'success', text: 'Profile updated successfully!' });
-        } catch (err: any) {
-            setMessage({ type: 'error', text: err.message });
-        } finally {
-            setLoading(false);
         }
+    }, [user, loading, router]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleDelete = async () => {
-        if (!userId) {
-            setMessage({ type: 'error', text: 'You need a valid User ID to delete.' });
-            return;
-        }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus({ type: 'loading' });
         
-        const confirmDelete = window.confirm("Are you sure you want to permanently delete this account? This cannot be undone.");
-        if (!confirmDelete) return;
-
         try {
+            // First we need to get the token. 
+            // In a real app we'd use an Axios interceptor. Here we'll use credentials: 'include'.
             const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081';
-            const res = await fetch(`${apiURL}/api/users/${userId}`, {
-                method: 'DELETE',
+            const res = await fetch(`${apiURL}/api/users/me`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+                credentials: 'include' // Important for sending the access_token cookie
             });
 
             if (!res.ok) {
-                const errData = await res.json();
-                throw new Error(errData.error || 'Failed to delete account');
+                if (res.status === 409) {
+                    throw new Error('This username is already taken. Please choose another one.');
+                }
+                throw new Error('Failed to update profile. Please try again.');
             }
 
-            alert("Account deleted successfully.");
-            router.push('/signup');
+            // Refresh user context so TopNav updates
+            await checkAuth();
+            setStatus({ type: 'success', message: 'Profile updated successfully!' });
+
+            // Navigate back to the profile page after a short delay
+            setTimeout(() => {
+                router.push(`/profile/${formData.username}`);
+            }, 1000);
         } catch (err: any) {
-            setMessage({ type: 'error', text: err.message });
+            setStatus({ type: 'error', message: err.message });
         }
     };
+
+    if (loading || !user) {
+        return (
+            <div className="bg-background min-h-screen flex items-center justify-center text-primary-fixed-dim">
+                <span className="material-symbols-outlined animate-spin text-[48px]">progress_activity</span>
+            </div>
+        );
+    }
 
     return (
-        <div className="bg-background text-on-surface font-sans min-h-screen selection:bg-primary-container/30">
-            {/* TopNavBar */}
-            <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant shadow-sm">
-                <div className="flex justify-between items-center h-16 px-4 md:px-10 max-w-[1440px] mx-auto">
-                    <div className="flex items-center gap-4">
-                        <Link href="/" className="text-xl font-bold text-primary-fixed-dim">Clarity Machine</Link>
-                    </div>
-                    <div className="flex-1 flex justify-center px-8 hidden md:flex">
-                        <div className="relative w-full max-w-md">
-                            <span className="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-                            <input className="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-8 pr-4 text-sm text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container font-mono transition-all" placeholder="Search resources..." type="text" />
-                        </div>
-                    </div>
-                </div>
-            </header>
+        <div className="bg-background text-on-surface font-sans min-h-screen">
+            <TopNavBar />
 
-            {/* SideNavBar */}
-            <nav className="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-4 gap-1 hidden md:flex">
-                <div className="px-6 pb-4 mb-2 border-b border-outline-variant/50">
-                    <h2 className="text-lg font-bold text-primary">Mission Control</h2>
-                </div>
-                <div className="flex-1 overflow-y-auto px-2 flex flex-col gap-1">
-                    <Link className="flex items-center gap-4 px-4 py-2 rounded-lg text-primary-fixed-dim bg-secondary-container/30 border-r-2 border-primary-container transition-all font-mono text-sm" href="/settings/account">
-                        <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>person</span>
-                        Account
+            <main className="pt-24 max-w-[1024px] mx-auto px-6 pb-20 flex gap-8">
+                
+                {/* Left Settings Navigation */}
+                <aside className="w-1/4 hidden md:flex flex-col gap-2">
+                    <Link href="/settings/account" className="px-4 py-2 bg-surface-container rounded-md border-l-4 border-primary-fixed-dim text-sm font-semibold">
+                        Account Profile
                     </Link>
-                    {/* Other inactive links omitted for brevity */}
-                </div>
-            </nav>
+                    <Link href="#" className="px-4 py-2 text-on-surface-variant hover:bg-surface-container rounded-md text-sm font-semibold transition-colors">
+                        Security
+                    </Link>
+                    <Link href="#" className="px-4 py-2 text-on-surface-variant hover:bg-surface-container rounded-md text-sm font-semibold transition-colors">
+                        Notifications
+                    </Link>
+                    <Link href="#" className="px-4 py-2 text-on-surface-variant hover:bg-surface-container rounded-md text-sm font-semibold transition-colors">
+                        Billing
+                    </Link>
+                </aside>
 
-            {/* Main Content */}
-            <main className="md:ml-64 pt-16 min-h-screen">
-                <div className="max-w-4xl mx-auto p-4 md:p-12 space-y-8">
-                    <header className="mb-12">
-                        <h1 className="text-4xl font-bold text-on-surface tracking-tight">Account Settings</h1>
-                        <p className="text-lg text-on-surface-variant mt-2">Manage your personal identity and core sandbox preferences.</p>
-                    </header>
+                {/* Main Settings Content */}
+                <div className="w-full md:w-3/4">
+                    <h1 className="text-2xl font-bold border-b border-outline-variant pb-4 mb-6">Account Profile</h1>
 
-                    {message && (
-                        <div className={`p-4 rounded-lg border ${message.type === 'error' ? 'bg-error-container/20 border-error-red text-error-red' : 'bg-tertiary-container/20 border-tertiary-fixed-dim text-tertiary-fixed-dim'}`}>
-                            {message.text}
+                    {status.message && (
+                        <div className={`p-4 mb-6 rounded-md flex items-center gap-3 ${status.type === 'error' ? 'bg-error-container/20 border border-error text-error' : 'bg-primary-container/20 border border-primary-fixed-dim text-primary-fixed-dim'}`}>
+                            <span className="material-symbols-outlined">{status.type === 'error' ? 'error' : 'check_circle'}</span>
+                            <span className="text-sm font-semibold">{status.message}</span>
                         </div>
                     )}
 
-                    {/* Temporary ID input for testing */}
-                    <section className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm p-6 mb-8">
-                        <h3 className="text-lg font-bold text-on-surface mb-2">Test Configuration</h3>
-                        <p className="text-sm text-on-surface-variant mb-4">Since JWT login isn't connected, enter a User ID from the database to test the update and delete functionality.</p>
-                        <input 
-                            className="w-full bg-surface border border-outline-variant rounded-md px-4 py-2 text-on-surface focus:border-primary-container focus:outline-none" 
-                            type="text" 
-                            placeholder="Enter valid UUID string..."
-                            value={userId}
-                            onChange={(e) => setUserId(e.target.value)}
-                        />
-                    </section>
-
-                    {/* Profile Identity Card */}
-                    <section className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
-                        <div className="p-6 border-b border-outline-variant bg-surface-container/30">
-                            <h3 className="text-xl font-bold text-on-surface">Profile Identity</h3>
-                            <p className="text-on-surface-variant">This information will be displayed publicly across your API sandboxes.</p>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-[600px]">
+                        
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-semibold">Display Name</label>
+                            <input 
+                                type="text" 
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                className="bg-surface-container-lowest border border-outline-variant rounded-md px-4 py-2 text-sm focus:border-primary-fixed-dim focus:outline-none transition-colors"
+                                required
+                            />
                         </div>
-                        <div className="p-6 md:p-8 space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-1">
-                                    <label className="block text-xs font-semibold text-on-surface-variant uppercase">Display Name</label>
-                                    <input 
-                                        className="w-full bg-surface border border-outline-variant rounded-md px-4 py-2 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" 
-                                        type="text" 
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    />
+
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-semibold">Username</label>
+                            <div className="flex items-center gap-2">
+                                <span className="text-on-surface-variant text-sm bg-surface-container px-3 py-2 rounded-md border border-outline-variant">claritymachine.io/</span>
+                                <input 
+                                    type="text" 
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-4 py-2 text-sm focus:border-primary-fixed-dim focus:outline-none transition-colors"
+                                    required
+                                />
+                            </div>
+                            <p className="text-xs text-on-surface-variant mt-1">Changing your username can have unintended side effects.</p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-semibold">Bio</label>
+                            <textarea 
+                                name="bio"
+                                value={formData.bio}
+                                onChange={handleChange}
+                                rows={4}
+                                className="bg-surface-container-lowest border border-outline-variant rounded-md px-4 py-2 text-sm focus:border-primary-fixed-dim focus:outline-none transition-colors resize-y"
+                                placeholder="Tell us a little about yourself"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-semibold">Location</label>
+                            <input 
+                                type="text" 
+                                name="location"
+                                value={formData.location}
+                                onChange={handleChange}
+                                className="bg-surface-container-lowest border border-outline-variant rounded-md px-4 py-2 text-sm focus:border-primary-fixed-dim focus:outline-none transition-colors"
+                                placeholder="E.g., Austin, TX"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-semibold">Avatar URL</label>
+                            <div className="flex gap-4 items-center">
+                                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border border-outline-variant bg-surface-container">
+                                    {formData.avatar_url ? (
+                                        <img src={formData.avatar_url} alt="Avatar preview" className="w-full h-full object-cover grayscale contrast-125" />
+                                    ) : (
+                                        <span className="material-symbols-outlined w-full h-full flex items-center justify-center text-[32px] text-on-surface-variant">person</span>
+                                    )}
                                 </div>
-                                <div className="space-y-1">
-                                    <label className="block text-xs font-semibold text-on-surface-variant uppercase">Username</label>
-                                    <div className="relative flex items-center">
-                                        <span className="absolute left-2 text-on-surface-variant font-mono">@</span>
-                                        <input 
-                                            className="w-full bg-surface border border-outline-variant rounded-md pl-8 pr-4 py-2 text-primary font-mono focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" 
-                                            type="text" 
-                                            value={formData.username}
-                                            onChange={(e) => setFormData({...formData, username: e.target.value})}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="block text-xs font-semibold text-on-surface-variant uppercase">Email Address</label>
-                                    <input 
-                                        className="w-full bg-surface border border-outline-variant rounded-md px-4 py-2 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" 
-                                        type="email" 
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="block text-xs font-semibold text-on-surface-variant uppercase">Location</label>
-                                    <input 
-                                        className="w-full bg-surface border border-outline-variant rounded-md px-4 py-2 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" 
-                                        type="text" 
-                                        value={formData.location}
-                                        onChange={(e) => setFormData({...formData, location: e.target.value})}
-                                    />
-                                </div>
-                                <div className="space-y-1 md:col-span-2">
-                                    <label className="block text-xs font-semibold text-on-surface-variant uppercase">Bio</label>
-                                    <textarea 
-                                        className="w-full bg-surface border border-outline-variant rounded-md px-4 py-2 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all min-h-[100px]" 
-                                        value={formData.bio}
-                                        onChange={(e) => setFormData({...formData, bio: e.target.value})}
-                                    />
-                                </div>
-                                <div className="space-y-1 md:col-span-2">
-                                    <label className="block text-xs font-semibold text-on-surface-variant uppercase">Avatar Image URL</label>
-                                    <input 
-                                        className="w-full bg-surface border border-outline-variant rounded-md px-4 py-2 text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" 
-                                        type="url" 
-                                        placeholder="https://example.com/image.jpg"
-                                        value={formData.avatar_url}
-                                        onChange={(e) => setFormData({...formData, avatar_url: e.target.value})}
-                                    />
-                                </div>
+                                <input 
+                                    type="url" 
+                                    name="avatar_url"
+                                    value={formData.avatar_url}
+                                    onChange={handleChange}
+                                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-md px-4 py-2 text-sm focus:border-primary-fixed-dim focus:outline-none transition-colors"
+                                    placeholder="https://example.com/avatar.png"
+                                />
                             </div>
                         </div>
-                        <div className="p-4 bg-surface-container/30 border-t border-outline-variant flex justify-end">
+
+                        <div className="pt-4 border-t border-outline-variant">
                             <button 
-                                onClick={handleUpdate}
-                                disabled={loading}
-                                className="bg-primary-container text-on-primary-container px-6 py-2 rounded text-sm font-bold shadow-[0_0_12px_rgba(0,240,255,0.15)] hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] active:scale-95 transition-all disabled:opacity-50"
+                                type="submit" 
+                                disabled={status.type === 'loading'}
+                                className="bg-primary-container text-on-primary-container px-6 py-2 rounded-md text-sm font-bold shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100 flex items-center gap-2"
                             >
-                                {loading ? 'Saving...' : 'Save Changes'}
+                                {status.type === 'loading' ? (
+                                    <><span className="material-symbols-outlined animate-spin text-[18px]">progress_activity</span> Saving...</>
+                                ) : (
+                                    'Update Profile'
+                                )}
                             </button>
                         </div>
-                    </section>
-
-                    {/* Danger Zone */}
-                    <section className="mt-16">
-                        <h3 className="text-2xl font-bold text-error-red mb-4 flex items-center gap-2">
-                            <span className="material-symbols-outlined">warning</span>
-                            Danger Zone
-                        </h3>
-                        <div className="border border-error-red/30 rounded-xl overflow-hidden bg-surface-container-lowest relative">
-                            <div className="absolute inset-0 bg-gradient-to-br from-error-container/5 to-transparent pointer-events-none"></div>
-                            <div className="p-6 md:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 relative z-10">
-                                <div>
-                                    <h4 className="text-lg font-semibold text-on-surface">Delete Account</h4>
-                                    <p className="text-on-surface-variant mt-1 max-w-lg">
-                                        Once you delete your account, there is no going back. All sandboxes, API keys, and deployment history will be permanently erased. Please be certain.
-                                    </p>
-                                </div>
-                                <button 
-                                    onClick={handleDelete}
-                                    className="shrink-0 px-6 py-2 rounded bg-error-container text-on-error-container hover:bg-error-red hover:text-surface-dim text-sm font-bold transition-colors active:scale-95 border border-error-red/50"
-                                >
-                                    Delete Permanently
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <div className="h-16"></div>
+                    </form>
                 </div>
             </main>
         </div>

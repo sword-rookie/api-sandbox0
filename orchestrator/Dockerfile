@@ -17,6 +17,7 @@ RUN apk add --no-cache ca-certificates git curl && \
 
 WORKDIR /root/
 COPY --from=builder /app/orchestrator .
+COPY --from=builder /app/migrations ./migrations
 
 EXPOSE 8080
 CMD ["./orchestrator"]

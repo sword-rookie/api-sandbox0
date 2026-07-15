@@ -2,38 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
+import TopNavBar from '../../components/TopNavBar';
 
 export default function DashboardHome() {
     return (
         <div className="bg-background text-on-surface font-sans min-h-screen selection:bg-primary-container selection:text-on-primary-container">
             {/* TopNavBar */}
-            <header className="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant">
-                <div className="flex items-center gap-4">
-                    <span className="text-2xl font-bold text-primary">Clarity Machine</span>
-                    <div className="hidden md:flex items-center bg-surface-container rounded-full px-4 py-1 border border-outline-variant w-96 ml-8 focus-within:border-primary-fixed-dim focus-within:shadow-[0_0_10px_rgba(0,240,255,0.2)] transition-all">
-                        <span className="material-symbols-outlined text-on-surface-variant mr-2">search</span>
-                        <input className="bg-transparent border-none text-sm focus:ring-0 w-full text-on-surface placeholder:text-on-surface-variant outline-none" placeholder="Search sandbox..." type="text" />
-                    </div>
-                </div>
-                <div className="flex items-center gap-4">
-                    <div className="hidden lg:flex items-center gap-2">
-                        <button className="bg-surface-container-high border border-outline-variant text-on-surface px-4 py-1.5 rounded-lg text-xs font-semibold hover:bg-surface-container transition-all active:scale-95">
-                            + New Project
-                        </button>
-                        <button className="bg-primary-container text-on-primary-container px-4 py-1.5 rounded-lg text-xs font-semibold hover:brightness-110 transition-all active:scale-95 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            + New Sandbox
-                        </button>
-                    </div>
-                    <div className="flex items-center gap-2 border-l border-outline-variant pl-4 ml-2">
-                        <button className="material-symbols-outlined text-on-surface-variant hover:text-on-surface transition-colors">notifications</button>
-                        <Link href="/profile/demo">
-                            <div className="w-8 h-8 rounded-full overflow-hidden border border-primary-container cursor-pointer hover:scale-105 transition-transform">
-                                <img alt="User profile" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyid4KhRn3uPKxkbFa5PN6Z6eoQ31wjDP9cyfcPoyH7D5pA23M9dJUlChexrPpOYNC_g-rzXuEyWs2W2JI7VVZI8u9_qMhuq9MnHo7L5DYjKjnsw8BW7oOdolU_YzE-vdm24k5A915uk8jZKhgw0KeFqaZW3FFrJAeDjzttfUkzkmLpFurLES2LWZm32GuKwcPfIXF4yTXOyzEcxAAcycZoxna4fQjWgHNkvNFocHiLUsF9fdp9tBjGYJlcaGhMnZqEUwLfY2vel6S" />
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </header>
+            <TopNavBar />
 
             {/* SideNavBar */}
             <aside className="fixed left-0 top-16 bottom-0 w-64 hidden md:flex flex-col py-4 px-2 bg-surface-container-lowest border-r border-outline-variant">

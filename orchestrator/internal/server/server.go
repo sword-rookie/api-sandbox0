@@ -9,6 +9,8 @@ import (
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/auth"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/builder"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/config"
+	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/middleware"
+	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/repository"
 )
 
 type Server struct {
@@ -18,6 +20,7 @@ type Server struct {
 func corsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		if r.Method == "OPTIONS" {
@@ -28,6 +31,8 @@ func corsMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+
+
 func NewServer(cfg *config.Config) *Server {
 	r := mux.NewRouter()
 
@@ -35,16 +40,16 @@ func NewServer(cfg *config.Config) *Server {
 	r.Use(corsMiddleware)
 
 	// Initialize Database Repository
-	dbPath := "/volumes/clarity.db"
-	repo, err := auth.NewSQLiteRepository(dbPath)
+	repo, err := repository.NewPostgresRepo(cfg)
 	if err != nil {
 		log.Fatalf("❌ Failed to initialize user repository: %v", err)
 	}
-	log.Println("💾 User repository (SQLite) initialized successfully")
+	log.Println("💾 User repository (Postgres) initialized successfully")
 
 	// Initialize Services & Handlers
-	authService := auth.NewService(repo)
+	authService := auth.NewService(repo, cfg)
 	authHandler := auth.NewHandler(authService)
+	auth.InitOAuth()
 
 	// Health Check
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -54,12 +59,25 @@ func NewServer(cfg *config.Config) *Server {
 		w.Write([]byte(`{"status":"ok","message":"API Sandbox Orchestrator is running"}`))
 	}).Methods("GET")
 
-	// Auth Endpoints
-	r.HandleFunc("/api/auth/register", authHandler.Register).Methods("POST", "OPTIONS")
+	// Auth Endpoints (Rate Limited)
+	authRouter := r.PathPrefix("/api/auth").Subrouter()
+	authRouter.Use(middleware.RateLimit)
+	authRouter.HandleFunc("/register", authHandler.Register).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/login", authHandler.Login).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/login/mfa", authHandler.LoginMFA).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/mfa/generate", authHandler.GenerateMFA).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/mfa/verify", authHandler.VerifyMFA).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/{provider}/login", authHandler.BeginOAuth).Methods("GET", "OPTIONS")
+	authRouter.HandleFunc("/{provider}/callback", authHandler.OAuthCallback).Methods("GET", "OPTIONS")
+	authRouter.HandleFunc("/refresh", authHandler.RefreshToken).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/forgot-password", authHandler.ForgotPassword).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/validate-reset-token", authHandler.ValidateResetToken).Methods("GET", "OPTIONS")
+	authRouter.HandleFunc("/reset-password", authHandler.ResetPassword).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/profile/me", authHandler.GetMe).Methods("GET", "OPTIONS")
 
 	// Profile Endpoints
 	r.HandleFunc("/api/users/{username}", authHandler.GetProfile).Methods("GET", "OPTIONS")
-	r.HandleFunc("/api/users/{id}", authHandler.UpdateProfile).Methods("PUT", "OPTIONS")
+	r.HandleFunc("/api/users/me", authHandler.UpdateProfileMe).Methods("PUT", "OPTIONS")
 	r.HandleFunc("/api/users/{id}", authHandler.DeleteProfile).Methods("DELETE", "OPTIONS")
 
 	// Build Endpoint
