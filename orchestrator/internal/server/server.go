@@ -75,6 +75,7 @@ func NewServer(cfg *config.Config) *Server {
 	authRouter.HandleFunc("/reset-password", authHandler.ResetPassword).Methods("POST", "OPTIONS")
 	authRouter.HandleFunc("/logout", authHandler.Logout).Methods("POST", "OPTIONS")
 	authRouter.HandleFunc("/profile/me", authHandler.GetMe).Methods("GET", "OPTIONS")
+	authRouter.HandleFunc("/dashboard", authHandler.GetDashboard).Methods("GET", "OPTIONS")
 
 	// Profile Endpoints
 	r.HandleFunc("/api/users/{username}", authHandler.GetProfile).Methods("GET", "OPTIONS")

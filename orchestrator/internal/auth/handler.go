@@ -512,3 +512,97 @@ func (h *Handler) UploadAvatar(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"url": url})
 }
+
+func (h *Handler) GetDashboard(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Error(w, `{"error": "unauthorized"}`, http.StatusUnauthorized)
+		return
+	}
+
+	userID, err := ValidateAccessToken(cookie.Value)
+	if err != nil {
+		http.Error(w, `{"error": "invalid token"}`, http.StatusUnauthorized)
+		return
+	}
+
+	user, err := h.service.GetProfileByID(userID)
+	if err != nil {
+		http.Error(w, `{"error": "user not found"}`, http.StatusNotFound)
+		return
+	}
+
+	resp := dto.DashboardResponse{}
+	resp.User.Name = user.Name
+	resp.User.Username = user.Username
+
+	// Hardcoded stats
+	resp.Stats = dto.DashboardStats{
+		ActiveSandboxes: 5,
+		Projects:        3,
+		Issues:          2,
+	}
+
+	// Hardcoded recent projects
+	resp.RecentProjects = []dto.ProjectPreview{
+		{
+			ID:          "p1",
+			Name:        "Project Alpha",
+			Domain:      "alpha-production.infra",
+			Status:      "HEALTHY",
+			ActiveCount: 12,
+			IssueCount:  0,
+			LastUpdated: time.Now().Add(-2 * time.Minute),
+		},
+		{
+			ID:          "p2",
+			Name:        "Beta Service",
+			Domain:      "beta-service.test",
+			Status:      "ISSUES",
+			ActiveCount: 5,
+			IssueCount:  2,
+			LastUpdated: time.Now().Add(-14 * time.Hour),
+		},
+		{
+			ID:          "p3",
+			Name:        "Delta Analytics",
+			Domain:      "delta-v3.analytics",
+			Status:      "HEALTHY",
+			ActiveCount: 3,
+			IssueCount:  0,
+			LastUpdated: time.Now().Add(-48 * time.Hour),
+		},
+	}
+
+	// Hardcoded active sandboxes
+	resp.ActiveSandboxes = []dto.SandboxPreview{
+		{
+			ID:          "s1",
+			Name:        "auth-v2-dev",
+			ProjectName: "Project Alpha",
+			Status:      "RUNNING",
+			LiveURL:     "auth-v2.clarity.dev",
+			LastActive:  time.Now(),
+		},
+		{
+			ID:          "s2",
+			Name:        "payment-gate-test",
+			ProjectName: "Beta Service",
+			Status:      "SLEEPING",
+			LiveURL:     "pay-test.clarity.dev",
+			LastActive:  time.Now().Add(-45 * time.Minute),
+		},
+		{
+			ID:          "s3",
+			Name:        "worker-node-4",
+			ProjectName: "Project Alpha",
+			Status:      "BUILDING",
+			LiveURL:     "",
+			LastActive:  time.Now().Add(-2 * time.Minute),
+		},
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(resp)
+}
