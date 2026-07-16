@@ -153,12 +153,18 @@ func getEnvOrDefault(key, fallback string) string {
 }
 
 func SetAuthCookies(w http.ResponseWriter, accessToken, refreshToken string) {
+	secure := os.Getenv("GO_ENV") == "production"
+	sameSite := http.SameSiteLaxMode
+	if secure {
+		sameSite = http.SameSiteNoneMode
+	}
+
 	http.SetCookie(w, &http.Cookie{
 		Name:     "access_token",
 		Value:    accessToken,
 		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
+		Secure:   secure,
+		SameSite: sameSite,
 		Path:     "/",
 		MaxAge:   15 * 60, // 15 minutes
 	})
@@ -167,8 +173,8 @@ func SetAuthCookies(w http.ResponseWriter, accessToken, refreshToken string) {
 		Name:     "refresh_token",
 		Value:    refreshToken,
 		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
+		Secure:   secure,
+		SameSite: sameSite,
 		Path:     "/api/auth/refresh",
 		MaxAge:   7 * 24 * 60 * 60, // 7 days
 	})

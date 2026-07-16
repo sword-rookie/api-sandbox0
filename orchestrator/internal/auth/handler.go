@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -238,7 +240,17 @@ func (h *Handler) VerifyMFA(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
-	// Clear the access token cookie
+	// 1. Revoke the refresh token in the DB if it exists
+	cookie, err := r.Cookie("refresh_token")
+	if err == nil && cookie.Value != "" {
+		tokenHash := sha256.Sum256([]byte(cookie.Value))
+		hashStr := hex.EncodeToString(tokenHash[:])
+		if dbToken, err := h.service.repo.GetRefreshToken(hashStr); err == nil {
+			h.service.repo.RevokeRefreshToken(dbToken.ID)
+		}
+	}
+
+	// 2. Clear the access token cookie
 	http.SetCookie(w, &http.Cookie{
 		Name:     "access_token",
 		Value:    "",
@@ -248,11 +260,11 @@ func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 	})
 
-	// Clear the refresh token cookie
+	// 3. Clear the refresh token cookie (Path MUST match SetAuthCookies)
 	http.SetCookie(w, &http.Cookie{
 		Name:     "refresh_token",
 		Value:    "",
-		Path:     "/",
+		Path:     "/api/auth/refresh",
 		Expires:  time.Unix(0, 0),
 		MaxAge:   -1,
 		HttpOnly: true,
