@@ -55,6 +55,19 @@ func (s *Service) GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error
 	return s.repo.GetProjectsByUserID(userID)
 }
 
+func (s *Service) GetProjectByID(userID uuid.UUID, projectID uuid.UUID) (*models.Project, error) {
+	project, err := s.repo.GetProjectByID(projectID)
+	if err != nil {
+		return nil, ErrProjectNotFound
+	}
+	
+	if project.UserID != userID {
+		return nil, errors.New("unauthorized to access this project")
+	}
+
+	return project, nil
+}
+
 func (s *Service) UpdateProject(userID uuid.UUID, projectID uuid.UUID, req *dto.UpdateProjectRequest) (*models.Project, error) {
 	project, err := s.repo.GetProjectByID(projectID)
 	if err != nil {

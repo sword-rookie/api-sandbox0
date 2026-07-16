@@ -183,9 +183,11 @@ export default function ProjectsPage() {
                                                 <span className="text-[10px] font-bold tracking-wider">HEALTHY</span>
                                             </div>
                                         </div>
-                                        <button className="p-2 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary-container transition-all">
-                                            <span className="material-symbols-outlined">launch</span>
-                                        </button>
+                                        <Link href={`/projects/create?id=${project.id}`}>
+                                            <button className="p-2 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary-container transition-all">
+                                                <span className="material-symbols-outlined">launch</span>
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             ))}

@@ -83,6 +83,45 @@ func (h *Handler) GetProjects(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(dto.MapProjectsToResponse(projects))
 }
 
+func (h *Handler) GetProjectByID(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Error(w, `{"error": "unauthorized"}`, http.StatusUnauthorized)
+		return
+	}
+
+	userID, err := auth.ValidateAccessToken(cookie.Value)
+	if err != nil {
+		http.Error(w, `{"error": "invalid token"}`, http.StatusUnauthorized)
+		return
+	}
+	userUUID, err := uuid.Parse(userID)
+	if err != nil {
+		http.Error(w, `{"error": "Invalid user ID"}`, http.StatusBadRequest)
+		return
+	}
+
+	projectIDStr := mux.Vars(r)["id"]
+	projectUUID, err := uuid.Parse(projectIDStr)
+	if err != nil {
+		http.Error(w, `{"error": "Invalid project ID"}`, http.StatusBadRequest)
+		return
+	}
+
+	project, err := h.service.GetProjectByID(userUUID, projectUUID)
+	if err != nil {
+		if err == ErrProjectNotFound {
+			http.Error(w, `{"error": "Project not found"}`, http.StatusNotFound)
+		} else {
+			http.Error(w, `{"error": "Failed to fetch project"}`, http.StatusInternalServerError)
+		}
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(dto.MapProjectToResponse(*project))
+}
+
 func (h *Handler) UpdateProject(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("access_token")
 	if err != nil {

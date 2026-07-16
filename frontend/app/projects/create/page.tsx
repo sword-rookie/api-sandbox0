@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useCallback, useRef, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import TopNavBar from '../../../components/TopNavBar';
 import {
@@ -32,7 +32,9 @@ const edgeTypes = {
 export default function CreateProjectPage() {
     return (
         <ReactFlowProvider>
-            <CreateProjectEditor />
+            <Suspense fallback={<div className="bg-background min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary-fixed border-t-transparent rounded-full animate-spin"></div></div>}>
+                <CreateProjectEditor />
+            </Suspense>
         </ReactFlowProvider>
     );
 }
@@ -40,7 +42,10 @@ export default function CreateProjectPage() {
 function CreateProjectEditor() {
     const { user, isLoading } = useAuth();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    
     const [projectName, setProjectName] = useState('Untitled Project');
+    const [projectId, setProjectId] = useState<string | null>(searchParams.get('id'));
     const [isSaving, setIsSaving] = useState(false);
     
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -55,6 +60,30 @@ function CreateProjectEditor() {
             router.push('/login');
         }
     }, [user, isLoading, router]);
+
+    useEffect(() => {
+        if (!projectId || !user) return;
+        
+        const fetchProject = async () => {
+            const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081';
+            try {
+                const res = await fetch(`${apiURL}/api/projects/${projectId}`, {
+                    credentials: 'include'
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setProjectName(data.name || 'Untitled Project');
+                    if (data.blueprint_schema) {
+                        setNodes(data.blueprint_schema.nodes || []);
+                        setEdges(data.blueprint_schema.edges || []);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load project:", err);
+            }
+        };
+        fetchProject();
+    }, [projectId, user, setNodes, setEdges]);
 
     const onConnect = useCallback(
         (params: Connection | Edge) => setEdges((eds) => addEdge({ ...params, type: 'animatedWire' }, eds)),
@@ -96,22 +125,42 @@ function CreateProjectEditor() {
         const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081';
         
         try {
-            const res = await fetch(`${apiURL}/api/projects`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({
-                    name: projectName,
-                    description: 'Draft project from visual builder',
-                    blueprint_schema: blueprintSchema
-                })
-            });
+            if (!projectId) {
+                // Create new project
+                const res = await fetch(`${apiURL}/api/projects`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        name: projectName,
+                        description: 'Draft project from visual builder',
+                        blueprint_schema: blueprintSchema
+                    })
+                });
 
-            if (res.ok) {
-                // Return to projects list
-                router.push('/projects');
+                if (res.ok) {
+                    const data = await res.json();
+                    setProjectId(data.id);
+                    // Update URL without reloading to reflect new ID
+                    window.history.replaceState(null, '', `/projects/create?id=${data.id}`);
+                } else {
+                    console.error("Failed to save draft");
+                }
             } else {
-                console.error("Failed to save draft");
+                // Update existing project
+                const res = await fetch(`${apiURL}/api/projects/${projectId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        name: projectName,
+                        blueprint_schema: blueprintSchema
+                    })
+                });
+                
+                if (!res.ok) {
+                    console.error("Failed to update draft");
+                }
             }
         } catch (error) {
             console.error("Error saving draft:", error);
