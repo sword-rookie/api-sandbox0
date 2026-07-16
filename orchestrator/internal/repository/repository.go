@@ -30,6 +30,8 @@ type Repository interface {
 
 	// Project & Sandbox Methods
 	CreateProject(project *models.Project) error
+	GetProjectByID(id uuid.UUID) (*models.Project, error)
+	UpdateProject(project *models.Project) error
 	GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error)
 	CreateSandbox(sandbox *models.Sandbox) error
 	GetSandboxesByUserID(userID uuid.UUID) ([]models.Sandbox, error)

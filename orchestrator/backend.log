@@ -72,3 +72,81 @@ Routes registered successfully
 2026/07/16 11:36:19 [32m/home/student/major/orchestrator/internal/repository/postgres.go:119
 [0m[33m[0.731ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE username = 'adith07nair' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
 Health check called
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:169
+[0m[33m[4.354ms] [34;1m[rows:1][0m SELECT * FROM "refresh_tokens" WHERE token_hash = 'de79cdc44b44e52c4adf11fb0fa2dee858fbc95459f6b4104c4bd762034138f8' ORDER BY "refresh_tokens"."id" LIMIT 1
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:177
+[0m[33m[3.650ms] [34;1m[rows:1][0m UPDATE "refresh_tokens" SET "revoked"=true WHERE id = 'd17c1d6d-3037-490e-9655-5dc28c683d03'
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:163
+[0m[33m[1.154ms] [34;1m[rows:1][0m INSERT INTO "refresh_tokens" ("user_id","token_hash","expires_at","revoked","created_at","id") VALUES ('19e51bf3-96af-4ca4-92f7-2771cc7c99fe','99e69135bdf1891b30088ee8f326d2ec363356061166448bedcbf1681605c14a','2026-07-23 06:39:30.031',false,'2026-07-16 06:39:30.031','5cb54b18-5fb7-4329-8652-0d57e0798e9e') RETURNING "id"
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:182
+[0m[33m[0.771ms] [34;1m[rows:1][0m INSERT INTO "audit_logs" ("user_id","event","provider","ip_address","user_agent","created_at","id") VALUES ('19e51bf3-96af-4ca4-92f7-2771cc7c99fe','token_refresh','system','::1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36','2026-07-16 06:39:30.032','1c2d34f8-e66d-4c47-826f-a8f49cccc5a0') RETURNING "id"
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.842ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.777ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[2.580ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[1.377ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.467ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.325ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:30 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[0.269ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:31 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.676ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:31 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[5.695ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:31 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.918ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:31 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[0.468ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:32 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.797ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:32 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[1.075ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:32 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.466ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:32 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[0.399ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:34 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.901ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:34 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.727ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:39 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.834ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:39 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.481ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:40 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.815ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 12:09:40 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.194ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 12:09:40 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[0.165ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc

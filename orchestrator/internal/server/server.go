@@ -90,6 +90,7 @@ func NewServer(cfg *config.Config) *Server {
 	// Project Endpoints
 	r.HandleFunc("/api/projects", projectHandler.CreateProject).Methods("POST", "OPTIONS")
 	r.HandleFunc("/api/projects", projectHandler.GetProjects).Methods("GET", "OPTIONS")
+	r.HandleFunc("/api/projects/{id}", projectHandler.UpdateProject).Methods("PATCH", "OPTIONS")
 
 	// Static files for uploads
 	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads"))))

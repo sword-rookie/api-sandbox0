@@ -9,13 +9,24 @@
 - **Nixpacks Integration**: Added functionality to accept a GitHub repository URL and automatically generate OCI images without requiring user-provided Dockerfiles.
 - **Background Execution**: Configured the build engine to run asynchronously, streaming state back instead of blocking HTTP requests.
 
-### Frontend & UX (Next.js Blueprint Editor)
-- **React Flow Engine**: Integrated `@xyflow/react` for the core infinite canvas, supporting zooming, panning, and high-performance virtualization.
-- **Tailwind & Styling**: Configured Tailwind CSS with the custom dark cybernetic theme, importing Google Fonts (Inter, JetBrains Mono, Material Symbols) to perfectly match the UI mockups.
-- **Custom UE5 Nodes**: Developed `BlueprintNode.js` featuring dynamic gradient headers, glowing borders, custom Execution Pins (triangles), and Data Pins (circles).
-- **Animated Connections**: Implemented `AnimatedWire.js` representing execution flow with pulsing SVG path animations.
-- **Command Palette**: Built the `CommandPalette.js` overlay, allowing developers to press `CTRL+P` or `Space` to instantly search and spawn new node types (HTTP Request, Branch, Cache Set).
-- **Layout Integration**: Wrapped the canvas in a production-ready Layout containing a Top NavBar, Sidebar tools menu, and a live Minimap.
+#### Status Check (Pillars I-V)
+
+- **Pillar I (Go Orchestrator)**: `[PARTIAL]` API routing, JWT auth, database config. 
+- **Pillar II (Nixpacks Runtime)**: `[PARTIAL]` `builder.go` implemented but not orchestrated.
+- **Pillar III (OverlayFS CoW)**: `[PLANNED]`
+- **Pillar IV (gVisor/runsc)**: `[PLANNED]`
+- **Pillar V (Gemini AI Layer)**: `[PLANNED]`
+
+## What's Completed
+
+### 1. Database & Security Foundation
+- Established PostgreSQL container with `gorm` schemas (Users, Projects, Sandboxes).
+- Upgraded security: Config system explicitly `panic()`s on missing environment variables instead of using insecure defaults.
+- Implemented robust JWT authentication (HttpOnly cookies) with refresh token architecture.
+
+### 2. Dashboard UI (Frontend)
+- Built `TopNavBar.tsx` and the `ProjectsPage` grid layout.
+- Integrated `AuthContext` to protect routes.
 
 ---
 

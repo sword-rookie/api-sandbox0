@@ -209,6 +209,23 @@ func (r *PostgresRepo) CreateProject(project *models.Project) error {
 	return result.Error
 }
 
+func (r *PostgresRepo) GetProjectByID(id uuid.UUID) (*models.Project, error) {
+	var project models.Project
+	result := r.DB.First(&project, "id = ?", id)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, errors.New("project not found")
+		}
+		return nil, result.Error
+	}
+	return &project, nil
+}
+
+func (r *PostgresRepo) UpdateProject(project *models.Project) error {
+	result := r.DB.Save(project)
+	return result.Error
+}
+
 func (r *PostgresRepo) GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error) {
 	var projects []models.Project
 	result := r.DB.Where("user_id = ?", userID).Order("created_at desc").Find(&projects)

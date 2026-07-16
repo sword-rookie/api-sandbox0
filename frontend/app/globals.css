@@ -118,3 +118,12 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+@keyframes flow {
+  from {
+    stroke-dashoffset: 15;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

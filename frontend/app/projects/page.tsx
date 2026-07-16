@@ -131,10 +131,12 @@ export default function ProjectsPage() {
                     <div className="relative z-10 max-w-7xl mx-auto">
                         <div className="flex justify-between items-center mb-8">
                             <h2 className="text-2xl font-bold text-on-surface">Projects</h2>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-primary-container text-on-primary-container font-bold text-sm rounded-lg hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all">
-                                <span className="material-symbols-outlined text-[20px]">add</span>
-                                New Project
-                            </button>
+                            <Link href="/projects/create">
+                                <button className="flex items-center gap-2 px-4 py-2 bg-primary-container text-on-primary-container font-bold text-sm rounded-lg hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all">
+                                    <span className="material-symbols-outlined text-[20px]">add</span>
+                                    New Project
+                                </button>
+                            </Link>
                         </div>
 
                         {/* Tab Navigation */}
@@ -189,13 +191,15 @@ export default function ProjectsPage() {
                             ))}
 
                             {/* Empty State Card / CTA */}
-                            <div className="border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-8 hover:border-primary-fixed/40 hover:bg-primary-fixed/5 transition-all cursor-pointer group min-h-[280px]">
-                                <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <span className="material-symbols-outlined text-primary-fixed text-[32px]">add</span>
+                            <Link href="/projects/create">
+                                <div className="border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-8 hover:border-primary-fixed/40 hover:bg-primary-fixed/5 transition-all cursor-pointer group min-h-[280px]">
+                                    <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                        <span className="material-symbols-outlined text-primary-fixed text-[32px]">add</span>
+                                    </div>
+                                    <span className="text-lg font-bold text-on-surface-variant group-hover:text-primary-fixed transition-colors">Provision New Project</span>
+                                    <p className="text-sm text-on-surface-variant text-center mt-2 opacity-60 max-w-[200px]">Create an isolated environment for API collaboration.</p>
                                 </div>
-                                <span className="text-lg font-bold text-on-surface-variant group-hover:text-primary-fixed transition-colors">Provision New Project</span>
-                                <p className="text-sm text-on-surface-variant text-center mt-2 opacity-60 max-w-[200px]">Create an isolated environment for API collaboration.</p>
-                            </div>
+                            </Link>
 
                         </div>
                     </div>

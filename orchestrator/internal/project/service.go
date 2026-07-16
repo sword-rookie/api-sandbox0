@@ -15,6 +15,8 @@ var (
 
 type Repository interface {
 	CreateProject(project *models.Project) error
+	GetProjectByID(id uuid.UUID) (*models.Project, error)
+	UpdateProject(project *models.Project) error
 	GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error)
 	CreateSandbox(sandbox *models.Sandbox) error
 	GetSandboxesByUserID(userID uuid.UUID) ([]models.Sandbox, error)
@@ -33,11 +35,12 @@ func (s *Service) CreateProject(userID uuid.UUID, req *dto.CreateProjectRequest)
 	slug := strings.ToLower(strings.ReplaceAll(req.Name, " ", "-")) + "-" + uuid.New().String()[:8]
 
 	project := &models.Project{
-		UserID:      userID,
-		Name:        req.Name,
-		Slug:        slug,
-		Description: req.Description,
-		Status:      "active",
+		UserID:          userID,
+		Name:            req.Name,
+		Slug:            slug,
+		Description:     req.Description,
+		BlueprintSchema: req.BlueprintSchema,
+		Status:          "active",
 	}
 
 	err := s.repo.CreateProject(project)
@@ -50,6 +53,37 @@ func (s *Service) CreateProject(userID uuid.UUID, req *dto.CreateProjectRequest)
 
 func (s *Service) GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error) {
 	return s.repo.GetProjectsByUserID(userID)
+}
+
+func (s *Service) UpdateProject(userID uuid.UUID, projectID uuid.UUID, req *dto.UpdateProjectRequest) (*models.Project, error) {
+	project, err := s.repo.GetProjectByID(projectID)
+	if err != nil {
+		return nil, ErrProjectNotFound
+	}
+	
+	if project.UserID != userID {
+		return nil, errors.New("unauthorized to update this project")
+	}
+
+	if req.Name != nil {
+		project.Name = *req.Name
+	}
+	if req.Description != nil {
+		project.Description = *req.Description
+	}
+	if req.BlueprintSchema != nil {
+		project.BlueprintSchema = req.BlueprintSchema
+	}
+	if req.IsPinned != nil {
+		project.IsPinned = *req.IsPinned
+	}
+
+	err = s.repo.UpdateProject(project)
+	if err != nil {
+		return nil, err
+	}
+	
+	return project, nil
 }
 
 func (s *Service) GetSandboxesByUserID(userID uuid.UUID) ([]models.Sandbox, error) {
