@@ -28,5 +28,11 @@ type Repository interface {
 	GetPasswordResetToken(id uuid.UUID) (*models.PasswordResetToken, error)
 	DeletePasswordResetToken(id uuid.UUID) error
 
+	// Project & Sandbox Methods
+	CreateProject(project *models.Project) error
+	GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error)
+	CreateSandbox(sandbox *models.Sandbox) error
+	GetSandboxesByUserID(userID uuid.UUID) ([]models.Sandbox, error)
+
 	Close() error
 }

@@ -1,0 +1,14 @@
+{
+  "name": "clarity-machine-root",
+  "version": "1.0.0",
+  "description": "Root orchestrator for running Clarity Machine",
+  "scripts": {
+    "start": "docker compose up -d && concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd orchestrator && go run cmd/main.go",
+    "start:frontend": "export PATH=/home/student/local_node/node-v20.10.0-linux-x64/bin:$PATH && cd frontend && npm run dev",
+    "stop": "docker compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -45,7 +45,7 @@ export default function DashboardHome() {
     const fetchDashboardData = async () => {
         try {
             const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8081';
-            const res = await fetch(`${apiURL}/api/dashboard`, {
+            const res = await fetch(`${apiURL}/api/auth/dashboard`, {
                 credentials: 'include',
             });
             
@@ -87,26 +87,13 @@ export default function DashboardHome() {
                 {/* SideNavBar (w-72) */}
                 <aside className={`w-72 border-r border-outline-variant bg-surface-container-lowest h-full flex flex-col transition-transform duration-300 z-50 fixed md:relative ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
                     
-                    {/* Project Context */}
-                    <div className="p-6 border-b border-outline-variant">
-                        <div className="flex items-center gap-3 mb-2">
-                            <div className="w-10 h-10 bg-primary-container/20 rounded-lg flex items-center justify-center border border-primary-container/30 shadow-[0_0_10px_rgba(0,240,255,0.1)]">
-                                <span className="material-symbols-outlined text-primary-fixed">deployed_code</span>
-                            </div>
-                            <div>
-                                <h3 className="text-sm font-bold text-on-surface tracking-wider">PROJECT ALPHA</h3>
-                                <p className="text-xs text-on-surface-variant font-mono">Production Cluster</p>
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Navigation */}
                     <nav className="flex-1 overflow-y-auto py-4 space-y-1 px-3">
                         <Link href="/dashboard" className="flex items-center gap-4 px-4 py-3 bg-primary-container/10 text-primary-fixed border border-primary-container/30 rounded-lg transition-all shadow-[inset_0_0_15px_rgba(0,240,255,0.05)]">
                             <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>dashboard</span>
                             <span className="text-sm font-bold tracking-wide">Dashboard</span>
                         </Link>
-                        <Link href="#" className="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all group">
+                        <Link href="/projects" className="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all group">
                             <span className="material-symbols-outlined group-hover:text-primary-fixed transition-colors">folder</span>
                             <span className="text-sm font-medium">Projects</span>
                         </Link>

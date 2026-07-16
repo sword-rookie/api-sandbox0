@@ -10,6 +10,7 @@ import (
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/builder"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/config"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/middleware"
+	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/project"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/repository"
 )
 
@@ -51,6 +52,9 @@ func NewServer(cfg *config.Config) *Server {
 	authHandler := auth.NewHandler(authService)
 	auth.InitOAuth()
 
+	projectService := project.NewService(repo)
+	projectHandler := project.NewHandler(projectService)
+
 	// Health Check
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Health check called")
@@ -82,6 +86,10 @@ func NewServer(cfg *config.Config) *Server {
 	r.HandleFunc("/api/users/me", authHandler.UpdateProfileMe).Methods("PUT", "OPTIONS")
 	r.HandleFunc("/api/upload/avatar", authHandler.UploadAvatar).Methods("POST", "OPTIONS")
 	r.HandleFunc("/api/users/{id}", authHandler.DeleteProfile).Methods("DELETE", "OPTIONS")
+
+	// Project Endpoints
+	r.HandleFunc("/api/projects", projectHandler.CreateProject).Methods("POST", "OPTIONS")
+	r.HandleFunc("/api/projects", projectHandler.GetProjects).Methods("GET", "OPTIONS")
 
 	// Static files for uploads
 	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads"))))

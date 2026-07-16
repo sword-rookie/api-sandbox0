@@ -536,70 +536,94 @@ func (h *Handler) GetDashboard(w http.ResponseWriter, r *http.Request) {
 	resp.User.Name = user.Name
 	resp.User.Username = user.Username
 
-	// Hardcoded stats
+	// Fetch real projects
+	userUUID, err := uuid.Parse(userID)
+	if err != nil {
+		http.Error(w, `{"error": "invalid user id format"}`, http.StatusBadRequest)
+		return
+	}
+
+	projects, err := h.service.GetProjectsByUserID(userUUID)
+	if err != nil {
+		projects = []models.Project{}
+	}
+
+	// Fetch real sandboxes
+	sandboxes, err := h.service.GetSandboxesByUserID(userUUID)
+	if err != nil {
+		sandboxes = []models.Sandbox{}
+	}
+
+	activeSandboxesCount := 0
+	for _, s := range sandboxes {
+		if s.Status == "running" || s.Status == "building" {
+			activeSandboxesCount++
+		}
+	}
+
 	resp.Stats = dto.DashboardStats{
-		ActiveSandboxes: 5,
-		Projects:        3,
-		Issues:          2,
+		ActiveSandboxes: activeSandboxesCount,
+		Projects:        len(projects),
+		Issues:          0, // TODO: Implement real issue tracking
 	}
 
-	// Hardcoded recent projects
-	resp.RecentProjects = []dto.ProjectPreview{
-		{
-			ID:          "p1",
-			Name:        "Project Alpha",
-			Domain:      "alpha-production.infra",
-			Status:      "HEALTHY",
-			ActiveCount: 12,
+	// Map Projects
+	resp.RecentProjects = []dto.ProjectPreview{}
+	for i, p := range projects {
+		if i >= 3 {
+			break // Only show top 3 recent
+		}
+		
+		// Count active sandboxes for this project
+		pActive := 0
+		for _, s := range sandboxes {
+			if s.ProjectID != nil && *s.ProjectID == p.ID && (s.Status == "running" || s.Status == "building") {
+				pActive++
+			}
+		}
+
+		resp.RecentProjects = append(resp.RecentProjects, dto.ProjectPreview{
+			ID:          p.ID.String(),
+			Name:        p.Name,
+			Domain:      p.Slug + ".clarity.dev",
+			Status:      p.Status,
+			ActiveCount: pActive,
 			IssueCount:  0,
-			LastUpdated: time.Now().Add(-2 * time.Minute),
-		},
-		{
-			ID:          "p2",
-			Name:        "Beta Service",
-			Domain:      "beta-service.test",
-			Status:      "ISSUES",
-			ActiveCount: 5,
-			IssueCount:  2,
-			LastUpdated: time.Now().Add(-14 * time.Hour),
-		},
-		{
-			ID:          "p3",
-			Name:        "Delta Analytics",
-			Domain:      "delta-v3.analytics",
-			Status:      "HEALTHY",
-			ActiveCount: 3,
-			IssueCount:  0,
-			LastUpdated: time.Now().Add(-48 * time.Hour),
-		},
+			LastUpdated: p.UpdatedAt,
+		})
 	}
 
-	// Hardcoded active sandboxes
-	resp.ActiveSandboxes = []dto.SandboxPreview{
-		{
-			ID:          "s1",
-			Name:        "auth-v2-dev",
-			ProjectName: "Project Alpha",
-			Status:      "RUNNING",
-			LiveURL:     "auth-v2.clarity.dev",
-			LastActive:  time.Now(),
-		},
-		{
-			ID:          "s2",
-			Name:        "payment-gate-test",
-			ProjectName: "Beta Service",
-			Status:      "SLEEPING",
-			LiveURL:     "pay-test.clarity.dev",
-			LastActive:  time.Now().Add(-45 * time.Minute),
-		},
-		{
-			ID:          "s3",
-			Name:        "worker-node-4",
-			ProjectName: "Project Alpha",
-			Status:      "BUILDING",
-			LiveURL:     "",
-			LastActive:  time.Now().Add(-2 * time.Minute),
-		},
+	// Map Sandboxes
+	resp.ActiveSandboxes = []dto.SandboxPreview{}
+	for i, s := range sandboxes {
+		if i >= 3 {
+			break // Only show top 3 recent
+		}
+		
+		// Find project name
+		projName := "Unknown"
+		if s.ProjectID != nil {
+			for _, p := range projects {
+				if p.ID == *s.ProjectID {
+					projName = p.Name
+					break
+				}
+			}
+		}
+
+		lastAct := s.UpdatedAt
+		if s.LastActiveAt != nil {
+			lastAct = *s.LastActiveAt
+		}
+
+		resp.ActiveSandboxes = append(resp.ActiveSandboxes, dto.SandboxPreview{
+			ID:          s.ID.String(),
+			Name:        s.Name,
+			ProjectName: projName,
+			Status:      s.Status,
+			LiveURL:     s.LiveURL,
+			LastActive:  lastAct,
+		})
 	}
 
 	w.Header().Set("Content-Type", "application/json")

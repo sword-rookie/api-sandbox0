@@ -459,3 +459,11 @@ func (s *Service) VerifyMFA(userID uuid.UUID, req *dto.MFAVerifyRequest) error {
 	}
 	return nil
 }
+
+func (s *Service) GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error) {
+	return s.repo.GetProjectsByUserID(userID)
+}
+
+func (s *Service) GetSandboxesByUserID(userID uuid.UUID) ([]models.Sandbox, error) {
+	return s.repo.GetSandboxesByUserID(userID)
+}

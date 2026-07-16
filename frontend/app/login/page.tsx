@@ -125,7 +125,7 @@ const InteractiveNetworkCanvas = () => {
 
 export default function LoginPage() {
     const router = useRouter();
-    const { checkAuth } = useAuth();
+    const { checkAuth, user } = useAuth();
     const [step, setStep] = useState<1 | 2>(1);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -133,6 +133,14 @@ export default function LoginPage() {
     const [tempToken, setTempToken] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
+    
+    // Redirect when user is populated and loader is showing
+    useEffect(() => {
+        if (user && showLoader) {
+            router.push('/dashboard');
+        }
+    }, [user, showLoader, router]);
     
     // Auto-focus on TOTP input when step changes to 2
     const totpInputRef = useRef<HTMLInputElement>(null);
@@ -168,8 +176,10 @@ export default function LoginPage() {
                     setTempToken(data.temp_token);
                     setStep(2);
                 } else {
-                    await checkAuth();
-                    router.push('/dashboard');
+                    setShowLoader(true);
+                    setTimeout(async () => {
+                        await checkAuth();
+                    }, 2000);
                 }
             } else {
                 const res = await fetch(`${apiURL}/api/auth/login/mfa`, {
@@ -184,8 +194,10 @@ export default function LoginPage() {
                 if (!res.ok) {
                     throw new Error(data.error || 'Invalid authentication code');
                 }
-                await checkAuth();
-                router.push('/dashboard');
+                setShowLoader(true);
+                setTimeout(async () => {
+                    await checkAuth();
+                }, 2000);
             }
         } catch (err: any) {
             setError(err.message);
@@ -193,6 +205,92 @@ export default function LoginPage() {
             setLoading(false);
         }
     };
+
+    if (showLoader) {
+        return (
+            <div className="bg-black text-on-surface min-h-screen overflow-hidden flex flex-col items-center justify-center relative font-sans selection:bg-primary-container selection:text-black">
+                <style jsx global>{`
+                    .blueprint-bg {
+                        background-image: 
+                            linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+                        background-size: 40px 40px;
+                        background-position: center center;
+                    }
+                    .spinner-ring {
+                        border: 2px solid transparent;
+                        border-top-color: #00f0ff;
+                        border-right-color: rgba(0, 240, 255, 0.3);
+                        border-radius: 50%;
+                        animation: spin 1.5s linear infinite;
+                        box-shadow: 0 0 15px rgba(0, 240, 255, 0.2), inset 0 0 10px rgba(0, 240, 255, 0.1);
+                    }
+                    .spinner-ring-inner {
+                        border: 2px solid transparent;
+                        border-left-color: #7df4ff;
+                        border-bottom-color: rgba(125, 244, 255, 0.3);
+                        border-radius: 50%;
+                        animation: spin-reverse 2s linear infinite;
+                    }
+                    .pulse-glow {
+                        animation: pulse-op 2s ease-in-out infinite alternate;
+                    }
+                    .terminal-text {
+                        overflow: hidden;
+                        border-right: .15em solid #00f0ff;
+                        white-space: nowrap;
+                        margin: 0 auto;
+                        letter-spacing: .15em;
+                        animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+                    }
+                    @keyframes spin { 100% { transform: rotate(360deg); } }
+                    @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+                    @keyframes pulse-op {
+                        0% { opacity: 0.6; text-shadow: 0 0 5px rgba(0,240,255,0.2); }
+                        100% { opacity: 1; text-shadow: 0 0 15px rgba(0,240,255,0.6); }
+                    }
+                    @keyframes typing { from { width: 0 } to { width: 100% } }
+                    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #00f0ff; } }
+                `}</style>
+                
+                {/* Background Grid */}
+                <div className="absolute inset-0 blueprint-bg z-0 pointer-events-none opacity-50"></div>
+                <main className="z-10 flex flex-col items-center justify-center flex-grow w-full max-w-[1440px] px-8 relative">
+                    {/* Logo & Spinner Container */}
+                    <div className="relative w-48 h-48 flex items-center justify-center mb-12">
+                        <div className="absolute inset-0 spinner-ring"></div>
+                        <div className="absolute inset-4 spinner-ring-inner"></div>
+                        <div className="relative z-10 text-primary-container drop-shadow-[0_0_15px_rgba(0,240,255,0.5)]">
+                            <span className="material-symbols-outlined text-[64px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200" }}>hexagon</span>
+                            <span className="material-symbols-outlined absolute inset-0 m-auto flex items-center justify-center text-[24px]" style={{ fontVariationSettings: "'FILL' 1, 'wght' 400" }}>memory</span>
+                        </div>
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary-container rounded-full shadow-[0_0_8px_#00f0ff]"></div>
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-primary-container rounded-full shadow-[0_0_8px_#00f0ff]"></div>
+                    </div>
+                    
+                    {/* Text */}
+                    <h1 className="text-2xl md:text-3xl font-bold text-primary-container tracking-widest uppercase pulse-glow text-center mb-4">
+                        Preparing your environment...
+                    </h1>
+                    <p className="text-base text-on-surface-variant opacity-70 tracking-wide">
+                        Initializing core modules
+                    </p>
+                </main>
+                
+                {/* Footer strings */}
+                <footer className="z-10 w-full px-8 py-8 flex flex-col items-center justify-center absolute bottom-0 opacity-80">
+                    <div className="w-full max-w-lg border-t border-primary-container/20 pt-4 flex justify-between items-center px-4">
+                        <span className="font-mono text-primary-container/70 terminal-text text-xs md:text-sm">
+                            ESTABLISHING SECURE CONNECTION // NODE: ALPHA-7
+                        </span>
+                        <span className="font-mono text-outline hidden md:block text-sm">
+                            SYS.VER.4.5.2
+                        </span>
+                    </div>
+                </footer>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-background text-on-surface min-h-screen selection:bg-primary-container/30">

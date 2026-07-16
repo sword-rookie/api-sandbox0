@@ -202,6 +202,36 @@ func (r *PostgresRepo) DeletePasswordResetToken(id uuid.UUID) error {
 	return result.Error
 }
 
+// Project & Sandbox Methods
+
+func (r *PostgresRepo) CreateProject(project *models.Project) error {
+	result := r.DB.Create(project)
+	return result.Error
+}
+
+func (r *PostgresRepo) GetProjectsByUserID(userID uuid.UUID) ([]models.Project, error) {
+	var projects []models.Project
+	result := r.DB.Where("user_id = ?", userID).Order("created_at desc").Find(&projects)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return projects, nil
+}
+
+func (r *PostgresRepo) CreateSandbox(sandbox *models.Sandbox) error {
+	result := r.DB.Create(sandbox)
+	return result.Error
+}
+
+func (r *PostgresRepo) GetSandboxesByUserID(userID uuid.UUID) ([]models.Sandbox, error) {
+	var sandboxes []models.Sandbox
+	result := r.DB.Where("user_id = ?", userID).Order("created_at desc").Find(&sandboxes)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return sandboxes, nil
+}
+
 func (r *PostgresRepo) Close() error {
 	sqlDB, err := r.DB.DB()
 	if err != nil {

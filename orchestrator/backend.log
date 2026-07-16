@@ -1,0 +1,10 @@
+2026/07/16 11:02:21 Database schema migrations applied successfully
+2026/07/16 11:02:21 💾 User repository (Postgres) initialized successfully
+Routes registered successfully
+2026/07/16 11:02:21 🚀 API Sandbox Orchestrator started on :8081
+
+2026/07/16 11:09:02 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[2.410ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:09:02 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[1.675ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
