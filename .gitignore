@@ -24,3 +24,14 @@ orchestrator/orchestrator
 
 # Docker volumes
 volumes/
+
+# Logs
+*.log
+orchestrator/backend.log
+
+# User uploads
+orchestrator/uploads/
+
+# Compiled binaries
+orchestrator/main
+orchestrator/tmp_bin

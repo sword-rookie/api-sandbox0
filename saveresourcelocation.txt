@@ -1,0 +1,10 @@
+Frontend Location: /home/student/major/frontend
+Frontend Start Command: cd /home/student/major/frontend && npm run dev
+
+Backend Location: /home/student/major/orchestrator
+Backend Start Command: cd /home/student/major/orchestrator && export PORT=8081 && go run cmd/main.go
+
+Docker Services (Postgres/Ollama):
+Start Command: cd /home/student/major && docker compose up -d
+
+* Note: Make sure to use a non-default ENCRYPTION_KEY in your .env, and ensure you're using a newer Node version (v16+) via nvm when running the frontend.

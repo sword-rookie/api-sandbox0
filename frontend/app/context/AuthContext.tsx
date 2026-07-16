@@ -13,14 +13,14 @@ interface User {
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;
-    checkAuth: () => Promise<void>;
+    checkAuth: () => Promise<User | null>;
     logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
     isLoading: true,
-    checkAuth: async () => {},
+    checkAuth: async () => null,
     logout: async () => {},
 });
 
@@ -29,8 +29,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
     const pathname = usePathname();
-
-    const publicRoutes = ['/login', '/signup', '/forgot-password', '/reset-password'];
 
     const checkAuth = async () => {
         try {
@@ -57,11 +55,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             if (res.ok) {
                 const data = await res.json();
                 setUser(data);
+                return data;
             } else {
                 setUser(null);
+                return null;
             }
         } catch (error) {
             setUser(null);
+            return null;
         } finally {
             setIsLoading(false);
         }
@@ -84,17 +85,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         checkAuth();
     }, []);
-
-    useEffect(() => {
-        if (!isLoading) {
-            const isPublicRoute = publicRoutes.includes(pathname);
-            if (!user && !isPublicRoute) {
-                router.push('/login');
-            } else if (user && isPublicRoute) {
-                router.push('/dashboard');
-            }
-        }
-    }, [user, isLoading, pathname, router]);
 
     return (
         <AuthContext.Provider value={{ user, isLoading, checkAuth, logout }}>

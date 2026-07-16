@@ -135,13 +135,6 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
     
-    // Redirect when user is populated and loader is showing
-    useEffect(() => {
-        if (user && showLoader) {
-            router.push('/dashboard');
-        }
-    }, [user, showLoader, router]);
-    
     // Auto-focus on TOTP input when step changes to 2
     const totpInputRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
@@ -176,10 +169,15 @@ export default function LoginPage() {
                     setTempToken(data.temp_token);
                     setStep(2);
                 } else {
-                    setShowLoader(true);
-                    setTimeout(async () => {
-                        await checkAuth();
-                    }, 2000);
+                    setLoading(true);
+                    const user = await checkAuth();
+                    if (user) {
+                        setShowLoader(true);
+                        router.push('/dashboard');
+                    } else {
+                        setError('Failed to load user profile. Please try logging in again.');
+                        setLoading(false);
+                    }
                 }
             } else {
                 const res = await fetch(`${apiURL}/api/auth/login/mfa`, {
@@ -194,10 +192,15 @@ export default function LoginPage() {
                 if (!res.ok) {
                     throw new Error(data.error || 'Invalid authentication code');
                 }
-                setShowLoader(true);
-                setTimeout(async () => {
-                    await checkAuth();
-                }, 2000);
+                setLoading(true);
+                const user = await checkAuth();
+                if (user) {
+                    setShowLoader(true);
+                    router.push('/dashboard');
+                } else {
+                    setError('Failed to load user profile. Please try logging in again.');
+                    setLoading(false);
+                }
             }
         } catch (err: any) {
             setError(err.message);
