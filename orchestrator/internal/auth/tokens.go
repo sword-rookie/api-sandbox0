@@ -15,9 +15,14 @@ import (
 )
 
 var (
-	jwtSecret      = []byte(getEnvOrDefault("JWT_SECRET", "super-secret-jwt-key-replace-in-prod"))
-	stateCookieKey = []byte(getEnvOrDefault("STATE_COOKIE_KEY", "state-cookie-secret-32bytes-min!"))
+	jwtSecret      []byte
+	stateCookieKey []byte
 )
+
+func InitAuthKeys(jwtSec string, cookieSec string) {
+	jwtSecret = []byte(jwtSec)
+	stateCookieKey = []byte(cookieSec)
+}
 
 func GenerateTokens(userID string) (accessToken string, refreshTokenOpaque string, refreshTokenHash string, err error) {
 	// 1. Generate Access Token (JWT)

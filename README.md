@@ -2,14 +2,12 @@
 
 Clarity Machine is a next-generation infrastructure provisioning platform and visual API builder. 
 
-## 🌌 The Vision
-The core objective of Clarity Machine is to build a high-performance, **Unreal Engine 5-inspired node-based visual workflow editor**. It allows developers and engineers to easily design, connect, and deploy API infrastructure without writing extensive boilerplate code.
+## 🌌 The Vision & Architecture
+The core objective of Clarity Machine is to build a high-performance, **Unreal Engine 5-inspired node-based visual workflow editor** that orchestrates complex infrastructure.
 
-### Key Pillars of the Vision:
-1. **Node-Based Blueprint Editor:** A React Flow-powered canvas featuring custom nodes, execution/data pins, and animated wiring systems for intuitive API logic construction.
-2. **Cybernetic Design Language:** A stunning, premium aesthetic featuring dark modes, vibrant neon accents (glassmorphism), dynamic micro-animations, and a highly responsive user experience.
-3. **Seamless Infrastructure Orchestration:** A robust Go-based backend (The Orchestrator) responsible for taking visual blueprints and dynamically spinning up, managing, and scaling real "Sandboxes" and "Projects".
-4. **Uncompromising Security:** Enterprise-grade security practices, from HttpOnly cookie session management to Multi-Factor Authentication (MFA).
+> **Read the Manifesto:** For the full problem framing (The Staging Bottleneck) and our product philosophy, read [docs/vision.md](docs/vision.md).
+> 
+> **View the Architecture Status:** For a breakdown of our 5 Technical Pillars and an honest status tracker of what is currently built vs planned, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ---
 
@@ -46,11 +44,11 @@ We have successfully established the foundational layer of the application, focu
   - *Reason:* Best balance of performance, ecosystem, and developer experience.
 - **Database:** PostgreSQL
   - *Reason:* Solid, industry-standard choice.
-- **Cache / Sessions:** Redis
+- **Cache / Sessions:** Redis `[PLANNED]`
   - *Reason:* Necessary for refresh tokens, rate limiting, etc.
 - **Object Storage:** AWS S3 (or MinIO for on-prem)
   - *Reason:* Standard.
-- **Authentication:** JWT + Refresh Tokens (stored in Redis + DB)
+- **Authentication:** JWT + DB
   - *Reason:* Standard & secure.
 - **Local AI:** Ollama (with fallback to Gemini)
   - *Reason:* Good for local, cost-effective inference.

@@ -27,4 +27,4 @@
    - Implement basic reverse proxy registration to route traffic to dynamic sandboxes.
 2. **Data Plane**:
    - Begin integration for OverlayFS Copy-on-Write database forking.
-   - Test LLM (Ollama) mock data generation for new sandbox instances.
+   - Test LLM mock data generation for new sandbox instances.

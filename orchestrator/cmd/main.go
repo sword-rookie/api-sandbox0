@@ -4,12 +4,14 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/auth"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/config"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/server"
 )
 
 func main() {
 	cfg := config.Load()
+	auth.InitAuthKeys(cfg.JWTSecret, cfg.StateCookieKey)
 
 	srv := server.NewServer(cfg)
 

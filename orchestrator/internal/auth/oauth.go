@@ -23,18 +23,21 @@ var (
 )
 
 func InitOAuth() {
+	// Note: We don't panic on missing OAuth secrets like we do for JWT.
+	// If these are not provided in the environment, OAuth login will simply fail safely at runtime
+	// when the user attempts it, which is acceptable since OAuth is an optional feature.
 	githubOauthConfig = &oauth2.Config{
 		RedirectURL:  getEnvOrDefault("GITHUB_REDIRECT_URL", "http://localhost:8081/api/auth/github/callback"),
-		ClientID:     getEnvOrDefault("GITHUB_CLIENT_ID", "mock-github-client-id"),
-		ClientSecret: getEnvOrDefault("GITHUB_CLIENT_SECRET", "mock-github-client-secret"),
+		ClientID:     getEnvOrDefault("GITHUB_CLIENT_ID", ""),
+		ClientSecret: getEnvOrDefault("GITHUB_CLIENT_SECRET", ""),
 		Scopes:       []string{"read:user", "user:email"},
 		Endpoint:     github.Endpoint,
 	}
 
 	googleOauthConfig = &oauth2.Config{
 		RedirectURL:  getEnvOrDefault("GOOGLE_REDIRECT_URL", "http://localhost:8081/api/auth/google/callback"),
-		ClientID:     getEnvOrDefault("GOOGLE_CLIENT_ID", "mock-google-client-id"),
-		ClientSecret: getEnvOrDefault("GOOGLE_CLIENT_SECRET", "mock-google-client-secret"),
+		ClientID:     getEnvOrDefault("GOOGLE_CLIENT_ID", ""),
+		ClientSecret: getEnvOrDefault("GOOGLE_CLIENT_SECRET", ""),
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		Endpoint:     google.Endpoint,
 	}
