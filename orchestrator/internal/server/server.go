@@ -13,6 +13,7 @@ import (
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/middleware"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/project"
 	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/repository"
+	"github.com/sword-rookie/api-sandbox0/orchestrator/internal/sandbox"
 )
 
 type Server struct {
@@ -60,6 +61,9 @@ func NewServer(cfg *config.Config) *Server {
 	projectService := project.NewService(repo)
 	projectHandler := project.NewHandler(projectService)
 
+	sandboxService := sandbox.NewService(repo)
+	sandboxHandler := sandbox.NewHandler(sandboxService)
+
 	// Health Check
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Health check called")
@@ -97,6 +101,9 @@ func NewServer(cfg *config.Config) *Server {
 	r.HandleFunc("/api/projects", projectHandler.GetProjects).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/projects/{id}", projectHandler.GetProjectByID).Methods("GET", "OPTIONS")
 	r.HandleFunc("/api/projects/{id}", projectHandler.UpdateProject).Methods("PATCH", "OPTIONS")
+
+	// Sandbox Endpoints
+	r.HandleFunc("/api/sandboxes", sandboxHandler.GetSandboxes).Methods("GET", "OPTIONS")
 
 	// Static files for uploads
 	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads"))))
