@@ -6,6 +6,16 @@ import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import TopNavBar from '../../../components/TopNavBar';
 
+interface ProjectPreview {
+    id: string;
+    name: string;
+    domain: string;
+    status: string;
+    active_count: number;
+    issue_count: number;
+    last_updated: string;
+}
+
 interface UserProfile {
     id: string;
     name: string;
@@ -14,6 +24,9 @@ interface UserProfile {
     bio: string;
     location: string;
     avatar_url: string;
+    projects_count: number;
+    sandboxes_count: number;
+    pinned_projects: ProjectPreview[];
 }
 
 // Generate a random contribution graph (365 days)
@@ -169,69 +182,36 @@ export default function ProfilePage() {
                             </button>
                             <button className="flex items-center gap-2 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:border-outline-variant font-semibold text-sm whitespace-nowrap transition-colors">
                                 <span className="material-symbols-outlined text-[18px]">terminal</span>
-                                Sandboxes <span className="bg-surface-container px-2 rounded-full text-xs ml-1">42</span>
+                                Sandboxes <span className="bg-surface-container px-2 rounded-full text-xs ml-1">{profile.sandboxes_count}</span>
                             </button>
                             <button className="flex items-center gap-2 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:border-outline-variant font-semibold text-sm whitespace-nowrap transition-colors">
                                 <span className="material-symbols-outlined text-[18px]">folder</span>
-                                Projects <span className="bg-surface-container px-2 rounded-full text-xs ml-1">8</span>
+                                Projects <span className="bg-surface-container px-2 rounded-full text-xs ml-1">{profile.projects_count}</span>
                             </button>
                             <button className="flex items-center gap-2 py-2 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:border-outline-variant font-semibold text-sm whitespace-nowrap transition-colors">
                                 <span className="material-symbols-outlined text-[18px]">star</span>
-                                Stars <span className="bg-surface-container px-2 rounded-full text-xs ml-1">128</span>
+                                Stars <span className="bg-surface-container px-2 rounded-full text-xs ml-1">0</span>
                             </button>
                         </div>
 
                         <div className="mt-4">
                             <h3 className="text-sm font-semibold mb-3">Pinned</h3>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                {/* Pinned Card 1 */}
-                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
-                                    <div className="flex items-center justify-between">
-                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">alpha-production-cluster</a>
-                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
+                                {profile.pinned_projects && profile.pinned_projects.length > 0 ? profile.pinned_projects.map(proj => (
+                                    <div key={proj.id} className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
+                                        <div className="flex items-center justify-between">
+                                            <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">{proj.name}</a>
+                                            <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
+                                        </div>
+                                        <p className="text-xs text-on-surface-variant line-clamp-2">{proj.domain}</p>
+                                        <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
+                                            <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-primary-fixed"></div>{proj.status}</div>
+                                            <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 0</div>
+                                        </div>
                                     </div>
-                                    <p className="text-xs text-on-surface-variant line-clamp-2">Main production cluster for project Alpha. Contains critical microservices.</p>
-                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
-                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-yellow-400"></div>Go</div>
-                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 12</div>
-                                    </div>
-                                </div>
-                                {/* Pinned Card 2 */}
-                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
-                                    <div className="flex items-center justify-between">
-                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">sandbox-ai-inference</a>
-                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
-                                    </div>
-                                    <p className="text-xs text-on-surface-variant line-clamp-2">GPU-accelerated sandbox for running local LLM inference.</p>
-                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
-                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500"></div>Python</div>
-                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 45</div>
-                                    </div>
-                                </div>
-                                {/* Pinned Card 3 */}
-                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
-                                    <div className="flex items-center justify-between">
-                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">web-dashboard-ui</a>
-                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
-                                    </div>
-                                    <p className="text-xs text-on-surface-variant line-clamp-2">React based frontend interface for internal tooling.</p>
-                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
-                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-cyan-400"></div>TypeScript</div>
-                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 8</div>
-                                    </div>
-                                </div>
-                                {/* Pinned Card 4 */}
-                                <div className="p-4 border border-outline-variant rounded-xl bg-surface-container-lowest flex flex-col gap-2">
-                                    <div className="flex items-center justify-between">
-                                        <a href="#" className="text-primary-fixed-dim font-semibold hover:underline text-sm">rust-hyper-proxy</a>
-                                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">drag_indicator</span>
-                                    </div>
-                                    <p className="text-xs text-on-surface-variant line-clamp-2">High performance network proxy written in Rust.</p>
-                                    <div className="flex items-center gap-4 mt-2 text-xs text-on-surface-variant">
-                                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-orange-500"></div>Rust</div>
-                                        <div className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> 112</div>
-                                    </div>
-                                </div>
+                                )) : (
+                                    <div className="col-span-2 text-sm text-on-surface-variant py-4">No pinned projects yet.</div>
+                                )}
                             </div>
                         </div>
 

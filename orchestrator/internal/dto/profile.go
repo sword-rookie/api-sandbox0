@@ -18,5 +18,8 @@ type ProfileResponse struct {
 	Email     string `json:"email"`
 	Bio       string `json:"bio"`
 	Location  string `json:"location"`
-	AvatarURL string `json:"avatar_url"`
+	AvatarURL      string           `json:"avatar_url"`
+	SandboxesCount int              `json:"sandboxes_count"`
+	ProjectsCount  int              `json:"projects_count"`
+	PinnedProjects []ProjectPreview `json:"pinned_projects"`
 }

@@ -13,6 +13,7 @@ type Project struct {
 	Slug        string     `json:"slug" gorm:"unique;not null"`
 	Description string     `json:"description"`
 	Status      string     `json:"status" gorm:"default:active"`
+	IsPinned    bool       `json:"is_pinned" gorm:"default:false"`
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
 	Sandboxes   []Sandbox  `json:"sandboxes" gorm:"foreignKey:ProjectID"`

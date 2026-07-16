@@ -1,0 +1,11 @@
+You made a great point! 
+
+Here is why I originally put it in a container, and why you are correct that it shouldn't be:
+
+1. **Why it was containerized initially:** It's standard practice for typical web apps so you can run the whole stack (database, AI, backend) with a single `docker compose up -d` command. 
+
+2. **Why you are completely right:** The Clarity Machine is a containerization platform. Its primary job is to spawn *other* containers. When the Orchestrator runs inside a Docker container, it creates a "Docker-in-Docker" scenario. This requires mounting the Docker socket, which is complex, insecure, and creates annoying networking loops.
+
+Running the Orchestrator natively on your local machine gives it direct control over your system's Docker engine. It makes it infinitely easier for the Orchestrator to spawn user sandboxes.
+
+I've updated `docker-compose.yml` to only run Postgres and Ollama. You can now run the backend natively using: `go run ./cmd/main.go`.

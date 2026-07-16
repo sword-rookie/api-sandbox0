@@ -8,3 +8,67 @@ Routes registered successfully
 
 2026/07/16 11:09:02 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
 [0m[33m[1.675ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:11 [32m/home/student/major/orchestrator/internal/repository/postgres.go:107
+[0m[33m[0.962ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE email = 'adith07nair@gmail.com' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:35:11 [32m/home/student/major/orchestrator/internal/repository/postgres.go:142
+[0m[33m[20.337ms] [34;1m[rows:1][0m UPDATE "users" SET "name"='adith krishna',"username"='adith07nair',"email"='adith07nair@gmail.com',"password_hash"='$argon2id$v=19$m=65536,t=1,p=4$uAmwBJE+PzHHbhSYktDmpA$lfe8vA1lE57gtoHyL4HKyIHmbU8+lo93l8qg9FjZgWM',"bio"='',"location"='',"avatar_url"='http://localhost:8081/uploads/avatars/22a6781e-9bf1-465f-9086-014576830f9e.jpeg',"provider"='local',"provider_id"='',"email_verified"=false,"mfa_enabled"=false,"mfa_secret"='',"last_login"='2026-07-16 06:05:11.853',"last_ip"='::1',"last_user_agent"='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36',"created_at"='2026-07-16 09:21:37.106',"updated_at"='2026-07-16 06:05:11.853',"deleted_at"=NULL WHERE "users"."deleted_at" IS NULL AND "id" = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe'
+
+2026/07/16 11:35:11 [32m/home/student/major/orchestrator/internal/repository/postgres.go:182
+[0m[33m[0.957ms] [34;1m[rows:1][0m INSERT INTO "audit_logs" ("user_id","event","provider","ip_address","user_agent","created_at","id") VALUES ('19e51bf3-96af-4ca4-92f7-2771cc7c99fe','login_success','local','::1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36','2026-07-16 06:05:11.873','4143ff69-ada6-4a0e-b7bf-55a979a07ef0') RETURNING "id"
+
+2026/07/16 11:35:11 [32m/home/student/major/orchestrator/internal/repository/postgres.go:163
+[0m[33m[1.027ms] [34;1m[rows:1][0m INSERT INTO "refresh_tokens" ("user_id","token_hash","expires_at","revoked","created_at","id") VALUES ('19e51bf3-96af-4ca4-92f7-2771cc7c99fe','de79cdc44b44e52c4adf11fb0fa2dee858fbc95459f6b4104c4bd762034138f8','2026-07-23 06:05:11.874',false,'2026-07-16 06:05:11.874','d17c1d6d-3037-490e-9655-5dc28c683d03') RETURNING "id"
+
+2026/07/16 11:35:13 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.524ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:35:13 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.789ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:35:13 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.425ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:13 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[1.472ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:13 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.401ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:35:13 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.183ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:13 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[0.129ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:19 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.433ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:19 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.277ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:21 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.713ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:35:21 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.235ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:21 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[0.147ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:21 [32m/home/student/major/orchestrator/internal/repository/postgres.go:131
+[0m[33m[0.297ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:35:21 [32m/home/student/major/orchestrator/internal/repository/postgres.go:214
+[0m[33m[0.110ms] [34;1m[rows:0][0m SELECT * FROM "projects" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:35:21 [32m/home/student/major/orchestrator/internal/repository/postgres.go:228
+[0m[33m[0.124ms] [34;1m[rows:0][0m SELECT * FROM "sandboxes" WHERE user_id = '19e51bf3-96af-4ca4-92f7-2771cc7c99fe' ORDER BY created_at desc
+
+2026/07/16 11:36:19 [32m/home/student/major/orchestrator/internal/repository/postgres.go:119
+[0m[33m[1.349ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE username = 'adith07nair' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/07/16 11:36:19 [32m/home/student/major/orchestrator/internal/repository/postgres.go:119
+[0m[33m[0.731ms] [34;1m[rows:1][0m SELECT * FROM "users" WHERE username = 'adith07nair' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+Health check called

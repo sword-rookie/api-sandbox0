@@ -99,7 +99,9 @@ func (s *Service) GetProfileByUsername(username string) (*dto.ProfileResponse, e
 	if err != nil {
 		return nil, err
 	}
-	return s.mapToProfileResponse(user), nil
+	projects, _ := s.repo.GetProjectsByUserID(user.ID)
+	sandboxes, _ := s.repo.GetSandboxesByUserID(user.ID)
+	return s.mapToProfileResponse(user, projects, sandboxes), nil
 }
 
 func (s *Service) GetProfileByID(id string) (*dto.ProfileResponse, error) {
@@ -111,7 +113,9 @@ func (s *Service) GetProfileByID(id string) (*dto.ProfileResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	return s.mapToProfileResponse(user), nil
+	projects, _ := s.repo.GetProjectsByUserID(user.ID)
+	sandboxes, _ := s.repo.GetSandboxesByUserID(user.ID)
+	return s.mapToProfileResponse(user, projects, sandboxes), nil
 }
 
 func (s *Service) UpdateProfile(id string, req *dto.UpdateProfileRequest) (*dto.ProfileResponse, error) {
@@ -150,8 +154,9 @@ func (s *Service) UpdateProfile(id string, req *dto.UpdateProfileRequest) (*dto.
 	if err := s.repo.UpdateUser(user); err != nil {
 		return nil, err
 	}
-
-	return s.mapToProfileResponse(user), nil
+	projects, _ := s.repo.GetProjectsByUserID(user.ID)
+	sandboxes, _ := s.repo.GetSandboxesByUserID(user.ID)
+	return s.mapToProfileResponse(user, projects, sandboxes), nil
 }
 
 func (s *Service) DeleteProfile(id string) error {
@@ -298,16 +303,41 @@ func (s *Service) ResetPassword(req *dto.ResetPasswordRequest, ip, userAgent str
 	return s.repo.DeletePasswordResetToken(token.ID)
 }
 
-func (s *Service) mapToProfileResponse(user *models.User) *dto.ProfileResponse {
-	return &dto.ProfileResponse{
-		ID:        user.ID.String(),
-		Name:      user.Name,
-		Username:  user.Username,
-		Email:     user.Email,
-		Bio:       user.Bio,
-		Location:  user.Location,
-		AvatarURL: user.AvatarURL,
+func (s *Service) mapToProfileResponse(user *models.User, projects []models.Project, sandboxes []models.Sandbox) *dto.ProfileResponse {
+	resp := &dto.ProfileResponse{
+		ID:             user.ID.String(),
+		Name:           user.Name,
+		Username:       user.Username,
+		Email:          user.Email,
+		Bio:            user.Bio,
+		Location:       user.Location,
+		AvatarURL:      user.AvatarURL,
+		ProjectsCount:  len(projects),
+		SandboxesCount: len(sandboxes),
+		PinnedProjects: []dto.ProjectPreview{},
 	}
+
+	for _, p := range projects {
+		if p.IsPinned {
+			// Find active sandboxes for this project
+			pActive := 0
+			for _, s := range sandboxes {
+				if s.ProjectID != nil && *s.ProjectID == p.ID && (s.Status == "running" || s.Status == "building") {
+					pActive++
+				}
+			}
+			resp.PinnedProjects = append(resp.PinnedProjects, dto.ProjectPreview{
+				ID:          p.ID.String(),
+				Name:        p.Name,
+				Domain:      p.Slug + ".clarity.dev",
+				Status:      p.Status,
+				ActiveCount: pActive,
+				IssueCount:  0,
+				LastUpdated: p.UpdatedAt,
+			})
+		}
+	}
+	return resp
 }
 
 var (
